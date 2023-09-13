@@ -11,43 +11,15 @@ type PresentControlProps = {
 
 const PresentControl: FC<PresentControlProps> = (props) => {
     const {children, ...rest} = props;
-    const params = useParams();
+    const params = useParams<{id:string}>();
     console.log(params);
-    const [title,setTitle] = useState("土曜日 13時クラス")
+    const [classId,setClassId] = useState<string | undefined>(params.id)
     
     return (
-        <VStack>  
-            <Box display="flex" justifyContent="space-between" width="100%">
-                <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
-                    width={"120px"}
-                    borderRadius={10}
-                    backgroundColor={"blue.300"}
-                    textAlign={"center"}
-                    textColor={"white"}
-                    >
-                    <Link to={"/"}>登校管理
-                    </Link>
-                </Box>
-                <Box>
-                    <DateSelector/>
-                </Box>
-            </Box>
-            <Box marginTop={3}
-                fontSize={"2xl"}
-            >
-                {title}
-            </Box>
-            <Divider/>
 
-            <PresentListContainer/>
-            <Box marginBottom={5}>
-                <SubmitModal title="出席を更新"/>
-            </Box>
- 
-        
 
-        
-        </VStack>
+            <PresentListContainer classId={classId}/>
+
     )
 }
 

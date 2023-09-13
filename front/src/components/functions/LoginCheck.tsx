@@ -15,8 +15,6 @@ const LoginCheck: FC<LoginCheckProps> = (props) => {
         if(cookies.user_id===undefined || cookies.user_id === ""){
             navigate("/login")
         }
-
-        
     },[])
 
     

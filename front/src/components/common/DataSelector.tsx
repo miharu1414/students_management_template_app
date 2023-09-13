@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { Box, Stack } from "@chakra-ui/react"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DateSelector.css'; // カスタムスタイルをインポート
 
-const DateSelector = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const handleDateChange = (date: any) => {
-    setSelectedDate(date);
-  };
+type DateSelectorProps = {
+  children? : Node;
+  selectedDate: Date;
+  handleDateChange: (value:Date) => void;
+}
+
+const DateSelector:FC<DateSelectorProps> = (props) => {
+  const {children, ...rest} = props;
+
 
   return (
     <Stack width={"165px"} direction={"row"} alignItems={"center"} justifyContent={"center"} height={"100%"}>
@@ -26,8 +30,8 @@ const DateSelector = () => {
         日付
       </Box>
       <DatePicker
-        selected={selectedDate}
-        onChange={handleDateChange}
+        selected={rest.selectedDate}
+        onChange={rest.handleDateChange}
         dateFormat="yyyy/MM/dd"
         className="datePicker"
       />
