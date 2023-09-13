@@ -1,3 +1,0 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /python/test/index.cgi/$1 [QSA,L]
