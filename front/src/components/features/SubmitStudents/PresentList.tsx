@@ -28,7 +28,7 @@ const PresentList: FC<PresentListProps> = (props) => {
 
 
     return (
-        <VStack>  
+        <VStack minWidth={"330px"}>  
         <Box display="flex" justifyContent="space-between" width="100%">
             <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
                 width={"120px"}
