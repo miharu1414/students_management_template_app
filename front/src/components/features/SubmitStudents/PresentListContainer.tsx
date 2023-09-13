@@ -1,96 +1,114 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { Box, VStack, theme, Stack, Divider, Button } from "@chakra-ui/react"
 
+import {  useParams, Link } from 'react-router-dom';
 import PresentList from "./PresentList"
 
 type PresentListContainerProps = {
     children? : Node;
+    classId?: string;
 }
 
-export type studentInfo = {
+export type presentInfo = {
     id: string,
     name: string,
-    present: boolean,
-    type: string,
+    attendId: string,
+    classId?: string,
+    courseId?: string,
 }
 
 const PresentListContainer: FC<PresentListContainerProps> = (props) => {
     const {children, ...rest} = props;
 
-    const [studentsInfo, setStudentsInfo] = useState<Array<studentInfo>>([
-        {
-            id: "1",
-            name: "クレファス 太郎",
-            present: true,
-            type: "normal",
-        },
-        {
-            id: "2",
-            name: "クレファス 太郎",
-            present: true,
-            type: "normal",
-        },
-        {
-            id: "3",
-            name: "青空 太郎",
-            present: true,
-            type: "normal",
-        },
-        {
-            id: "4",
-            name: "あおぞら 四郎",
-            present: true,
-            type: "normal",
-        },
-        {
-            id: "5",
-            name: "並木 海大",
-            present: true,
-            type: "normal",
-        },
+    const [studentsInfo, setStudentsInfo] = useState<Array<presentInfo>>([]);
+    const [loading,setLoading] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-        {
-            id: "6",
-            name: "安倍 晋三",
-            present: true,
-            type: "normal",
-        },
-        {
-            id: "7",
-            name: "麻生 太郎",
-            present: true,
-            type: "normal",
-        },
-        {
-            id: "8",
-            name: "ビックモーター",
-            present: true,
-            type: "normal",
-        },
+    const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
+    };
 
-
-]);
-
-    const handleUpdateStudentInfo = (index:string, value: boolean):void => {
+    const handleUpdateStudentInfo = (index:string, value: string):void => {
         setStudentsInfo((prev)=> {
             const updatedStudentsInfo = prev.map((student,idx)=>{
                 if (student.id === index) {
                     return {
                         ...student,
-                        present: value,
+                        attendId: value,
                     }
                 }
                 return student
             });
             return updatedStudentsInfo; 
         })
-
     } 
 
+    function formatDateToYYYYMMDD(date: Date): string {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        
+        return `${year}-${month}-${day}`;
+      }
+
+
+    const GetStudents = async () => {
+        setLoading(true)
+        const formData = {class_id: rest.classId, date: formatDateToYYYYMMDD(selectedDate)};
+        console.log(formData);
+        try {
+          const URL = process.env.REACT_APP_UTIL_API + 'getStudentsForSubmit';
+          const response = await fetch(URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              // 必要な場合、他のヘッダーも追加できます
+            },
+            body: JSON.stringify(formData),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          // リクエストが成功した場合の処理
+          console.log(response);
+    
+          // JSONデータを取得
+          const jsonData = await response.json();
+          console.log('受け取ったJSONデータ:', jsonData);
+          setStudentsInfo(jsonData.studentsData)
+          setLoading(false)
+    
+          // 任意の追加処理をここで行う
+        } catch (error) {
+          // エラーハンドリング
+          console.error('POSTリクエストエラー:', error);
+        }
+      };
+
+
+      useEffect(()=>{
+        GetStudents();
+      },[])
+      
+      useEffect(()=>{
+        GetStudents();
+      },[selectedDate])
+
     return (
-        <PresentList 
-            studentsInfo={studentsInfo}
-            onClickUpdateStudentInfo={handleUpdateStudentInfo}
-        />
+
+            <PresentList 
+                title={"土曜日15時"}
+                loading={loading}
+                selectedDate={selectedDate}
+                studentsInfo={studentsInfo}
+                handleDateChange={handleDateChange}
+                onClickUpdateStudentInfo={handleUpdateStudentInfo}
+
+            />
+
     )
 }
 

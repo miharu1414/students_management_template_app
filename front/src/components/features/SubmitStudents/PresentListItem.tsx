@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { Box, Button, Flex } from "@chakra-ui/react";
-import { studentInfo } from "./PresentListContainer";
+import { presentInfo } from "./PresentListContainer";
 import { Link } from "react-router-dom";
 
 type PresentListItemProps = {
     children?: React.ReactNode;
     index: number;
-    studentInfo: studentInfo,
-    onClickUpdateStudentInfo: (id: string, value: boolean) => void
+    studentInfo: presentInfo,
+    onClickUpdateStudentInfo: (id: string, value: string) => void
 }
 
 const PresentListItem: FC<PresentListItemProps> = (props) => {
@@ -53,15 +53,26 @@ const PresentListItem: FC<PresentListItemProps> = (props) => {
 
             <Box>
                 <Button
-                    colorScheme={rest.studentInfo.present ? "blue" : "blackAlpha"}
-                    onClick={() => rest.onClickUpdateStudentInfo(rest.studentInfo.id, true)}>
+                    width={"55px"}
+                    colorScheme={rest.studentInfo.attendId == "1" ?  "blue":"blackAlpha"  }
+                    onClick={() => rest.onClickUpdateStudentInfo(rest.studentInfo.id, "1")}>
                     出席
                 </Button>
             </Box>
             <Box>
-                <Button colorScheme={rest.studentInfo.present ? "blackAlpha" : "red"}
-                    onClick={() => rest.onClickUpdateStudentInfo(rest.studentInfo.id, false)}>
+                <Button 
+                    width={"55px"}
+                    colorScheme={rest.studentInfo.attendId == "2" ?  "red": "blackAlpha"}
+                    onClick={() => rest.onClickUpdateStudentInfo(rest.studentInfo.id, "2")}>
                     欠席
+                </Button>
+            </Box>
+            <Box>
+                <Button 
+                    width={"20px"}
+                    colorScheme={rest.studentInfo.attendId == "4" ?  "yellow" :"blackAlpha"}
+                    onClick={() => rest.onClickUpdateStudentInfo(rest.studentInfo.id, "4")}>
+                    他
                 </Button>
             </Box>
 
