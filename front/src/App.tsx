@@ -14,6 +14,7 @@ import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
 import Header from "./components/common/Header";
 
+import EditStudents from "./pages/EditStudents";
 import Home from "src/pages/Home"
 import Detail from "src/pages/Detail"
 import PresentControl from "./pages/PresentControl";
@@ -22,13 +23,16 @@ export const App = () => (
   <ChakraProvider theme={theme}>
     <Box fontSize="xl">
       <VStack spacing={0}>
-        <Header/>
+        
 
         <BrowserRouter>
+        <Header/>
       <Routes>
+
         <Route path={`/`}  element={<Home/>}/>
         <Route path={`/register/`}  />
         <Route path={`/login/`}  />
+        <Route path={`/edit/`}  element={<EditStudents/>}/>
         <Route path={`/control/`} >
           <Route path={`:id`} element={<PresentControl/>}/>
         </Route>
