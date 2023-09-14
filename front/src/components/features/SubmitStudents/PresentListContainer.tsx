@@ -7,6 +7,7 @@ import PresentList from "./PresentList"
 type PresentListContainerProps = {
     children? : Node;
     classId?: string;
+    className: string;
 }
 
 export type presentInfo = {
@@ -23,12 +24,13 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
     const [studentsInfo, setStudentsInfo] = useState<Array<presentInfo>>([]);
     const [loading,setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [error, setError] = useState<boolean>(false);
 
     const handleDateChange = (date: Date) => {
-    setSelectedDate(date);
+        setSelectedDate(date);
     };
 
-    const handleUpdateStudentInfo = (index:string, value: string):void => {
+    const handleUpdateStudentType = (index:string, value: string):void => {
         setStudentsInfo((prev)=> {
             const updatedStudentsInfo = prev.map((student,idx)=>{
                 if (student.id === index) {
@@ -80,6 +82,45 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
           console.log('受け取ったJSONデータ:', jsonData);
           setStudentsInfo(jsonData.studentsData)
           setLoading(false)
+          setError(false)
+    
+          // 任意の追加処理をここで行う
+        } catch (error) {
+          // エラーハンドリング
+          setError(true)
+          console.error('POSTリクエストエラー:', error);
+        }
+      };
+
+      const UploadStudents = async () => {
+        setLoading(true)
+        const formData = {class_id: rest.classId, date: formatDateToYYYYMMDD(selectedDate), studentsInfo: studentsInfo};
+        console.log(formData);
+        try {
+          const URL = process.env.REACT_APP_UTIL_API + '/insertStudentsAttendance';
+          const response = await fetch(URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              // 必要な場合、他のヘッダーも追加できます
+            },
+            body: JSON.stringify(formData),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          // リクエストが成功した場合の処理
+          console.log(response);
+    
+          // JSONデータを取得
+          const jsonData = await response.json();
+          console.log('受け取ったJSONデータ:', jsonData);
+          setStudentsInfo(jsonData.studentsData)
+          setTimeout(()=>GetStudents(),500);
+          setLoading(false)
     
           // 任意の追加処理をここで行う
         } catch (error) {
@@ -88,25 +129,33 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
         }
       };
 
+      const handleClickReload = ():void =>{
+        GetStudents();
+      }
+
+
+
 
       useEffect(()=>{
-        GetStudents();
-      },[])
-      
-      useEffect(()=>{
-        GetStudents();
+        setTimeout(GetStudents,300)
       },[selectedDate])
+
+
+
+
 
     return (
 
             <PresentList 
-                title={"土曜日15時"}
+                title={rest.className}
                 loading={loading}
                 selectedDate={selectedDate}
                 studentsInfo={studentsInfo}
+                error={error}
                 handleDateChange={handleDateChange}
-                onClickUpdateStudentInfo={handleUpdateStudentInfo}
-
+                onClickUpdateStudentType={handleUpdateStudentType}
+                onClickUpdate={UploadStudents}
+                onClickReload={handleClickReload}
             />
 
     )

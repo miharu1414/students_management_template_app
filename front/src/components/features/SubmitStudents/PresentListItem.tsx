@@ -43,7 +43,7 @@ const PresentListItem: FC<PresentListItemProps> = (props) => {
         >
 
 
-            <Link to={"/detail/1"}>
+        <Link to={"/detail/" + rest.studentInfo.id}>
                 <Box fontSize={"4xs"} width={"150px"} >
                     {truncateText(rest.studentInfo.name, 9)}
                 </Box>
