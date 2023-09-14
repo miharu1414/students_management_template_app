@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Box, Button, Flex, useDisclosure, Modal, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, HStack, Text, Textarea,
+import { Box, Button, Flex, useDisclosure, Modal, HStack, Text, Textarea,
     ModalOverlay, 
     ModalContent,
     ModalHeader,
@@ -7,17 +7,25 @@ import { Box, Button, Flex, useDisclosure, Modal, Table, Thead, Tbody, Tr, Th, T
     ModalBody,
     Input,
     VStack,
+    Select,
+    Spacer,
 } from "@chakra-ui/react";
-import { studentInfo } from "./EditModalContainer";
+import { studentInfo, classInfo, courseInfo } from "./EditModalContainer";
 import { Link } from "react-router-dom";
 
 type EditModalProps = {
     studentInfo: studentInfo,
-    onClickUpdateStudentInfo: () => void
+    classes: classInfo[],
+    courses: courseInfo[],
+    onClickUpdateStudentInfo: () => void,
+    onClickDeleteStudentInfo: () => void,
     updateClass: (newClass:string) => void,
     updateCourse: (newCourse:string) => void,
     updateAddress: (newAddress:string) => void,
     updateMemo: (newMemo:string) => void,
+    onGetStudent: () => void,
+    onGetClasses: () => void,
+    onGetCourses: () => void,
 }
 
 const EditModal: FC<EditModalProps> = (props) => {
@@ -27,8 +35,13 @@ const EditModal: FC<EditModalProps> = (props) => {
 
     return (
       <>
-        <Button 
-                onClick={onOpen}
+        <Button
+                onClick={() => {
+                  onOpen()
+                  rest.onGetStudent()
+                  setTimeout(rest.onGetClasses, 150)
+                  setTimeout(rest.onGetCourses, 300)
+                }}
                 padding={3} 
                 border={2} 
                 borderColor={"whiteAlpha.200"}
@@ -41,26 +54,50 @@ const EditModal: FC<EditModalProps> = (props) => {
         <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{rest.studentInfo.name}の編集</ModalHeader>
+          <ModalHeader>
+            <HStack>
+            <Text>{rest.studentInfo.name}の編集</Text>
+            <Spacer></Spacer>
+            <Button colorScheme='red' mr={3} onClick={() => rest.onClickDeleteStudentInfo()}>
+              削除
+            </Button>
+            </HStack>
+          </ModalHeader>
           <ModalBody>
             <VStack>
                 <HStack>
                     <Text>クラス：</Text>
-                    <Box><Input value={rest.studentInfo.class} defaultValue={rest.studentInfo.class} onChange={(e)=>rest.updateClass(e.target.value)}></Input></Box>
+                    <Box>
+                      <Select placeholder='クラスを選んでください' onChange={(e)=>rest.updateClass(e.target.value)}>
+                        {rest.classes.map((classData) => {
+                          return (
+                            <option value={classData.classId} label={classData.className}/>
+                          )
+                        })}
+                      </Select>
+                    </Box>
                 </HStack>
                 <HStack>
                     <Text>コース：</Text>
-                    <Box><Input value={rest.studentInfo.course} defaultValue={rest.studentInfo.course} onChange={(e)=>rest.updateCourse(e.target.value)}></Input></Box>
+                    <Box>
+                      <Select placeholder='コースを選んでください' onChange={(e)=>rest.updateCourse(e.target.value)}>
+                        {rest.courses.map((courseData) => {
+                          return (
+                            <option value={courseData.courseId} label={courseData.courseName}/>
+                          )
+                        })}
+                      </Select>
+                    </Box>
                 </HStack>
                 <HStack>
                     <Text>緊急連絡先：</Text>
-                    <Box><Input value={rest.studentInfo.address} defaultValue={rest.studentInfo.address} onChange={(e)=>rest.updateAddress(e.target.value)}></Input></Box>
+                    <Box><Input value={rest.studentInfo.address} onChange={(e)=>rest.updateAddress(e.target.value)}></Input></Box>
                 </HStack>
                 <HStack>
                     <Text>メモ：</Text>
-                    <Box><Textarea value={rest.studentInfo.memo} defaultValue={rest.studentInfo.memo} onChange={(e)=>rest.updateMemo(e.target.value)}></Textarea></Box>
+                    <Box><Textarea value={rest.studentInfo.memo} onChange={(e)=>rest.updateMemo(e.target.value)}></Textarea></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={rest.onClickUpdateStudentInfo}>
+                <Button colorScheme='blue' mr={3} onClick={() => rest.onClickUpdateStudentInfo()}>
                     更新
                 </Button>
             </VStack>

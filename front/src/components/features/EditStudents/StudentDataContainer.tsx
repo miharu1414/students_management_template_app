@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import StudentDatasList from "./StudentDatasList";
 
 type StudentDataContainerProps = {
@@ -6,10 +6,11 @@ type StudentDataContainerProps = {
 }
 
 export type studentInfo = {
-    studentId: string,
+    id: string,
     name: string,
-    class: string,
-    course: string,
+    kana: string
+    class_name: string,
+    course_name: string,
     address: string,
     subDay: number,
     memo: string,
@@ -20,58 +21,52 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
     const {children, ...rest} = props;
 
     const [studentsInfo, setStudentsInfo] = useState<Array<studentInfo>>([
-        {
-            studentId: "1",
-            name: "クレファス 太郎",
-            class: "1",
-            course: "1",
-            address: "07089441293",
-            subDay: 1,
-            memo: 'この子はチンパンジーです',
-            update: '2023/05/12',
-        },
-        {
-            studentId: "2",
-            name: "クレファス 太郎",
-            class: "1",
-            course: "1",
-            address: "07089441293",
-            subDay: 1,
-            memo: 'この子はチンパンジーです',
-            update: '2023/05/12',
-        },
-        {
-            studentId: "3",
-            name: "クレファス 太郎",
-            class: "1",
-            course: "1",
-            address: "07089441293",
-            subDay: 1,
-            memo: 'この子はチンパンジーです',
-            update: '2023/05/12',
-        },
-]);
+    ]);
 
-    const handleUpdateStudentInfo = (index:string, value: boolean):void => {
-        setStudentsInfo((prev)=> {
-            const updatedStudentsInfo = prev.map((student,idx)=>{
-                if (student.studentId === index) {
-                    return {
-                        ...student,
-                        present: value,
-                    }
-                }
-                return student
+    const GetStudentInfo = async () => {
+        try {
+            const URL = process.env.REACT_APP_UTIL_API + 'getStudents';
+            const response = await fetch(URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                // 必要な場合、他のヘッダーも追加できます
+              },
+              body: JSON.stringify({}),
             });
-            return updatedStudentsInfo; 
-        })
+      
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+      
+            // リクエストが成功した場合の処理
+            console.log(response);
+      
+            // JSONデータを取得
+            const jsonData = await response.json();
+            console.log(jsonData)
+            // 任意の追加処理をここで行う
 
-    } 
+            const newStudents: studentInfo[] = [];
+            jsonData.studentsData.map((student:studentInfo) => {
+                const studentData: studentInfo = {id: student.id, name: student.name, kana: student.kana, class_name: student.class_name, course_name: student.course_name, address: student.address, subDay: student.subDay, memo: student.memo, update: student.update}
+                newStudents.push(studentData)
+            })
+            setStudentsInfo(newStudents)
+          } catch (error) {
+            // エラーハンドリング
+            console.error('POSTリクエストエラー:', error);
+          }
+    }
+
+    useEffect(() => {
+        GetStudentInfo()
+    }, [])
 
     return (
         <StudentDatasList
            studentInfo={studentsInfo}
-           onClickUpdateStudentInfo={handleUpdateStudentInfo}
         />
     )
 }

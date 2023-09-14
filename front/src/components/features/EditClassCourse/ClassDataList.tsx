@@ -1,40 +1,34 @@
 import { FC, useState } from "react";
 import { Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, VStack,
 } from "@chakra-ui/react";
-import { studentInfo } from "./StudentDataContainer";
-import StudentData from "./StudentData";
-import { Link } from "react-router-dom";
+import { classInfo } from "./ClassDataContainer";
+import ClassData from "./ClassData";
 
-type StudentDatasListProps = {
+type ClassDatasListProps = {
     children?: React.ReactNode;
-    studentInfo: studentInfo[],
+    classInfo: classInfo[],
 }
 
-const StudentDatasList: FC<StudentDatasListProps> = (props) => {
+const ClassDatasList: FC<ClassDatasListProps> = (props) => {
     const { children, ...rest } = props;
 
     return (
-
         <Box width={"85%"} >
-            <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
+            <Heading size={"lg"} textAlign={"center"} marginBottom={2}>クラス管理</Heading>
             <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
 
             <Table variant="simple">
                         <Thead>
                             <Tr>
-                                <Th>名前</Th>
-                                <Th>クラス</Th>
-                                <Th>コース</Th>
-                                <Th>緊急連絡先</Th>
-                                <Th>メモ</Th>
+                                <Th>クラス名</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
-                        {rest.studentInfo.map((student, index)=> {
+                        {rest.classInfo.map((classData, index)=> {
                 return (
-                    <StudentData
+                    <ClassData
                         index={index}
-                        studentInfo={student}
+                        classInfo={classData}
                         key={index}
                     />
                 )
@@ -46,4 +40,4 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
     );
 }
 
-export default StudentDatasList;
+export default ClassDatasList;

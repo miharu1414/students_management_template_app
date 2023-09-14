@@ -15,6 +15,7 @@ import { Logo } from "./Logo"
 import Header from "./components/common/Header";
 
 import EditStudents from "./pages/EditStudents";
+import EditClassCourse from "./pages/EditClassCourse";
 import Home from "src/pages/Home"
 import Login from "src/pages/Login"
 import LoginFunction from "src/components/functions/LoginFunction";
@@ -64,6 +65,7 @@ export const App = () => (
 
 
               <Route path={`/edit/`}  element={<EditStudents/>}/>
+              <Route path={`/editClassCourse/`}  element={<EditClassCourse/>}/>              
               <Route path={`/control/`} >
                 <Route path={`:id`} element={<PresentControl/>}/>
               </Route>

@@ -1,14 +1,17 @@
 import { VStack, Box, HStack, } from "@chakra-ui/react";
 import { FC } from "react";
 import {  useParams, Link } from 'react-router-dom';
-import StudentDataContainer from "src/components/features/EditStudents/StudentDataContainer";
-import NewStudentModalContainer from "src/components/features/EditStudents/NewStudentModalContainer";
+import CourseDataContainer from "src/components/features/EditClassCourse/CourseDataContainer";
+import NewCourseModalContainer from "src/components/features/EditClassCourse/NewCourseModalContainer";
+import ClassDataContainer from "src/components/features/EditClassCourse/ClassDataContainer";
+import NewClassModalContainer from "src/components/features/EditClassCourse/NewClassModalContainer";
 
-type NameProps = {
+
+type EditClassCourseProps = {
     children? : Node;
 }
 
-const Name: FC<NameProps> = (props) => {
+const EditClassCourse: FC<EditClassCourseProps> = (props) => {
     const {children, ...rest} = props;
     const params = useParams();
     console.log(params);
@@ -26,7 +29,7 @@ const Name: FC<NameProps> = (props) => {
                     ホームヘ
                     </Link>
             </Box>
-            <StudentDataContainer/>
+            <CourseDataContainer/>
             <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
                 width={"120px"}
                 borderRadius={10}
@@ -34,11 +37,25 @@ const Name: FC<NameProps> = (props) => {
                 textAlign={"center"}
                 textColor={"white"}
                 marginTop={8}
+                marginBottom={8}
                 >
-                <NewStudentModalContainer/>
+                <NewCourseModalContainer/>
+            </Box>
+
+            <ClassDataContainer/>
+            <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
+                width={"120px"}
+                borderRadius={10}
+                backgroundColor={"blue.300"}
+                textAlign={"center"}
+                textColor={"white"}
+                marginTop={8}
+                marginBottom={8}
+                >
+                <NewClassModalContainer/>
             </Box>
         </>        
     )
 }
 
-export default Name;
+export default EditClassCourse;
