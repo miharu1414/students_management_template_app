@@ -16,6 +16,7 @@ import { Button, useDisclosure } from '@chakra-ui/react';
 type SubmitModalProps = {
     children? : React.ReactNode;
     title? : string,
+    onUpload: ()=>void;
 }
 
 const SubmitModal: FC<SubmitModalProps> = (props) => {
@@ -25,8 +26,7 @@ const SubmitModal: FC<SubmitModalProps> = (props) => {
 
     const doSubmit = () => {
         onClose(); // モーダルを閉じる
-        window.location.href = "/";
-    
+        rest.onUpload();
     }
 
     return (

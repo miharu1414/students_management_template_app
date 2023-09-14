@@ -19,7 +19,6 @@ const Logout: FC<LogoutProps> = (props) => {
         ctx.setUpdateId("")
         ctx.setUpdateName("")
         navigate("/login")
-        
     },[])
 
     

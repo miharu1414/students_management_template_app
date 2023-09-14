@@ -67,7 +67,7 @@ export const App = () => (
               <Route path={`/edit/`}  element={<EditStudents/>}/>
               <Route path={`/editClassCourse/`}  element={<EditClassCourse/>}/>              
               <Route path={`/control/`} >
-                <Route path={`:id`} element={<PresentControl/>}/>
+                <Route path={`:id/:name`} element={<PresentControl/>}/>
               </Route>
               <Route path={`/detail/`} >
                 <Route path={`:id`} element={<Detail/>}/>

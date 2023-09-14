@@ -1,11 +1,11 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, VStack, theme, Stack, Divider, Button } from "@chakra-ui/react"
 
 import {  useParams, Link } from 'react-router-dom';
 
 import PresentListItem from "./PresentListItem"
 import { presentInfo } from "./PresentListContainer";
-import SubmitModal from "src/components/common/SubmitModal";
+import SubmitModal from "src/components/features/SubmitStudents/SubmitModal";
 import DateSelector from "src/components/common/DataSelector";
 import Loading from "src/components/common/Loading";
 
@@ -14,17 +14,19 @@ type PresentListProps = {
     title: string,
     loading: boolean;
     selectedDate: Date;
-
+    error:boolean;
 
   
     studentsInfo: presentInfo[],
+    onClickUpdate: ()=> void;
     handleDateChange: (value:Date) => void;
-    onClickUpdateStudentInfo: (id: string, value: string) => void
-
+    onClickUpdateStudentType: (id: string, value: string) => void
+    onClickReload:()=>void;
 }
 
 const PresentList: FC<PresentListProps> = (props) => {
     const {children, ...rest} = props;
+
 
 
     return (
@@ -53,30 +55,39 @@ const PresentList: FC<PresentListProps> = (props) => {
             {rest.title}
         </Box>
         <Divider/>
-            <Loading loading={rest.loading}>
-                <VStack spacing={0} overflowY={"scroll"}>
-                    {rest.studentsInfo.map((studentInfo, index)=> {
-                        return (
-                            <PresentListItem 
-                            index={index}
-                            studentInfo={studentInfo}
-                            onClickUpdateStudentInfo={rest.onClickUpdateStudentInfo}    
-                            key={index}
-                        />
-                        )
+            {rest.error ? 
+                <Button onClick={rest.onClickReload}>リロード</Button>
+                :
+                <Loading loading={rest.loading}>
+                    <VStack spacing={0} overflowY={"scroll"}>
+                        {typeof(rest.studentsInfo?.length) !== "undefined" && rest.studentsInfo?.map((studentInfo, index)=> {
+                            return (
+                                <PresentListItem 
+                                index={index}
+                                studentInfo={studentInfo}
+                                onClickUpdateStudentInfo={rest.onClickUpdateStudentType}    
+                                key={index}
+                            />
+                            )
 
-                    })}
+                        })}
 
 
-                </VStack>
+                    </VStack>
+                </Loading>
+            }
+            
 
-            </Loading>
+            
 
             
    
 
             <Box marginBottom={5}>
-                <SubmitModal title="出席を更新"/>
+                <SubmitModal 
+                    title="出席を更新"
+                    onUpload={rest.onClickUpdate}
+                />
             </Box>
  
         
