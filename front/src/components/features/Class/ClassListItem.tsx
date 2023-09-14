@@ -12,7 +12,7 @@ type ClassListItemProps = {
 const ClassListItem: FC<ClassListItemProps> = (props) => {
   const {children,...rest} = props;
   const link = () => {
-    return "/control/" + rest.class.id
+    return "/control/" + rest.class.classId+"/"+rest.class.className
   }
 
   return (
@@ -26,7 +26,7 @@ const ClassListItem: FC<ClassListItemProps> = (props) => {
             
 
             <Heading as={"h3"} size={"lg"}>
-                {rest.class.name}
+                {rest.class.className}
             </Heading>
 
 
@@ -34,7 +34,7 @@ const ClassListItem: FC<ClassListItemProps> = (props) => {
 
         </CardBody>
         <CardFooter padding={2}>
-            <Text fontSize={"sm"}>最終更新日: {rest.class.lastPosted}</Text>
+            <Text fontSize={"sm"}>最終更新日: {rest.class.lastUpdate}</Text>
         </CardFooter>
         </Card>
     </Link>

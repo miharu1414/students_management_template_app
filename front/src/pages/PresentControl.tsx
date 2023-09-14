@@ -1,9 +1,9 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, VStack, theme, Stack, Divider, Button } from "@chakra-ui/react"
 import {  useParams, Link } from 'react-router-dom';
 import DateSelector from "src/components/common/DataSelector";
 import PresentListContainer from "src/components/features/SubmitStudents/PresentListContainer";
-import SubmitModal from "src/components/common/SubmitModal";
+import SubmitModal from "src/components/features/SubmitStudents/SubmitModal";
 type PresentControlProps = {
     children? : Node;
 
@@ -11,43 +11,58 @@ type PresentControlProps = {
 
 const PresentControl: FC<PresentControlProps> = (props) => {
     const {children, ...rest} = props;
-    const params = useParams();
-    console.log(params);
-    const [title,setTitle] = useState("土曜日 13時クラス")
+    const params = useParams<{id:string,name:string}>();
+    const [classId,setClassId] = useState<string | undefined>(params.id)
+    const [className,setClassName] = useState<string|undefined>(params.name);
+
+    const DownloadClassName = async () => {
+       
+        const formData = {class_id: classId};
+        console.log(formData);
+        try {
+          const URL = process.env.REACT_APP_UTIL_API + '/getClass';
+          const response = await fetch(URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              // 必要な場合、他のヘッダーも追加できます
+            },
+            body: JSON.stringify(formData),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          // リクエストが成功した場合の処理
+          console.log(response);
+    
+          // JSONデータを取得
+          const jsonData = await response.json();
+          console.log('受け取ったJSONデータ:', jsonData);
+          setClassName(jsonData.class_name)
+          
+    
+          // 任意の追加処理をここで行う
+        } catch (error) {
+          // エラーハンドリング
+          console.error('POSTリクエストエラー:', error);
+        }
+    };
+
+    useEffect(()=>{
+        DownloadClassName()
+    },[classId])
+
+    
+
     
     return (
-        <VStack>  
-            <Box display="flex" justifyContent="space-between" width="100%">
-                <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
-                    width={"120px"}
-                    borderRadius={10}
-                    backgroundColor={"blue.300"}
-                    textAlign={"center"}
-                    textColor={"white"}
-                    >
-                    <Link to={"/"}>登校管理
-                    </Link>
-                </Box>
-                <Box>
-                    <DateSelector/>
-                </Box>
-            </Box>
-            <Box marginTop={3}
-                fontSize={"2xl"}
-            >
-                {title}
-            </Box>
-            <Divider/>
 
-            <PresentListContainer/>
-            <Box marginBottom={5}>
-                <SubmitModal title="出席を更新"/>
-            </Box>
- 
-        
 
-        
-        </VStack>
+            <PresentListContainer classId={classId} className={className as string}/>
+
     )
 }
 
