@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, Button, Flex, useDisclosure, Modal, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, HStack, Text,
     ModalOverlay, 
     ModalContent,
@@ -16,7 +16,6 @@ type StudentDataProps = {
     children?: React.ReactNode;
     index: number;
     studentInfo: studentInfo,
-    onClickUpdateStudentInfo: (id: string, value: boolean) => void
 }
 
 const StudentData: FC<StudentDataProps> = (props) => {
@@ -24,7 +23,9 @@ const StudentData: FC<StudentDataProps> = (props) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-
+    useEffect(()=>{
+        console.log(rest.studentInfo)
+    },[])
     function truncateText(text: string, maxLength: number) {
         if (text.length <= maxLength) {
             return text;
@@ -37,11 +38,11 @@ const StudentData: FC<StudentDataProps> = (props) => {
       <>
         <Tr>
             <Td>{rest.studentInfo.name}</Td>
-            <Td>{rest.studentInfo.class}</Td>
-            <Td>{rest.studentInfo.course}</Td>
+            <Td>{rest.studentInfo.class_name}</Td>
+            <Td>{rest.studentInfo.course_name}</Td>
             <Td>{rest.studentInfo.address}</Td>
             <Td>{rest.studentInfo.memo}</Td>
-            <EditModalContainer studentId={rest.studentInfo.studentId}></EditModalContainer>
+            <EditModalContainer studentId={rest.studentInfo.id}></EditModalContainer>
         </Tr>
       </>
     );
