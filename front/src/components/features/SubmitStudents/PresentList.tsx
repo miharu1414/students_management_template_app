@@ -15,6 +15,7 @@ type PresentListProps = {
     loading: boolean;
     selectedDate: Date;
     error:boolean;
+    isDisable:boolean;
 
   
     studentsInfo: presentInfo[],
@@ -86,6 +87,7 @@ const PresentList: FC<PresentListProps> = (props) => {
 
             <Box marginY={5}>
                 <SubmitModal 
+                    isDisable={rest.isDisable}
                     title="出席を更新"
                     onUpload={rest.onClickUpdate}
                 />

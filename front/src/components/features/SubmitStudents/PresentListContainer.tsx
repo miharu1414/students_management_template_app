@@ -25,6 +25,7 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
     const [loading,setLoading] = useState<boolean>(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [error, setError] = useState<boolean>(false);
+    const [isDisable,setIsDisable] = useState<boolean>(false);
 
     const handleDateChange = (date: Date) => {
         setSelectedDate(date);
@@ -170,6 +171,14 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
         GetStudents();
       }
 
+      const validate = (): void => {
+        // studentsInfoの各要素に対して、attendIdが空文字かどうかを判定
+        const isValid = studentsInfo?.every((student) => student.attendId !== ''); // 条件を逆にする
+      
+        console.log(isValid);
+        setIsDisable(!isValid); // 条件を逆にして setIsDisable を設定
+      };
+      
 
 
 
@@ -177,6 +186,13 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
         setTimeout(GetStudents,300)
       },[selectedDate])
 
+      useEffect(()=>{
+        validate()
+      },[studentsInfo])
+    
+      useEffect(()=>{
+        validate()
+      },[])
 
 
 
@@ -189,6 +205,7 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
                 selectedDate={selectedDate}
                 studentsInfo={studentsInfo}
                 error={error}
+                isDisable={isDisable}
                 handleDateChange={handleDateChange}
                 onClickUpdateStudentType={handleUpdateStudentType}
                 onClickUpdate={UploadStudents}

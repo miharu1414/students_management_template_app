@@ -4,11 +4,11 @@ import {  useParams, Link } from 'react-router-dom';
 import StudentDataContainer from "src/components/features/EditStudents/StudentDataContainer";
 import NewStudentModalContainer from "src/components/features/EditStudents/NewStudentModalContainer";
 
-type NameProps = {
+type EditStudentsProps = {
     children? : Node;
 }
 
-const Name: FC<NameProps> = (props) => {
+const EditStudents: FC<EditStudentsProps> = (props) => {
     const {children, ...rest} = props;
     const params = useParams();
     console.log(params);
@@ -31,4 +31,4 @@ const Name: FC<NameProps> = (props) => {
     )
 }
 
-export default Name;
+export default EditStudents;
