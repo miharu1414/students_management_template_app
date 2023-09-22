@@ -129,6 +129,43 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
         }
       };
 
+      const DeleteAttendInfos = async () => {
+        setLoading(true)
+        const formData = {class_id: rest.classId, date: formatDateToYYYYMMDD(selectedDate)};
+        console.log(formData);
+        try {
+          const URL = process.env.REACT_APP_UTIL_API + '/deleteAttendDatas';
+          const response = await fetch(URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              // 必要な場合、他のヘッダーも追加できます
+            },
+            body: JSON.stringify(formData),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          // リクエストが成功した場合の処理
+          console.log(response);
+    
+          // JSONデータを取得
+          const jsonData = await response.json();
+          console.log('受け取ったJSONデータ:', jsonData);
+          
+          setTimeout(()=>GetStudents(),500);
+          setLoading(false)
+    
+          // 任意の追加処理をここで行う
+        } catch (error) {
+          // エラーハンドリング
+          console.error('POSTリクエストエラー:', error);
+        }
+      };
+
       const handleClickReload = ():void =>{
         GetStudents();
       }
@@ -156,6 +193,7 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
                 onClickUpdateStudentType={handleUpdateStudentType}
                 onClickUpdate={UploadStudents}
                 onClickReload={handleClickReload}
+                onClickDelete={DeleteAttendInfos}
             />
 
     )

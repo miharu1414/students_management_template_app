@@ -3,11 +3,11 @@ import { VStack, Heading } from "@chakra-ui/react";
 import ClassList from "src/components/features/Class/ClassList";
 import ClassListContainer from "src/components/features/Class/ClassListContainer";
 
-type NameProps = {
+type HomeProps = {
     children? : Node;
 }
 
-const Name: FC<NameProps> = (props) => {
+const Home: FC<HomeProps> = (props) => {
     const {children, ...rest} = props;
     return (
     <>
@@ -21,4 +21,4 @@ const Name: FC<NameProps> = (props) => {
     )
 }
 
-export default Name;
+export default Home;
