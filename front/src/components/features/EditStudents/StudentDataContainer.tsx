@@ -24,7 +24,7 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
 
     const [studentsInfo, setStudentsInfo] = useState<Array<studentInfo>>([]);
     const [loading, setLoading] = useState<boolean>(false)
-
+    const [error,setError] = useState<boolean>(false);
     const GetStudentInfo = async () => {
         try {
             setLoading(true)
@@ -58,9 +58,11 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
             })
             setStudentsInfo(newStudents)
             setLoading(false)
+            setError(false)
           } catch (error) {
             // エラーハンドリング
             setLoading(false)
+            setError(true)
             console.error('POSTリクエストエラー:', error);
           }
     }
@@ -75,6 +77,7 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
            studentInfo={studentsInfo}
            GetStudentInfo={GetStudentInfo}
            loading={loading}
+           error={error}
         />
         <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
                 width={"120px"}

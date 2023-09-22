@@ -38,10 +38,10 @@ const StudentData: FC<StudentDataProps> = (props) => {
     return (
       <>
         <Tr>
-            <Td>{rest.studentInfo.name}</Td>
-            <Td>{rest.studentInfo.class_name}</Td>
-            <Td>{rest.studentInfo.course_name}</Td>
-            <Td>{rest.studentInfo.address}</Td>
+            <Td flexShrink={"0"}>{rest.studentInfo.name}</Td>
+            <Td flexShrink={"0"}>{rest.studentInfo.class_name}</Td>
+            <Td flexShrink={"0"}>{rest.studentInfo.subDay}</Td>
+            <Td flexShrink={"0"}>{rest.studentInfo.address}</Td>
             <Td>{rest.studentInfo.memo}</Td>
             <EditModalContainer 
               studentId={rest.studentInfo.id}

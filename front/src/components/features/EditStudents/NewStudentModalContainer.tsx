@@ -195,6 +195,17 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
             // JSONデータを取得
             // 任意の追加処理をここで行う
             console.log('unnko')
+            setStudentInfo({
+              id: "",
+              name: "",
+              kana: "",
+              class_name: "",
+              course_name: "",
+              address: "",
+              subDay: 0,
+              memo: '',
+              update: '',
+          },)
 
           } catch (error) {
             // エラーハンドリング

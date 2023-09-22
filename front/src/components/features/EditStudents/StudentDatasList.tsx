@@ -13,6 +13,9 @@ type StudentDatasListProps = {
     studentInfo: studentInfo[],
     GetStudentInfo: () => void,
     loading: boolean,
+    error: boolean;
+
+
 }
 
 const StudentDatasList: FC<StudentDatasListProps> = (props) => {
@@ -25,11 +28,11 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
     return (
         <>
             {isSp ? 
-                <VStack>
+                <VStack display={"flex"} alignItems={"center"}>
                     <Box>
                     <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
                     <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
-
+                    <Loading loading={rest.loading}>
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>
@@ -37,7 +40,7 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    <Loading loading={rest.loading}>
+                                {rest.error && <Button onClick={()=>rest.GetStudentInfo()}>リロード</Button>}
                                         {rest.studentInfo.map((student, index)=> {
                                             return (
                                                 <StudentDataMobile
@@ -48,9 +51,10 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                                 />
                                             )
                                         })}
-                                    </Loading>
+                                
                                 </Tbody>
                     </Table>
+                    </Loading>
                     </Box>
                 </VStack>
                 :
@@ -58,19 +62,19 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                     <Box width={"100%"} >
                     <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
                     <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
-
+                    <Loading loading={rest.loading}>
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>
-                                        <Th>名前</Th>
-                                        <Th>クラス</Th>
-                                        <Th>コース</Th>
-                                        <Th>緊急連絡先</Th>
-                                        <Th>メモ</Th>
+                                        <Th flexShrink={"0"}>名前</Th>
+                                        <Th flexShrink={"0"}>クラス</Th>
+                                        <Th flexShrink={"0"}>振替日数</Th>
+                                        <Th flexShrink={"0"}>緊急連絡先</Th>
+                                        <Th >メモ</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                <Loading loading={rest.loading}>
+                                {rest.error && <Button onClick={()=>rest.GetStudentInfo()}>リロード</Button>}
                                     {rest.studentInfo.map((student, index)=> {
                                         return (
                                             <StudentData
@@ -81,9 +85,10 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                             />
                                         )
                                     })}
-                                </Loading>
+
                                 </Tbody>
                     </Table>
+                    </Loading>
                     </Box>
                 </VStack>
             }

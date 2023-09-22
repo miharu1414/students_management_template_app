@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Box, VStack, theme, Stack, Divider, Button, Select, Heading } from "@chakra-ui/react"
-
+import { AsyncSelect, chakraComponents } from "chakra-react-select";
 import {   Link } from 'react-router-dom';
 
 
@@ -61,15 +61,15 @@ const ExtraAttend: FC<ExtraAttendProps> = (props) => {
             </Box>
         </Box>
             <Box  boxShadow={"sm"}>
-                <Select placeholder='クラスを選んでください' onChange={(e)=>rest.onUpdateClass(e.target.value)}>
+                {rest.classList && <Select placeholder='クラスを選んでください' onChange={(e)=>rest.onUpdateClass(e.target.value)}>
                     {rest.classList.map((classInstance,index)=> {
                         return (
-                            <option value={classInstance.classId} label={classInstance.className} key={index}/>
+                            <option value={classInstance.classId} key={index}>{classInstance.className}</option>
 
                         )
 
                     })}
-                </Select>
+                </Select>}
             </Box>
         <Divider/>
             <SearchStudentBox data={rest.studentsInfo} onClickAddStudent={rest.onClickAddStudent} searchStr={rest.searchStr} onChangeSearchStr={rest.onChangeSearchStr}/>
