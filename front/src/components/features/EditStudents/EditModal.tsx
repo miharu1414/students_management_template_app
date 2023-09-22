@@ -19,6 +19,7 @@ type EditModalProps = {
     classes: classInfo[],
     courses: courseInfo[],
     loading: boolean,
+    error: boolean,
     onClickUpdateStudentInfo: () => void,
     onClickDeleteStudentInfo: () => void,
     updateClass: (newClass:string) => void,
@@ -42,8 +43,8 @@ const EditModal: FC<EditModalProps> = (props) => {
                 onClick={() => {
                   onOpen()
                   rest.onGetStudent()
-                  setTimeout(rest.onGetClasses, 150)
-                  setTimeout(rest.onGetCourses, 300)
+                  setTimeout(rest.onGetClasses, 300)
+                  setTimeout(rest.onGetCourses, 500)
                 }}
                 padding={3} 
                 border={2} 
@@ -72,7 +73,14 @@ const EditModal: FC<EditModalProps> = (props) => {
           </ModalHeader>
           <ModalBody>
             <VStack>
-            <Loading loading={rest.loading}>
+            {rest.error ? 
+              <Button onClick={() => {
+                rest.onGetClasses()
+                setTimeout(rest.onGetCourses, 500)
+                setTimeout(rest.onGetStudent, 1000)
+              }}>リロード</Button>
+              :
+              <Loading loading={rest.loading}>
                 <HStack>
                     <Text>クラス：</Text>
                     <Box>
@@ -106,6 +114,7 @@ const EditModal: FC<EditModalProps> = (props) => {
                     <Box><Textarea value={rest.studentInfo.memo} onChange={(e)=>rest.updateMemo(e.target.value)}></Textarea></Box>
                 </HStack>
                 </Loading>
+            }
                 <Button colorScheme='blue' mr={3} onClick={() => {
                   rest.onClickUpdateStudentInfo()
                   setTimeout(rest.GetStudentInfo, 1000)

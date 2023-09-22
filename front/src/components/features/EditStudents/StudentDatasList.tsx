@@ -25,21 +25,55 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
     return (
         <>
             {isSp ? 
-                <Box>
-                <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
-                <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
+                <VStack>
+                    <Box>
+                    <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
+                    <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
 
-                <Table variant="simple">
-                            <Thead>
-                                <Tr>
-                                    <Th>名前</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
+                    <Table variant="simple">
+                                <Thead>
+                                    <Tr>
+                                        <Th>名前</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    <Loading loading={rest.loading}>
+                                        {rest.studentInfo.map((student, index)=> {
+                                            return (
+                                                <StudentDataMobile
+                                                    index={index}
+                                                    studentInfo={student}
+                                                    key={index}
+                                                    GetStudentInfo={rest.GetStudentInfo}
+                                                />
+                                            )
+                                        })}
+                                    </Loading>
+                                </Tbody>
+                    </Table>
+                    </Box>
+                </VStack>
+                :
+                <VStack>
+                    <Box width={"100%"} >
+                    <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
+                    <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
+
+                    <Table variant="simple">
+                                <Thead>
+                                    <Tr>
+                                        <Th>名前</Th>
+                                        <Th>クラス</Th>
+                                        <Th>コース</Th>
+                                        <Th>緊急連絡先</Th>
+                                        <Th>メモ</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
                                 <Loading loading={rest.loading}>
                                     {rest.studentInfo.map((student, index)=> {
                                         return (
-                                            <StudentDataMobile
+                                            <StudentData
                                                 index={index}
                                                 studentInfo={student}
                                                 key={index}
@@ -48,40 +82,10 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                         )
                                     })}
                                 </Loading>
-                            </Tbody>
-                </Table>
-                </Box>
-                :
-                <Box width={"85%"} >
-                <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
-                <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
-
-                <Table variant="simple">
-                            <Thead>
-                                <Tr>
-                                    <Th>名前</Th>
-                                    <Th>クラス</Th>
-                                    <Th>コース</Th>
-                                    <Th>緊急連絡先</Th>
-                                    <Th>メモ</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                            <Loading loading={rest.loading}>
-                                {rest.studentInfo.map((student, index)=> {
-                                    return (
-                                        <StudentData
-                                            index={index}
-                                            studentInfo={student}
-                                            key={index}
-                                            GetStudentInfo={rest.GetStudentInfo}
-                                        />
-                                    )
-                                })}
-                            </Loading>
-                            </Tbody>
-                </Table>
-                </Box>
+                                </Tbody>
+                    </Table>
+                    </Box>
+                </VStack>
             }
         </>        
     );

@@ -66,7 +66,7 @@ const ClassListContainer: FC<ClassListContainerProps> = (props) => {
     DownloadClasses();
   },[])
 
-  return <ClassList classList={classList}  />;
+  return <ClassList classList={classList} isLoading={loading}/>;
 };
 
 export default ClassListContainer;

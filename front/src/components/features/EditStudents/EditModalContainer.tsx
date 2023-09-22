@@ -50,6 +50,7 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
     );
 
     const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false)
     const [classes, setClasses] = useState<Array<classInfo>>([])
     const [courses, setCourses] = useState<Array<courseInfo>>([])
     
@@ -80,15 +81,17 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             // 任意の追加処理をここで行う
             setStudentInfo({studentId: rest.studentId, name: jsonData.name, kana: jsonData.kana, class_name: jsonData.class_name, class_id: jsonData.class_id, course_name: jsonData.course_name, course_id: jsonData.course_id, address: jsonData.address, subDay: jsonData.substitute_day, memo: jsonData.memo, update: jsonData.last_update})
             setLoading(false)
+            setError(false)
           } catch (error) {
             // エラーハンドリング
-            setLoading(false)
+            setError(true)
             console.error('POSTリクエストエラー:', error);
           }
     }
 
     const GetClasses = async () => {
         try {
+            setLoading(true)
             const URL = process.env.REACT_APP_UTIL_API + 'getClasses';
             const response = await fetch(URL, {
               method: 'POST',
@@ -117,14 +120,18 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
                 newClasses.push(classData)
             })
             setClasses(newClasses)
+            setLoading(false)
+            setError(false)
           } catch (error) {
             // エラーハンドリング
+            setError(true)
             console.error('POSTリクエストエラー:', error);
           }
     }
 
     const GetCourses = async () => {
         try {
+            setLoading(true)
             const URL = process.env.REACT_APP_UTIL_API + 'getCourses';
             const response = await fetch(URL, {
               method: 'POST',
@@ -153,8 +160,11 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             })
             console.log(newCourses)
             setCourses(newCourses)
+            setLoading(false)
+            setError(false)
           } catch (error) {
             // エラーハンドリング
+            setError(true)
             console.error('POSTリクエストエラー:', error);
           }
     }
@@ -270,6 +280,7 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
            classes={classes}
            courses={courses}
            loading={loading}
+           error={error}
            onClickUpdateStudentInfo={handleUpdateStudentInfo}
            onClickDeleteStudentInfo={handleDeleteStudentInfo}
            updateClass={updateClass}
