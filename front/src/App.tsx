@@ -28,6 +28,7 @@ import PresentControl from "./pages/PresentControl";
 
 
 import {userContext ,useUserInfo} from 'src/hooks/UserInfo'
+import ExtraAttendPage from "src/pages/ExtraAttendPage";
 
 
 
@@ -72,6 +73,8 @@ export const App = () => (
               <Route path={`/detail/`} >
                 <Route path={`:id`} element={<Detail/>}/>
               </Route>
+
+              <Route path={`/extraAttend/`}  element={<ExtraAttendPage/>}/>
             </Routes>
           </BrowserRouter>
 

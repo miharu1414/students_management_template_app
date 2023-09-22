@@ -16,6 +16,7 @@ import { Button, useDisclosure } from '@chakra-ui/react';
 type SubmitModalProps = {
     children? : React.ReactNode;
     title? : string,
+    color? : string,
     onUpload: ()=>void;
 }
 
@@ -31,7 +32,7 @@ const SubmitModal: FC<SubmitModalProps> = (props) => {
 
     return (
         <>
-            <Button onClick={onOpen}  colorScheme='teal' >{rest.title ?? "更新"}</Button>
+            <Button onClick={onOpen}  colorScheme={rest.color ? rest.color : 'teal'} >{rest.title ?? "更新"}</Button>
 
             <Modal isOpen={isOpen} onClose={onClose} >
                 <ModalOverlay />
