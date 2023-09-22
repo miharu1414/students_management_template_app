@@ -57,18 +57,22 @@ const EditModal: FC<EditModalProps> = (props) => {
         <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <Loading loading={rest.loading}>
           <ModalHeader>
             <HStack>
             <Text>{rest.studentInfo.name}の編集</Text>
             <Spacer></Spacer>
-            <Button colorScheme='red' mr={3} onClick={() => rest.onClickDeleteStudentInfo()}>
+            <Button colorScheme='red' mr={3} onClick={() => {
+              rest.onClickDeleteStudentInfo()
+              onClose()
+              setTimeout(rest.GetStudentInfo, 1000)
+            }}>
               削除
             </Button>
             </HStack>
           </ModalHeader>
           <ModalBody>
             <VStack>
+            <Loading loading={rest.loading}>
                 <HStack>
                     <Text>クラス：</Text>
                     <Box>
@@ -101,6 +105,7 @@ const EditModal: FC<EditModalProps> = (props) => {
                     <Text>メモ：</Text>
                     <Box><Textarea value={rest.studentInfo.memo} onChange={(e)=>rest.updateMemo(e.target.value)}></Textarea></Box>
                 </HStack>
+                </Loading>
                 <Button colorScheme='blue' mr={3} onClick={() => {
                   rest.onClickUpdateStudentInfo()
                   setTimeout(rest.GetStudentInfo, 1000)
@@ -110,7 +115,6 @@ const EditModal: FC<EditModalProps> = (props) => {
                 </Button>
             </VStack>
           </ModalBody>
-          </Loading>
           
 
           <ModalFooter>

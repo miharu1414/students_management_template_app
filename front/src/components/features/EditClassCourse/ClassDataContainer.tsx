@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import ClassDatasList from "./ClassDataList";
 import NewClassModalContainer from "./NewClassModalContainer";
 
@@ -67,7 +67,8 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
 
     return (
       <>
-      <ClassDatasList
+      <VStack>
+        <ClassDatasList
            classInfo={classesInfo}
            GetClassesInfo={GetClassesInfo}
            loading={loading}
@@ -86,6 +87,7 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
                   GetClassesInfo={GetClassesInfo}
                 />
         </Box>
+        </VStack>
       </>
     )
 }
