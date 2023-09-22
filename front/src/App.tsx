@@ -47,7 +47,7 @@ export const App = () => (
         <VStack spacing={0}>
           
 
-          <BrowserRouter>
+          <BrowserRouter basename="/build">
             <LoginCheck/>
             <Header/>
             <Routes>
