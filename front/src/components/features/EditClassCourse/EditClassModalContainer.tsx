@@ -3,6 +3,7 @@ import EditClassModal from "./EditClassModal";
 
 type EditClassModalContainerProps = {
     classId: string,
+    GetClassesInfo: ()=> void,
 }
 
 export type classInfo = {
@@ -103,6 +104,7 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
            onClickUpdateClassInfo={handleUpdateClassInfo}
            updateClass={updateClass}
            getClassInfo={GetClassInfo}
+           GetClassesInfo={rest.GetClassesInfo}
         />
     )
 }

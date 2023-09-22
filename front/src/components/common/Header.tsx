@@ -4,10 +4,8 @@ import { Box, theme, IconButton ,
     MenuButton,
     MenuList,
     MenuItem,
-    MenuItemOption,
-    MenuGroup,
-    MenuOptionGroup,
-    MenuDivider,} from "@chakra-ui/react"
+    Tooltip,
+} from "@chakra-ui/react"
 import { EditIcon, HamburgerIcon, AtSignIcon, AddIcon,ExternalLinkIcon, RepeatClockIcon,RepeatIcon } from "@chakra-ui/icons";
 import { ColorModeSwitcher } from "src/ColorModeSwitcher"
 import { Link, useNavigate } from "react-router-dom";
@@ -23,17 +21,37 @@ const Header: FC<HeaderProps> = (props) => {
  
     return (
         <Box width="100%" display="flex" justifyContent="flex-end" height={"50px"}> {/* justifyContentを追加 */}
-
-            <IconButton
-                onClick={() => navigate('/edit/')}
-                size="md"
-                fontSize="lg"
-                variant="ghost"
-                color="current"
-                marginLeft="2"
-                icon={<EditIcon />}
-                aria-label={`editing`}
-            />
+            
+            <Tooltip
+              placement={"top"}
+              label='クラス・コースの編集'
+            >
+                <IconButton
+                    onClick={() => navigate('/editClassCourse/')}
+                    size="md"
+                    fontSize="lg"
+                    variant="ghost"
+                    color="current"
+                    marginLeft="2"
+                    icon={<EditIcon />}
+                    aria-label={`editing`}
+                />
+            </Tooltip>
+            <Tooltip
+              placement={"top"}
+              label='学生情報の編集'
+            >
+                <IconButton
+                    onClick={() => navigate('/edit/')}
+                    size="md"
+                    fontSize="lg"
+                    variant="ghost"
+                    color="current"
+                    marginLeft="2"
+                    icon={<EditIcon />}
+                    aria-label={`editing`}
+                />
+            </Tooltip>
             <Menu>
                 <MenuButton
                     as={IconButton}

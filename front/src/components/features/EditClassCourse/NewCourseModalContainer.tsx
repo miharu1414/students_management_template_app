@@ -7,7 +7,12 @@ export type courseInfo = {
     courseName: string,
 }
 
-const NewCourseModalContainer: FC = () => {
+type NewCourseModalContainerProps = {
+  GetCoursesInfo: () => void,
+}
+
+const NewCourseModalContainer: FC<NewCourseModalContainerProps> = (props) => {
+    const { ...rest } = props;
 
     const [courseInfo, setCourseInfo] = useState<courseInfo>(
         {
@@ -70,6 +75,7 @@ const NewCourseModalContainer: FC = () => {
            courses={courses}
            onClickInsertCourseInfo={handleInsertCourseInfo}
            updateCourse={updateCourse}
+           GetCoursesInfo={rest.GetCoursesInfo}
         />
     )
 }

@@ -7,7 +7,12 @@ export type classInfo = {
     className: string,
 }
 
-const NewClassModalContainer: FC = () => {
+type NewClassModalContainerProps = {
+  GetClassesInfo: () => void,
+}
+
+const NewClassModalContainer: FC<NewClassModalContainerProps> = (props) => {
+    const { ...rest } = props;
 
     const [classInfo, setClassInfo] = useState<classInfo>(
         {
@@ -70,6 +75,7 @@ const NewClassModalContainer: FC = () => {
            classs={classs}
            onClickInsertClassInfo={handleInsertClassInfo}
            updateClass={updateClass}
+           GetClassesInfo={rest.GetClassesInfo}
         />
     )
 }

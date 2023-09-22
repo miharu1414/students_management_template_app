@@ -3,6 +3,7 @@ import EditCourseModal from "./EditCourseModal";
 
 type EditCourseModalContainerProps = {
     courseId: string,
+    GetCoursesInfo: () => void,
 }
 
 export type courseInfo = {
@@ -107,6 +108,7 @@ const EditCourseModalContainer: FC<EditCourseModalContainerProps> =  (props) => 
            onClickUpdateCourseInfo={handleUpdateCourseInfo}
            updateCourse={updateCourse}
            getCourseInfo={GetCourseInfo}
+           GetCoursesInfo={rest.GetCoursesInfo}
         />
     )
 }

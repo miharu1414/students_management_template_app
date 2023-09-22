@@ -11,12 +11,14 @@ import { Box, Button, Flex, useDisclosure, Modal, HStack, Text, Textarea,
     Spacer,
 } from "@chakra-ui/react";
 import { studentInfo, classInfo, courseInfo } from "./EditModalContainer";
+import Loading from "src/components/common/Loading";
 import { Link } from "react-router-dom";
 
 type EditModalProps = {
     studentInfo: studentInfo,
     classes: classInfo[],
     courses: courseInfo[],
+    loading: boolean,
     onClickUpdateStudentInfo: () => void,
     onClickDeleteStudentInfo: () => void,
     updateClass: (newClass:string) => void,
@@ -26,6 +28,7 @@ type EditModalProps = {
     onGetStudent: () => void,
     onGetClasses: () => void,
     onGetCourses: () => void,
+    GetStudentInfo: () => void,
 }
 
 const EditModal: FC<EditModalProps> = (props) => {
@@ -54,6 +57,7 @@ const EditModal: FC<EditModalProps> = (props) => {
         <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
+          <Loading loading={rest.loading}>
           <ModalHeader>
             <HStack>
             <Text>{rest.studentInfo.name}の編集</Text>
@@ -68,7 +72,7 @@ const EditModal: FC<EditModalProps> = (props) => {
                 <HStack>
                     <Text>クラス：</Text>
                     <Box>
-                      <Select placeholder='クラスを選んでください' onChange={(e)=>rest.updateClass(e.target.value)}>
+                      <Select placeholder={rest.studentInfo.class_name} onChange={(e)=>rest.updateClass(e.target.value)}>
                         {rest.classes.map((classData) => {
                           return (
                             <option value={classData.classId} label={classData.className}/>
@@ -80,7 +84,7 @@ const EditModal: FC<EditModalProps> = (props) => {
                 <HStack>
                     <Text>コース：</Text>
                     <Box>
-                      <Select placeholder='コースを選んでください' onChange={(e)=>rest.updateCourse(e.target.value)}>
+                      <Select placeholder={rest.studentInfo.course_name} onChange={(e)=>rest.updateCourse(e.target.value)}>
                         {rest.courses.map((courseData) => {
                           return (
                             <option value={courseData.courseId} label={courseData.courseName}/>
@@ -97,11 +101,17 @@ const EditModal: FC<EditModalProps> = (props) => {
                     <Text>メモ：</Text>
                     <Box><Textarea value={rest.studentInfo.memo} onChange={(e)=>rest.updateMemo(e.target.value)}></Textarea></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={() => rest.onClickUpdateStudentInfo()}>
+                <Button colorScheme='blue' mr={3} onClick={() => {
+                  rest.onClickUpdateStudentInfo()
+                  setTimeout(rest.GetStudentInfo, 1000)
+                  onClose()
+                }}>
                     更新
                 </Button>
             </VStack>
           </ModalBody>
+          </Loading>
+          
 
           <ModalFooter>
             <Button colorScheme='blue' mr={3} onClick={onClose}>
