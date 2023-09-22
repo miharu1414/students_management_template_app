@@ -1,31 +1,41 @@
 import { FC, useEffect, useState } from "react";
-import { Box, VStack, theme, Stack, Divider, Button } from "@chakra-ui/react"
+import { Box, VStack, theme, Stack, Divider, Button, Select, Heading } from "@chakra-ui/react"
 
-import {  useParams, Link } from 'react-router-dom';
+import {   Link } from 'react-router-dom';
 
-import PresentListItem from "./PresentListItem"
-import { presentInfo } from "./PresentListContainer";
+
+import { presentInfo } from "./ExtraAttendContainer";
+import { classInfo } from "src/components/features/ExtraSubmit/ExtraAttendContainer";
 import SubmitModal from "src/components/features/SubmitStudents/SubmitModal";
 import DateSelector from "src/components/common/DataSelector";
 import Loading from "src/components/common/Loading";
+import { SearchStudentBox } from "src/components/features/ExtraSubmit/SearchStudentBox";
+import ExtraAttendItem from "./ExtraAttendItem";
 
-type PresentListProps = {
+type ExtraAttendProps = {
     children? : Node,
-    title: string,
+
     loading: boolean;
     selectedDate: Date;
     error:boolean;
+    classList: classInfo[]
+    searchStr: string;
+    onChangeSearchStr:(value:string) => void;
 
   
     studentsInfo: presentInfo[],
+    willAddStudentsInfo: presentInfo[],
     onClickUpdate: ()=> void;
     handleDateChange: (value:Date) => void;
-    onClickUpdateStudentType: (id: string, value: string) => void
+
     onClickReload:()=>void;
     onClickDelete:()=>void;
+    onUpdateClass: (value:string)=>void;
+    onClickDeleteStudent: (value:string)=>void;
+    onClickAddStudent: (value:string)=>void;
 }
 
-const PresentList: FC<PresentListProps> = (props) => {
+const ExtraAttend: FC<ExtraAttendProps> = (props) => {
     const {children, ...rest} = props;
 
 
@@ -50,25 +60,28 @@ const PresentList: FC<PresentListProps> = (props) => {
                 />
             </Box>
         </Box>
-        <Box marginTop={3}
-            fontSize={"2xl"}
-        >
-            {rest.title}
-        </Box>
+            <Box  boxShadow={"sm"}>
+                <Select placeholder='クラスを選んでください' onChange={(e)=>rest.onUpdateClass(e.target.value)}>
+                    {rest.classList.map((classInstance,index)=> {
+                        return (
+                            <option value={classInstance.classId} label={classInstance.className} key={index}/>
+
+                        )
+
+                    })}
+                </Select>
+            </Box>
         <Divider/>
+            <SearchStudentBox data={rest.studentsInfo} onClickAddStudent={rest.onClickAddStudent} searchStr={rest.searchStr} onChangeSearchStr={rest.onChangeSearchStr}/>
+            <Heading fontSize={"1xl"} marginTop={"8px"}>選択中の生徒</Heading>
             {rest.error ? 
                 <Button onClick={rest.onClickReload}>リロード</Button>
                 :
                 <Loading loading={rest.loading}>
-                    <VStack spacing={0} overflowY={"scroll"}>
-                        {typeof(rest.studentsInfo?.length) !== "undefined" && rest.studentsInfo?.map((studentInfo, index)=> {
+                    <VStack spacing={0} overflowY={"scroll"} width={"70%"}>
+                        {typeof(rest.willAddStudentsInfo?.length) !== "undefined" && rest.willAddStudentsInfo?.map((studentInfo, index)=> {
                             return (
-                                <PresentListItem 
-                                index={index}
-                                studentInfo={studentInfo}
-                                onClickUpdateStudentInfo={rest.onClickUpdateStudentType}    
-                                key={index}
-                            />
+                                        <ExtraAttendItem student={studentInfo} key={index} onClick={rest.onClickDeleteStudent}/>
                             )
 
                         })}
@@ -105,4 +118,4 @@ const PresentList: FC<PresentListProps> = (props) => {
     )
 }
 
-export default PresentList;
+export default ExtraAttend;

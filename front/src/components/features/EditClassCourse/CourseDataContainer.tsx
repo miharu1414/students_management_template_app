@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from "react";
+import { Box, VStack } from "@chakra-ui/react";
 import CourseDatasList from "./CourseDataList";
+import NewCourseModalContainer from "./NewCourseModalContainer";
 
 type CourseDataContainerProps = {
     children? : Node;
@@ -15,10 +17,11 @@ const CourseDataContainer: FC<CourseDataContainerProps> = (props) => {
 
     const [coursesInfo, setCoursesInfo] = useState<Array<courseInfo>>([
     ]);
-
-
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false)
 
     const GetCoursesInfo = async () => {
+        setLoading(true)
         try {
             const URL = process.env.REACT_APP_UTIL_API + 'getCourses';
             const response = await fetch(URL, {
@@ -49,21 +52,45 @@ const CourseDataContainer: FC<CourseDataContainerProps> = (props) => {
                 newCourses.push(CourseData)
             })
             setCoursesInfo(newCourses)
+            setLoading(false)
+            setError(false)
           } catch (error) {
             // エラーハンドリング
+            setError(true)
             console.error('POSTリクエストエラー:', error);
           }
     }
 
     useEffect(() => {
-        setTimeout(GetCoursesInfo,200)
+        setTimeout(GetCoursesInfo,1000)
       
     }, [])
 
     return (
-        <CourseDatasList
-           courseInfo={coursesInfo}
-        />
+        <>
+        <VStack>
+          <CourseDatasList
+            courseInfo={coursesInfo}
+            GetCoursesInfo={GetCoursesInfo}
+            loading={loading}
+            error={error}
+          />
+          <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
+                  width={"120px"}
+                  borderRadius={10}
+                  backgroundColor={"blue.300"}
+                  textAlign={"center"}
+                  textColor={"white"}
+                  marginTop={8}
+                  marginBottom={8}
+                  >
+                  <NewCourseModalContainer
+                    GetCoursesInfo={GetCoursesInfo}
+                  />
+          </Box>
+        </VStack>
+          
+        </>    
     )
 }
 

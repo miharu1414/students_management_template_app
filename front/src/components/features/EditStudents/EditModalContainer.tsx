@@ -3,6 +3,7 @@ import EditModal from "./EditModal";
 
 type EditModalContainerProps = {
     studentId: string,
+    GetStudentInfo: () => void,
 }
 
 export type studentInfo = {
@@ -10,7 +11,9 @@ export type studentInfo = {
     name: string,
     kana: string,
     class_name: string,
+    class_id: string,
     course_name: string,
+    course_id: string,
     address: string,
     subDay: number,
     memo: string,
@@ -36,18 +39,23 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             name: "",
             kana: "",
             class_name: "",
+            class_id: "",
             course_name: "",
+            course_id: "",
             address: "",
             subDay: 0,
             memo: '',
             update: '',
         },
     );
+
+    const [loading, setLoading] = useState<boolean>(false)
     const [classes, setClasses] = useState<Array<classInfo>>([])
     const [courses, setCourses] = useState<Array<courseInfo>>([])
     
     const GetStudentInfo = async () => {
         try {
+            setLoading(true)
             console.log(rest.studentId)
             const URL = process.env.REACT_APP_UTIL_API + 'getStudent';
             const response = await fetch(URL, {
@@ -70,9 +78,11 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             // JSONデータを取得
             const jsonData = await response.json();
             // 任意の追加処理をここで行う
-            setStudentInfo({studentId: rest.studentId, name: jsonData.name, kana: jsonData.kana, class_name: jsonData.class_name, course_name: jsonData.course_name, address: jsonData.address, subDay: jsonData.substitute_day, memo: jsonData.memo, update: jsonData.last_update})
+            setStudentInfo({studentId: rest.studentId, name: jsonData.name, kana: jsonData.kana, class_name: jsonData.class_name, class_id: jsonData.class_id, course_name: jsonData.course_name, course_id: jsonData.course_id, address: jsonData.address, subDay: jsonData.substitute_day, memo: jsonData.memo, update: jsonData.last_update})
+            setLoading(false)
           } catch (error) {
             // エラーハンドリング
+            setLoading(false)
             console.error('POSTリクエストエラー:', error);
           }
     }
@@ -151,13 +161,13 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
 
     const updateClass = (newClass: string)=> {
         const newValue = studentInfo
-        newValue.class_name = newClass
+        newValue.class_id = newClass
         setStudentInfo(newValue)
     } 
 
     const updateCourse = (newCourse: string)=> {
         const newValue = studentInfo
-        newValue.course_name = newCourse
+        newValue.course_id = newCourse
         setStudentInfo(newValue)
     } 
 
@@ -190,8 +200,8 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
                 student_id: studentInfo.studentId,
                 name: studentInfo.name,
                 kana: studentInfo.kana,
-                class_id: studentInfo.class_name,
-                course_id: studentInfo.course_name,
+                class_id: studentInfo.class_id,
+                course_id: studentInfo.course_id,
                 address: studentInfo.address,
                 substitute_day: studentInfo.subDay,
                 memo: studentInfo.memo,
@@ -259,6 +269,7 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
            studentInfo={studentInfo}
            classes={classes}
            courses={courses}
+           loading={loading}
            onClickUpdateStudentInfo={handleUpdateStudentInfo}
            onClickDeleteStudentInfo={handleDeleteStudentInfo}
            updateClass={updateClass}
@@ -268,6 +279,7 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
            onGetStudent={GetStudentInfo}
            onGetClasses={GetClasses}
            onGetCourses={GetCourses}
+           GetStudentInfo={rest.GetStudentInfo}
         />
     )
 }

@@ -1,11 +1,9 @@
-import { VStack, Box, HStack, } from "@chakra-ui/react";
+import { VStack, Box, HStack, Spacer, } from "@chakra-ui/react";
 import { FC } from "react";
 import {  useParams, Link } from 'react-router-dom';
 import CourseDataContainer from "src/components/features/EditClassCourse/CourseDataContainer";
-import NewCourseModalContainer from "src/components/features/EditClassCourse/NewCourseModalContainer";
 import ClassDataContainer from "src/components/features/EditClassCourse/ClassDataContainer";
-import NewClassModalContainer from "src/components/features/EditClassCourse/NewClassModalContainer";
-
+import { mediaQuery, useMediaQuery } from "src/hooks/Response";
 
 type EditClassCourseProps = {
     children? : Node;
@@ -14,9 +12,11 @@ type EditClassCourseProps = {
 const EditClassCourse: FC<EditClassCourseProps> = (props) => {
     const {children, ...rest} = props;
     const params = useParams();
+    const isSp = useMediaQuery(mediaQuery.sp)
     console.log(params);
     return (
         <>
+        <VStack maxWidth={'800px'}>
             <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
                     width={"120px"}
                     borderRadius={10}
@@ -29,31 +29,19 @@ const EditClassCourse: FC<EditClassCourseProps> = (props) => {
                     ホームヘ
                     </Link>
             </Box>
-            <CourseDataContainer/>
-            <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
-                width={"120px"}
-                borderRadius={10}
-                backgroundColor={"blue.300"}
-                textAlign={"center"}
-                textColor={"white"}
-                marginTop={8}
-                marginBottom={8}
-                >
-                <NewCourseModalContainer/>
-            </Box>
-
-            <ClassDataContainer/>
-            <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
-                width={"120px"}
-                borderRadius={10}
-                backgroundColor={"blue.300"}
-                textAlign={"center"}
-                textColor={"white"}
-                marginTop={8}
-                marginBottom={8}
-                >
-                <NewClassModalContainer/>
-            </Box>
+            
+            {isSp ? 
+                <Box>
+                    <CourseDataContainer/>
+                    <ClassDataContainer/>
+                </Box>
+                :
+                <HStack spacing={"100"}>
+                    <CourseDataContainer/>
+                    <ClassDataContainer/>
+                </HStack>
+            }
+        </VStack>
         </>        
     )
 }

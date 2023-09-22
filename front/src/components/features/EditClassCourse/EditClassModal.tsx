@@ -15,6 +15,7 @@ type EditClassModalProps = {
     onClickUpdateClassInfo: () => void,
     updateClass: (newClass:string) => void,
     getClassInfo: () => void,
+    GetClassesInfo: () => void,
 }
 
 const EditClassModal: FC<EditClassModalProps> = (props) => {
@@ -50,7 +51,11 @@ const EditClassModal: FC<EditClassModalProps> = (props) => {
                     <Text>クラスの名前：</Text>
                     <Box><Input value={rest.classInfo.className} onChange={(e)=> rest.updateClass(e.target.value) }></Input></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={() => rest.onClickUpdateClassInfo()}>
+                <Button colorScheme='blue' mr={3} onClick={() => {
+                  rest.onClickUpdateClassInfo()
+                  setTimeout(rest.GetClassesInfo, 500)
+                  onClose()
+                }}>
                     更新
                 </Button>
             </VStack>

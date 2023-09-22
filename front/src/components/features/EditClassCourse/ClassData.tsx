@@ -7,6 +7,7 @@ type ClassDataProps = {
     children?: React.ReactNode;
     index: number;
     classInfo: classInfo,
+    GetClassesInfo: () => void,
 }
 
 const ClassData: FC<ClassDataProps> = (props) => {
@@ -22,7 +23,10 @@ const ClassData: FC<ClassDataProps> = (props) => {
       <>
         <Tr>
             <Td>{rest.classInfo.className}</Td>
-            <EditClassModalContainer classId={rest.classInfo.classId}></EditClassModalContainer>
+            <EditClassModalContainer 
+              classId={rest.classInfo.classId}
+              GetClassesInfo={rest.GetClassesInfo}
+            />
         </Tr>
       </>
     );

@@ -27,16 +27,6 @@ const Name: FC<NameProps> = (props) => {
                     </Link>
             </Box>
             <StudentDataContainer/>
-            <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
-                width={"120px"}
-                borderRadius={10}
-                backgroundColor={"blue.300"}
-                textAlign={"center"}
-                textColor={"white"}
-                marginTop={8}
-                >
-                <NewStudentModalContainer/>
-            </Box>
         </>        
     )
 }

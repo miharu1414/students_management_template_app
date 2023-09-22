@@ -16,6 +16,7 @@ type NewStudentModalProps = {
     classs: classInfo[],
     updateClass: (newClass:string) => void,
     onClickInsertClassInfo: () => void,
+    GetClassesInfo: () => void,
 }
 
 const NewStudentModal: FC<NewStudentModalProps> = (props) => {
@@ -48,7 +49,11 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                     <Text>クラス名：</Text>
                     <Box><Input value={rest.classInfo.className} onChange={(e)=>rest.updateClass(e.target.value)}></Input></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={rest.onClickInsertClassInfo}>
+                <Button colorScheme='blue' mr={3} onClick={() => {
+                  rest.onClickInsertClassInfo()
+                  setTimeout(rest.GetClassesInfo, 1000)
+                  onClose()
+                }}>
                     追加
                 </Button>
             </VStack>

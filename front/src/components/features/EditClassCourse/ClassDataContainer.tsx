@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from "react";
+import { Box, VStack } from "@chakra-ui/react";
 import ClassDatasList from "./ClassDataList";
+import NewClassModalContainer from "./NewClassModalContainer";
 
 type ClassDataContainerProps = {
     children? : Node;
@@ -15,8 +17,11 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
 
     const [classesInfo, setClassesInfo] = useState<Array<classInfo>>([
     ]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false)
 
     const GetClassesInfo = async () => {
+        setLoading(true)
         try {
             const URL = process.env.REACT_APP_UTIL_API + 'getClassesNoneUpdate';
             const response = await fetch(URL, {
@@ -47,8 +52,11 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
                 newClasses.push(ClassData)
             })
             setClassesInfo(newClasses)
+            setLoading(false)
+            setError(false)
           } catch (error) {
             // エラーハンドリング
+            setError(true)
             console.error('POSTリクエストエラー:', error);
           }
     }
@@ -58,9 +66,29 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
     }, [])
 
     return (
+      <>
+      <VStack>
         <ClassDatasList
            classInfo={classesInfo}
+           GetClassesInfo={GetClassesInfo}
+           loading={loading}
+           error={error}
         />
+        <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
+                width={"120px"}
+                borderRadius={10}
+                backgroundColor={"blue.300"}
+                textAlign={"center"}
+                textColor={"white"}
+                marginTop={8}
+                marginBottom={8}
+                >
+                <NewClassModalContainer
+                  GetClassesInfo={GetClassesInfo}
+                />
+        </Box>
+        </VStack>
+      </>
     )
 }
 

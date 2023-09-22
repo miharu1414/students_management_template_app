@@ -7,6 +7,7 @@ type CourseDataProps = {
     children?: React.ReactNode;
     index: number;
     courseInfo: courseInfo,
+    GetCoursesInfo: () => void,
 }
 
 const CourseData: FC<CourseDataProps> = (props) => {
@@ -22,7 +23,10 @@ const CourseData: FC<CourseDataProps> = (props) => {
       <>
         <Tr>
             <Td>{rest.courseInfo.courseName}</Td>
-            <EditCourseModalContainer courseId={rest.courseInfo.courseId}></EditCourseModalContainer>
+            <EditCourseModalContainer 
+              courseId={rest.courseInfo.courseId}
+              GetCoursesInfo={rest.GetCoursesInfo}
+            />
         </Tr>
       </>
     );
