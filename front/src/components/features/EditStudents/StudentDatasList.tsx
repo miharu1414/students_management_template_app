@@ -4,6 +4,7 @@ import { Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, 
 import { studentInfo } from "./StudentDataContainer";
 import StudentData from "./StudentData";
 import StudentDataMobile from "./StudentDataMobile";
+import Loading from "src/components/common/Loading";
 import { mediaQuery, useMediaQuery } from "src/hooks/Response";
 import { Link } from "react-router-dom";
 
@@ -11,6 +12,7 @@ type StudentDatasListProps = {
     children?: React.ReactNode;
     studentInfo: studentInfo[],
     GetStudentInfo: () => void,
+    loading: boolean,
 }
 
 const StudentDatasList: FC<StudentDatasListProps> = (props) => {
@@ -34,16 +36,18 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                            {rest.studentInfo.map((student, index)=> {
-                    return (
-                        <StudentDataMobile
-                            index={index}
-                            studentInfo={student}
-                            key={index}
-                            GetStudentInfo={rest.GetStudentInfo}
-                        />
-                    )
-                })}
+                                <Loading loading={rest.loading}>
+                                    {rest.studentInfo.map((student, index)=> {
+                                        return (
+                                            <StudentDataMobile
+                                                index={index}
+                                                studentInfo={student}
+                                                key={index}
+                                                GetStudentInfo={rest.GetStudentInfo}
+                                            />
+                                        )
+                                    })}
+                                </Loading>
                             </Tbody>
                 </Table>
                 </Box>
@@ -63,16 +67,18 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                            {rest.studentInfo.map((student, index)=> {
-                    return (
-                        <StudentData
-                            index={index}
-                            studentInfo={student}
-                            key={index}
-                            GetStudentInfo={rest.GetStudentInfo}
-                        />
-                    )
-                })}
+                            <Loading loading={rest.loading}>
+                                {rest.studentInfo.map((student, index)=> {
+                                    return (
+                                        <StudentData
+                                            index={index}
+                                            studentInfo={student}
+                                            key={index}
+                                            GetStudentInfo={rest.GetStudentInfo}
+                                        />
+                                    )
+                                })}
+                            </Loading>
                             </Tbody>
                 </Table>
                 </Box>

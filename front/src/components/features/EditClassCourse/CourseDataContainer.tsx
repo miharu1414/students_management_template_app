@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import CourseDatasList from "./CourseDataList";
 import NewCourseModalContainer from "./NewCourseModalContainer";
 
@@ -68,6 +68,7 @@ const CourseDataContainer: FC<CourseDataContainerProps> = (props) => {
 
     return (
         <>
+        <VStack>
           <CourseDatasList
             courseInfo={coursesInfo}
             GetCoursesInfo={GetCoursesInfo}
@@ -87,6 +88,8 @@ const CourseDataContainer: FC<CourseDataContainerProps> = (props) => {
                     GetCoursesInfo={GetCoursesInfo}
                   />
           </Box>
+        </VStack>
+          
         </>    
     )
 }

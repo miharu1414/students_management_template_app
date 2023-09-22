@@ -22,11 +22,12 @@ export type studentInfo = {
 const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
     const {children, ...rest} = props;
 
-    const [studentsInfo, setStudentsInfo] = useState<Array<studentInfo>>([
-    ]);
+    const [studentsInfo, setStudentsInfo] = useState<Array<studentInfo>>([]);
+    const [loading, setLoading] = useState<boolean>(false)
 
     const GetStudentInfo = async () => {
         try {
+            setLoading(true)
             const URL = process.env.REACT_APP_UTIL_API + 'getStudents';
             const response = await fetch(URL, {
               method: 'POST',
@@ -56,8 +57,10 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
                 newStudents.push(studentData)
             })
             setStudentsInfo(newStudents)
+            setLoading(false)
           } catch (error) {
             // エラーハンドリング
+            setLoading(false)
             console.error('POSTリクエストエラー:', error);
           }
     }
@@ -71,6 +74,7 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
         <StudentDatasList
            studentInfo={studentsInfo}
            GetStudentInfo={GetStudentInfo}
+           loading={loading}
         />
         <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
                 width={"120px"}
