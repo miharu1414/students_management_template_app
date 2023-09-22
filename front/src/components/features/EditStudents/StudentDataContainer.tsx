@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from "react";
+import { Box } from "@chakra-ui/react";
 import StudentDatasList from "./StudentDatasList";
+import NewStudentModalContainer from "./NewStudentModalContainer";
 
 type StudentDataContainerProps = {
     children? : Node;
@@ -65,9 +67,24 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
     }, [])
 
     return (
+      <>
         <StudentDatasList
            studentInfo={studentsInfo}
+           GetStudentInfo={GetStudentInfo}
         />
+        <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
+                width={"120px"}
+                borderRadius={10}
+                backgroundColor={"blue.300"}
+                textAlign={"center"}
+                textColor={"white"}
+                marginTop={8}
+                >
+                <NewStudentModalContainer
+                  GetStudentInfo={GetStudentInfo}
+                />
+        </Box>
+      </>
     )
 }
 

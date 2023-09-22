@@ -14,6 +14,10 @@ export type studentInfo = {
     update: string,
 }
 
+type NewStudentModalContainerProps = {
+  GetStudentInfo: () => void,
+}
+
 export type classInfo = {
     classId: string,
     className: string,
@@ -25,7 +29,8 @@ export type courseInfo = {
 }
 
 
-const NewStudentModalContainer: FC = () => {
+const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
+    const { ...rest } = props;
 
     const [studentInfo, setStudentInfo] = useState<studentInfo>(
         {
@@ -216,6 +221,7 @@ const NewStudentModalContainer: FC = () => {
            updateMemo={updateMemo}
            onGetClasses={GetClasses}
            onGetCourses={GetCourses}
+           GetStudentInfo={rest.GetStudentInfo}
         />
     )
 }

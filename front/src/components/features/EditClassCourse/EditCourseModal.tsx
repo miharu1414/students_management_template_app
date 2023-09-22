@@ -15,6 +15,7 @@ type EditCourseModalProps = {
     onClickUpdateCourseInfo: () => void,
     updateCourse: (newCourse:string) => void,
     getCourseInfo: () => void,
+    GetCoursesInfo: () => void,
 }
 
 const EditCourseModal: FC<EditCourseModalProps> = (props) => {
@@ -50,7 +51,11 @@ const EditCourseModal: FC<EditCourseModalProps> = (props) => {
                     <Text>コースの名前：</Text>
                     <Box><Input value={rest.courseInfo.courseName} onChange={(e)=> rest.updateCourse(e.target.value) }></Input></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={() => rest.onClickUpdateCourseInfo()}>
+                <Button colorScheme='blue' mr={3} onClick={() => {
+                  rest.onClickUpdateCourseInfo()
+                  setTimeout(rest.GetCoursesInfo, 1000)
+                  onClose()
+                }}>
                     更新
                 </Button>
             </VStack>

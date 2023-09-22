@@ -22,7 +22,7 @@ const PresentListContainer: FC<PresentListContainerProps> = (props) => {
     const {children, ...rest} = props;
 
     const [studentsInfo, setStudentsInfo] = useState<Array<presentInfo>>([]);
-    const [loading,setLoading] = useState(false);
+    const [loading,setLoading] = useState<boolean>(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [error, setError] = useState<boolean>(false);
 

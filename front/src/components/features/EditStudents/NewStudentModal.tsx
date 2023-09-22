@@ -25,6 +25,7 @@ type NewStudentModalProps = {
     onClickInsertStudentInfo: () => void,
     onGetClasses: () => void,
     onGetCourses: () => void,
+    GetStudentInfo: () => void,
 }
 
 const NewStudentModal: FC<NewStudentModalProps> = (props) => {
@@ -38,7 +39,7 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                 onClick={() => {
                   onOpen()
                   rest.onGetClasses()
-                  setTimeout(rest.onGetCourses, 150)
+                  setTimeout(rest.onGetCourses, 1000)
                 }}
                 padding={3} 
                 border={2} 
@@ -95,7 +96,11 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                     <Text>メモ：</Text>
                     <Box><Textarea value={rest.studentInfo.memo} onChange={(e)=>rest.updateMemo(e.target.value)}></Textarea></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={rest.onClickInsertStudentInfo}>
+                <Button colorScheme='blue' mr={3} onClick={() => {
+                  rest.onClickInsertStudentInfo()
+                  setTimeout(rest.GetStudentInfo, 1000)
+                  onClose()
+                }}>
                     追加
                 </Button>
             </VStack>

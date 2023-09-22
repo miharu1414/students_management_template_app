@@ -16,6 +16,7 @@ type StudentDataProps = {
     children?: React.ReactNode;
     index: number;
     studentInfo: studentInfo,
+    GetStudentInfo: () => void,
 }
 
 const StudentData: FC<StudentDataProps> = (props) => {
@@ -42,7 +43,10 @@ const StudentData: FC<StudentDataProps> = (props) => {
             <Td>{rest.studentInfo.course_name}</Td>
             <Td>{rest.studentInfo.address}</Td>
             <Td>{rest.studentInfo.memo}</Td>
-            <EditModalContainer studentId={rest.studentInfo.id}></EditModalContainer>
+            <EditModalContainer 
+              studentId={rest.studentInfo.id}
+              GetStudentInfo={rest.GetStudentInfo}
+            />
         </Tr>
       </>
     );

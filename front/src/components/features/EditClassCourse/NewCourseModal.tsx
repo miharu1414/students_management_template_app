@@ -16,6 +16,7 @@ type NewStudentModalProps = {
     courses: courseInfo[],
     updateCourse: (newCourse:string) => void,
     onClickInsertCourseInfo: () => void,
+    GetCoursesInfo: () => void,
 }
 
 const NewStudentModal: FC<NewStudentModalProps> = (props) => {
@@ -48,7 +49,11 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                     <Text>コース名：</Text>
                     <Box><Input value={rest.courseInfo.courseName} onChange={(e)=>rest.updateCourse(e.target.value)}></Input></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={rest.onClickInsertCourseInfo}>
+                <Button colorScheme='blue' mr={3} onClick={() => {
+                  rest.onClickInsertCourseInfo()
+                  setTimeout(rest.GetCoursesInfo, 1000)
+                  onClose()
+                }}>
                     追加
                 </Button>
             </VStack>
