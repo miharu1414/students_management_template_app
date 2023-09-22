@@ -5,18 +5,20 @@ import { App } from "./App"
 import reportWebVitals from "./reportWebVitals"
 import * as serviceWorker from "./serviceWorker"
 import { CookiesProvider } from "react-cookie";
-
+import { IntlProvider } from 'react-intl';
 const container = document.getElementById("root")
 if (!container) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(container)
 
 root.render(
   <>
+    <IntlProvider locale="ja">
     <CookiesProvider>
       <ColorModeScript />
 
       <App />
     </CookiesProvider>
+    </IntlProvider>
   </>
 
 
