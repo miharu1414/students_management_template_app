@@ -2,7 +2,7 @@ import { VStack, Box, HStack, } from "@chakra-ui/react";
 import { FC } from "react";
 import {  useParams, Link } from 'react-router-dom';
 
-import EditStudents from "src/components/features/ExtraSubmit/EditStudents";
+import EditStudents from "src/components/features/EditStudents/EditStudents";
 type EditStudentsPageProps = {
     children? : Node;
 }
