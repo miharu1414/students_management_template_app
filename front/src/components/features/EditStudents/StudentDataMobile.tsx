@@ -3,6 +3,7 @@ import { Box, Button, Flex, useDisclosure, Modal, Table, Thead, Tbody, Tr, Th, T
 import { studentInfo } from "./StudentDataContainer";
 import EditModalContainer from "./EditModalContainer";
 import { Link } from "react-router-dom";
+import DetailStudent from "src/components/features/EditStudents/DetailStudent"
 
 type StudentDataMobileProps = {
     children?: React.ReactNode;
@@ -23,12 +24,16 @@ const StudentDataMobile: FC<StudentDataMobileProps> = (props) => {
     return (
       <>
         <Tr>
-            <Td>{rest.studentInfo.name}</Td>
+            <Td onClick={onOpen}>{rest.studentInfo.name}
+            <DetailStudent student={rest.studentInfo} isOpen={isOpen} onClose={onClose}/>
+            </Td>
+
             <EditModalContainer 
               studentId={rest.studentInfo.id}
               GetStudentInfo={rest.GetStudentInfo}
             />
         </Tr>
+
       </>
     );
 }

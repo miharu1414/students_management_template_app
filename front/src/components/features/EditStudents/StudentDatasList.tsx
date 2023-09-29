@@ -1,5 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, } from "react";
+
 import { Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, VStack,
+    useDisclosure
 } from "@chakra-ui/react";
 import { studentInfo } from "./StudentDataContainer";
 import StudentData from "./StudentData";
@@ -28,6 +30,7 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
     const userDevice = navigator.userAgent;
 
     const isSp = useMediaQuery(mediaQuery.sp)
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
 
     return (
