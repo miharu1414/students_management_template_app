@@ -8,15 +8,17 @@ import Loading from "src/components/common/Loading";
 import { mediaQuery, useMediaQuery } from "src/hooks/Response";
 import { Link } from "react-router-dom";
 import { StudentSearchBox } from "./StudentSearchBox";
+import { courseInfo } from "src/components/features/EditStudents/StudentDataContainer";
 
 type StudentDatasListProps = {
     children?: React.ReactNode;
     studentInfo: studentInfo[],
     searchStr: string;
-
+    courses: courseInfo[];
     loading: boolean,
     error: boolean;
     onChangeSearchStr: (value: string)=> void;
+    onChangeSelectedCourse: (value:string) => void;
     GetStudentInfo: () => void,
 
 }
@@ -36,7 +38,7 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                     <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
                     <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
                     <Loading loading={rest.loading}>
-                        <StudentSearchBox searchStr={rest.searchStr} onChangeSearchStr={rest.onChangeSearchStr}/>
+                        <StudentSearchBox width="200px" searchStr={rest.searchStr} courses={rest.courses} onChangeSelectedCourse={rest.onChangeSelectedCourse} onChangeSearchStr={rest.onChangeSearchStr} />
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>
@@ -63,10 +65,11 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                 </VStack>
                 :
                 <VStack>
-                    <Box width={"100%"} >
+                    <VStack width={"100%"} >
                     <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
                     <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
                     <Loading loading={rest.loading}>
+                    <StudentSearchBox width="400px" searchStr={rest.searchStr} courses={rest.courses} onChangeSelectedCourse={rest.onChangeSelectedCourse} onChangeSearchStr={rest.onChangeSearchStr} />
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>
@@ -93,7 +96,7 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                 </Tbody>
                     </Table>
                     </Loading>
-                    </Box>
+                    </VStack>
                 </VStack>
             }
         </>        

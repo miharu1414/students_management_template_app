@@ -8,6 +8,11 @@ import { useDebounce } from "src/components/common/useDebounce";
 type StudentDataContainerProps = {
     children? : Node;
 }
+export type courseInfo = {
+  courseId: string,
+  courseName: string,
+}
+
 
 export type studentInfo = {
     id: string,
@@ -31,6 +36,8 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
     const [error,setError] = useState<boolean>(false);
     const [searchStr,setSearchStr] = useState<string>("");
     const [displayStudents,setDisplayStudents] = useState<Array<studentInfo>>([]);
+    const [courses, setCourses] = useState<Array<courseInfo>>([])
+    const [selectedCourse, setSelectedCourse] = useState<string>("");
 
     const GetStudentInfo = async () => {
         try {
@@ -79,22 +86,75 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
           }
     }
 
+
+    const GetCourses = async () => {
+      try {
+          
+          const URL = process.env.REACT_APP_UTIL_API + 'getCourses';
+          const response = await fetch(URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              // 必要な場合、他のヘッダーも追加できます
+            },
+            body: JSON.stringify({}),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          // リクエストが成功した場合の処理
+          console.log(response);
+    
+          // JSONデータを取得
+          const jsonData = await response.json();
+          // 任意の追加処理をここで行う
+
+          const newCourses: courseInfo[] = [];
+          jsonData.course_info.map((courseData:courseInfo) => {
+              newCourses.push(courseData)
+          })
+
+          setCourses(newCourses)
+          setError(false)
+
+        } catch (error) {
+          // エラーハンドリング
+          setError(true)
+          console.error('POSTリクエストエラー:', error);
+        }
+        setLoading(false)
+  }
+
     const matchStudents = (searchStr:string, course_id: string): studentInfo[] => {
-      return studentsInfo.filter((student)=>((student.kana.indexOf(searchStr)>-1) || (student.name.indexOf(searchStr)>-1)) )
+      console.log(course_id)
+      if (course_id ==="" || typeof(course_id) == "undefined"){
+        return studentsInfo.filter((student)=>((student.kana.indexOf(searchStr)>-1) || (student.name.indexOf(searchStr)>-1)) )
+      }
+      else{
+        return studentsInfo.filter((student)=>(((student.kana.indexOf(searchStr)>-1) || (student.name.indexOf(searchStr)>-1))&& (student.course_id === course_id)) )
+      }
+    }
+
+    const handleOnOpenPage = async ()=> {
+      await GetStudentInfo();
+      await GetCourses();
     }
 
     useEffect(() => {
-      GetStudentInfo()
+       handleOnOpenPage();
 
     }, [])
 
       const debouncedInputText = useDebounce(searchStr,500)
 
     useEffect(()=>{
-      const newStudents: studentInfo[] = matchStudents(debouncedInputText,"");
+      const newStudents: studentInfo[] = matchStudents(debouncedInputText,selectedCourse);
       setDisplayStudents(newStudents)
       console.log(debouncedInputText)
-    },[debouncedInputText])
+    },[debouncedInputText,selectedCourse])
 
     return (
       <>   
@@ -140,6 +200,8 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
            searchStr={debouncedInputText}
            loading={loading}
            error={error}
+           courses={courses}
+           onChangeSelectedCourse={setSelectedCourse}
            GetStudentInfo={GetStudentInfo}
            onChangeSearchStr={setSearchStr}
         />

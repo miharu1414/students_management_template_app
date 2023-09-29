@@ -1,8 +1,8 @@
 
 import { FC, useContext, useState, useRef} from "react"
-import { Box, Button, Flex, HStack, Icon, Select, Input, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Icon, Select, Input, VStack, Text } from "@chakra-ui/react";
 import { userContext } from "src/hooks/UserInfo";
-
+import { courseInfo } from "src/components/features/EditStudents/StudentDataContainer";
 
 import { AiOutlineSearch } from "react-icons/ai";
 
@@ -10,6 +10,9 @@ import { AiOutlineSearch } from "react-icons/ai";
 type StudentSearchBoxProps = {
     children? : Node;
     searchStr: string;
+    width: string;
+    courses:courseInfo[]
+    onChangeSelectedCourse: (value: string) => void;
     onChangeSearchStr: (value:string)=>void;
 }
 
@@ -39,8 +42,8 @@ export const StudentSearchBox: FC<StudentSearchBoxProps> = (props) => {
     }
   return (
 
-        <VStack spacing={0} border={"1px"} borderColor={"gray.200"} borderRadius={"5px"} boxShadow={"sm"}>
-            <HStack bgColor="gray.50" borderRadius="10px">
+        <VStack spacing={0}  borderRadius={"5px"}>
+            <HStack bgColor="gray.50" borderRadius="10px" border={"1px"} borderColor={"gray.200"}  boxShadow={"sm"} >
                 <Icon
                   as={AiOutlineSearch}
                   fontSize="27px"
@@ -49,6 +52,7 @@ export const StudentSearchBox: FC<StudentSearchBoxProps> = (props) => {
                   w="50px"
                 />
                 <Input
+                
                   border="none"
                   outline="transparent solid 2px"
                   placeholder="生徒名を入れて検索"
@@ -65,13 +69,24 @@ export const StudentSearchBox: FC<StudentSearchBoxProps> = (props) => {
                     handleChange((e.target as HTMLInputElement).value) // 入力確定したとき
                   }}
 
-                  w="200px"
+                  w={rest.width}
                   h="50px"
                 />
 
 
               </HStack>
-
+              <HStack>
+                    <Text>コース：</Text>
+                    <Box>
+                      <Select placeholder="指定なし" onChange={(e)=>rest.onChangeSelectedCourse(e.target.value)}>
+                        {rest.courses.map((courseData) => {
+                          return (
+                            <option value={courseData.courseId} >{courseData.courseName}</option>
+                          )
+                        })}
+                      </Select>
+                    </Box>
+                </HStack>
         </VStack>
             
   );
