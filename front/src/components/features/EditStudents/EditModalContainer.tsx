@@ -50,13 +50,16 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
     );
 
     const [loading, setLoading] = useState<boolean>(false)
-    const [error, setError] = useState<boolean>(false)
+    const [error1, setError1] = useState<boolean>(false)
+    const [error2, setError2] = useState<boolean>(false)
+    const [error3, setError3] = useState<boolean>(false)
     const [classes, setClasses] = useState<Array<classInfo>>([])
     const [courses, setCourses] = useState<Array<courseInfo>>([])
     
     const GetStudentInfo = async () => {
+      setLoading(true)
         try {
-            setLoading(true)
+          
             console.log(rest.studentId)
             const URL = process.env.REACT_APP_UTIL_API + 'getStudent';
             const response = await fetch(URL, {
@@ -80,18 +83,18 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             const jsonData = await response.json();
             // 任意の追加処理をここで行う
             setStudentInfo({studentId: rest.studentId, name: jsonData.name, kana: jsonData.kana, class_name: jsonData.class_name, class_id: jsonData.class_id, course_name: jsonData.course_name, course_id: jsonData.course_id, address: jsonData.address, subDay: jsonData.substitute_day, memo: jsonData.memo, update: jsonData.last_update})
-            setLoading(false)
-            setError(false)
+            
+            setError1(false)
           } catch (error) {
             // エラーハンドリング
-            setError(true)
+            setError1(true)
             console.error('POSTリクエストエラー:', error);
           }
     }
 
     const GetClasses = async () => {
         try {
-            setLoading(true)
+           
             const URL = process.env.REACT_APP_UTIL_API + 'getClasses';
             const response = await fetch(URL, {
               method: 'POST',
@@ -120,18 +123,18 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
                 newClasses.push(classData)
             })
             setClasses(newClasses)
-            setLoading(false)
-            setError(false)
+            
+            setError2(false)
           } catch (error) {
             // エラーハンドリング
-            setError(true)
+            setError2(true)
             console.error('POSTリクエストエラー:', error);
           }
     }
 
     const GetCourses = async () => {
         try {
-            setLoading(true)
+            
             const URL = process.env.REACT_APP_UTIL_API + 'getCourses';
             const response = await fetch(URL, {
               method: 'POST',
@@ -158,15 +161,16 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             jsonData.course_info.map((courseData:courseInfo) => {
                 newCourses.push(courseData)
             })
-            console.log(newCourses)
+
             setCourses(newCourses)
-            setLoading(false)
-            setError(false)
+           
+            setError3(false)
           } catch (error) {
             // エラーハンドリング
-            setError(true)
+            setError3(true)
             console.error('POSTリクエストエラー:', error);
           }
+          setLoading(false)
     }
 
     const updateClass = (newClass: string)=> {
@@ -180,6 +184,12 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
         newValue.course_id = newCourse
         setStudentInfo(newValue)
     } 
+
+    const updateSubday = (newSubday: number)=> {
+      const newValue = studentInfo
+      newValue.subDay = newSubday
+      setStudentInfo(newValue)
+  } 
 
     const updateAddress = (newAddress: string)=> {
         setStudentInfo((prevValue)=>({
@@ -229,7 +239,7 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             console.log(studentInfo.kana)
             const jsonData = await response.json();
             // 任意の追加処理をここで行う
-            console.log('unnko')
+ 
 
           } catch (error) {
             // エラーハンドリング
@@ -261,7 +271,7 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
     
           // JSONデータを取得
           // 任意の追加処理をここで行う
-          console.log('unnko')
+         
 
         } catch (error) {
           // エラーハンドリング
@@ -269,9 +279,15 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
         }
   } 
 
-    useEffect(() => {
-        console.log(studentInfo)
-    },[studentInfo])
+  const handleOnClick = async () => {
+    
+    await GetStudentInfo()
+    await GetClasses()
+    await GetCourses()
+ 
+    
+  }
+
 
 
     return (
@@ -280,16 +296,18 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
            classes={classes}
            courses={courses}
            loading={loading}
-           error={error}
+           error1={error1}
+           error2={error2}
+           error3={error3}
            onClickUpdateStudentInfo={handleUpdateStudentInfo}
            onClickDeleteStudentInfo={handleDeleteStudentInfo}
            updateClass={updateClass}
            updateCourse={updateCourse}
            updateAddress={updateAddress}
            updateMemo={updateMemo}
-           onGetStudent={GetStudentInfo}
-           onGetClasses={GetClasses}
-           onGetCourses={GetCourses}
+           updateSubday={updateSubday}
+           onClick={handleOnClick}
+
            GetStudentInfo={rest.GetStudentInfo}
         />
     )

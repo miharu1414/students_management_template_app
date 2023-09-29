@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, Button, Flex, useDisclosure, Modal, Table, Thead, Tbody, Tr, Th, Td , Select, Divider, HStack, Text, Textarea,
     ModalOverlay, 
     ModalContent,
@@ -32,7 +32,23 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
     const { ...rest } = props;
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [sendDisable, setSendDisable] = useState<boolean>(true)
 
+    useEffect(() => {
+      if (rest.studentInfo.address==="" || rest.studentInfo.name==="" || rest.studentInfo.kana==="" || rest.studentInfo.memo==="" || rest.studentInfo.class_name==="" || rest.studentInfo.course_name===""){
+        setSendDisable(true)
+      }
+      else {
+        setSendDisable(false)
+      }
+    }, [
+      rest.studentInfo.address,
+      rest.studentInfo.class_name,
+      rest.studentInfo.course_name,
+      rest.studentInfo.kana,
+      rest.studentInfo.memo,
+      rest.studentInfo.name,
+    ])
     return (
       <>
         <Button 
@@ -70,7 +86,7 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                       <Select placeholder='クラスを選んでください' onChange={(e)=>rest.updateClass(e.target.value)}>
                         {rest.classes.map((classData) => {
                           return (
-                            <option value={classData.classId} label={classData.className}/>
+                            <option value={classData.classId}>{classData.className}</option>
                           )
                         })}
                       </Select>
@@ -82,7 +98,7 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                       <Select placeholder='コースを選んでください' onChange={(e)=>rest.updateCourse(e.target.value)}>
                         {rest.courses.map((courseData) => {
                           return (
-                            <option value={courseData.courseId} label={courseData.courseName}/>
+                            <option value={courseData.courseId}>{courseData.courseName}</option>
                           )
                         })}
                       </Select>
@@ -96,7 +112,7 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                     <Text>メモ：</Text>
                     <Box><Textarea value={rest.studentInfo.memo} onChange={(e)=>rest.updateMemo(e.target.value)}></Textarea></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={() => {
+                <Button colorScheme='blue' mr={3} isDisabled={sendDisable} onClick={() => {
                   rest.onClickInsertStudentInfo()
                   setTimeout(rest.GetStudentInfo, 1000)
                   onClose()

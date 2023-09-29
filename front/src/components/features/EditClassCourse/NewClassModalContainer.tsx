@@ -57,6 +57,10 @@ const NewClassModalContainer: FC<NewClassModalContainerProps> = (props) => {
             // JSONデータを取得
             // 任意の追加処理をここで行う
             console.log('unnko')
+            setClassInfo({
+              classId: "",
+              className: "",
+          },)
 
           } catch (error) {
             // エラーハンドリング

@@ -1,5 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, } from "react";
+
 import { Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, VStack,
+    useDisclosure
 } from "@chakra-ui/react";
 import { studentInfo } from "./StudentDataContainer";
 import StudentData from "./StudentData";
@@ -7,12 +9,20 @@ import StudentDataMobile from "./StudentDataMobile";
 import Loading from "src/components/common/Loading";
 import { mediaQuery, useMediaQuery } from "src/hooks/Response";
 import { Link } from "react-router-dom";
+import { StudentSearchBox } from "./StudentSearchBox";
+import { courseInfo } from "src/components/features/EditStudents/StudentDataContainer";
 
 type StudentDatasListProps = {
     children?: React.ReactNode;
     studentInfo: studentInfo[],
-    GetStudentInfo: () => void,
+    searchStr: string;
+    courses: courseInfo[];
     loading: boolean,
+    error: boolean;
+    onChangeSearchStr: (value: string)=> void;
+    onChangeSelectedCourse: (value:string) => void;
+    GetStudentInfo: () => void,
+
 }
 
 const StudentDatasList: FC<StudentDatasListProps> = (props) => {
@@ -20,16 +30,18 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
     const userDevice = navigator.userAgent;
 
     const isSp = useMediaQuery(mediaQuery.sp)
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
 
     return (
         <>
             {isSp ? 
-                <VStack>
+                <VStack display={"flex"} alignItems={"center"}>
                     <Box>
                     <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
                     <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
-
+                    <Loading loading={rest.loading}>
+                        <StudentSearchBox width="200px" searchStr={rest.searchStr} courses={rest.courses} onChangeSelectedCourse={rest.onChangeSelectedCourse} onChangeSearchStr={rest.onChangeSearchStr} />
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>
@@ -37,7 +49,7 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    <Loading loading={rest.loading}>
+                                {rest.error && <Button onClick={()=>rest.GetStudentInfo()}>リロード</Button>}
                                         {rest.studentInfo.map((student, index)=> {
                                             return (
                                                 <StudentDataMobile
@@ -48,29 +60,31 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                                 />
                                             )
                                         })}
-                                    </Loading>
+                                
                                 </Tbody>
                     </Table>
+                    </Loading>
                     </Box>
                 </VStack>
                 :
                 <VStack>
-                    <Box width={"100%"} >
+                    <VStack width={"100%"} >
                     <Heading size={"lg"} textAlign={"center"} marginBottom={2}>生徒管理</Heading>
                     <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
-
+                    <Loading loading={rest.loading}>
+                    <StudentSearchBox width="400px" searchStr={rest.searchStr} courses={rest.courses} onChangeSelectedCourse={rest.onChangeSelectedCourse} onChangeSearchStr={rest.onChangeSearchStr} />
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>
-                                        <Th>名前</Th>
-                                        <Th>クラス</Th>
-                                        <Th>コース</Th>
-                                        <Th>緊急連絡先</Th>
-                                        <Th>メモ</Th>
+                                        <Th flexShrink={"0"}>名前</Th>
+                                        <Th flexShrink={"0"}>クラス</Th>
+                                        <Th flexShrink={"0"}>振替日数</Th>
+                                        <Th flexShrink={"0"}>緊急連絡先</Th>
+                                        <Th >メモ</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                <Loading loading={rest.loading}>
+                                {rest.error && <Button onClick={()=>rest.GetStudentInfo()}>リロード</Button>}
                                     {rest.studentInfo.map((student, index)=> {
                                         return (
                                             <StudentData
@@ -81,10 +95,11 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                             />
                                         )
                                     })}
-                                </Loading>
+
                                 </Tbody>
                     </Table>
-                    </Box>
+                    </Loading>
+                    </VStack>
                 </VStack>
             }
         </>        

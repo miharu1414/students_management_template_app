@@ -37,7 +37,7 @@ export type attendData =  {
 
 const DetailStudentContainer: FC<DetailStudentContainerProps> = (props) => {
     const {children, ...rest} = props;
-    const [loading,setLoading] = useState<boolean>(false)
+    const [loading,setLoading] = useState<boolean>(true)
     const [studentInfo,setStudentInfo] = useState<studentInfoDetail>()
     const [attendData,setAttendDate] = useState<attendData[]>([])
 

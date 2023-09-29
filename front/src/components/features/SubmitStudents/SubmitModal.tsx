@@ -18,6 +18,7 @@ type SubmitModalProps = {
     title? : string,
     color? : string,
     onUpload: ()=>void;
+    isDisable?: boolean;
 }
 
 const SubmitModal: FC<SubmitModalProps> = (props) => {
@@ -28,11 +29,12 @@ const SubmitModal: FC<SubmitModalProps> = (props) => {
     const doSubmit = () => {
         onClose(); // モーダルを閉じる
         rest.onUpload();
+
     }
 
     return (
         <>
-            <Button onClick={onOpen}  colorScheme={rest.color ? rest.color : 'teal'} >{rest.title ?? "更新"}</Button>
+            <Button onClick={onOpen} isDisabled={rest.isDisable}  colorScheme={rest.color ? rest.color : 'teal'} >{rest.title ?? "更新"}</Button>
 
             <Modal isOpen={isOpen} onClose={onClose} >
                 <ModalOverlay />

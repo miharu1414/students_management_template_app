@@ -14,8 +14,8 @@ import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
 import Header from "./components/common/Header";
 
-import EditStudents from "./pages/EditStudents";
-import EditClassCourse from "./pages/EditClassCourse";
+import EditStudentsPage from "./pages/EditStudentsPage";
+import EditClassCoursePage from "src/pages/EditClassCoursePage"
 import Home from "src/pages/Home"
 import Login from "src/pages/Login"
 import LoginFunction from "src/components/functions/LoginFunction";
@@ -47,7 +47,7 @@ export const App = () => (
         <VStack spacing={0}>
           
 
-          <BrowserRouter>
+          <BrowserRouter basename="/build">
             <LoginCheck/>
             <Header/>
             <Routes>
@@ -65,8 +65,8 @@ export const App = () => (
               <Route path={`/logout/`} element={<Logout/>} />
 
 
-              <Route path={`/edit/`}  element={<EditStudents/>}/>
-              <Route path={`/editClassCourse/`}  element={<EditClassCourse/>}/>              
+              <Route path={`/edit/`}  element={<EditStudentsPage/>}/>
+              <Route path={`/editClassCourse/`}  element={<EditClassCoursePage />}/>              
               <Route path={`/control/`} >
                 <Route path={`:id/:name`} element={<PresentControl/>}/>
               </Route>

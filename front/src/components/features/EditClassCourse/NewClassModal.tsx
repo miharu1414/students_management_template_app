@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, Button, Flex, useDisclosure, Modal, Table, Thead, Tbody, Tr, Th, Td , Select, Divider, HStack, Text, Textarea,
     ModalOverlay, 
     ModalContent,
@@ -23,6 +23,17 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
     const { ...rest } = props;
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const [disable, setDisable] = useState<boolean>(true)
+
+    useEffect(() => {
+      if (rest.classInfo.className === ""){
+        setDisable(true)
+      }
+      else {
+        setDisable(false)
+      }
+    }, [rest.classInfo.className])
 
     return (
       <>
@@ -49,7 +60,7 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                     <Text>クラス名：</Text>
                     <Box><Input value={rest.classInfo.className} onChange={(e)=>rest.updateClass(e.target.value)}></Input></Box>
                 </HStack>
-                <Button colorScheme='blue' mr={3} onClick={() => {
+                <Button colorScheme='blue' mr={3} isDisabled={disable} onClick={() => {
                   rest.onClickInsertClassInfo()
                   setTimeout(rest.GetClassesInfo, 1000)
                   onClose()

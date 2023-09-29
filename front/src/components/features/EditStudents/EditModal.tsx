@@ -19,17 +19,20 @@ type EditModalProps = {
     classes: classInfo[],
     courses: courseInfo[],
     loading: boolean,
-    error: boolean,
+    error1: boolean,
+    error2: boolean,
+    error3: boolean,
+
     onClickUpdateStudentInfo: () => void,
     onClickDeleteStudentInfo: () => void,
     updateClass: (newClass:string) => void,
     updateCourse: (newCourse:string) => void,
     updateAddress: (newAddress:string) => void,
     updateMemo: (newMemo:string) => void,
-    onGetStudent: () => void,
-    onGetClasses: () => void,
-    onGetCourses: () => void,
+    updateSubday: (newSubday:number) => void,
+
     GetStudentInfo: () => void,
+    onClick:()=>void;
 }
 
 const EditModal: FC<EditModalProps> = (props) => {
@@ -37,14 +40,14 @@ const EditModal: FC<EditModalProps> = (props) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
+    const subDate = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+
     return (
       <>
         <Button
                 onClick={() => {
                   onOpen()
-                  rest.onGetStudent()
-                  setTimeout(rest.onGetClasses, 300)
-                  setTimeout(rest.onGetCourses, 500)
+                  rest.onClick()
                 }}
                 padding={3} 
                 border={2} 
@@ -55,7 +58,7 @@ const EditModal: FC<EditModalProps> = (props) => {
                 textAlign={"center"}
                 textColor={"white"}>編集
         </Button>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -73,21 +76,20 @@ const EditModal: FC<EditModalProps> = (props) => {
           </ModalHeader>
           <ModalBody>
             <VStack>
-            {rest.error ? 
+            <Loading loading={rest.loading}>
+            {(rest.error1 || rest.error2 || rest.error3) ? 
               <Button onClick={() => {
-                rest.onGetClasses()
-                setTimeout(rest.onGetCourses, 500)
-                setTimeout(rest.onGetStudent, 1000)
+                rest.onClick()
               }}>リロード</Button>
               :
-              <Loading loading={rest.loading}>
+        <>
                 <HStack>
                     <Text>クラス：</Text>
                     <Box>
                       <Select placeholder={rest.studentInfo.class_name} onChange={(e)=>rest.updateClass(e.target.value)}>
                         {rest.classes.map((classData) => {
                           return (
-                            <option value={classData.classId} label={classData.className}/>
+                            <option value={classData.classId} >{classData.className}</option>
                           )
                         })}
                       </Select>
@@ -99,7 +101,19 @@ const EditModal: FC<EditModalProps> = (props) => {
                       <Select placeholder={rest.studentInfo.course_name} onChange={(e)=>rest.updateCourse(e.target.value)}>
                         {rest.courses.map((courseData) => {
                           return (
-                            <option value={courseData.courseId} label={courseData.courseName}/>
+                            <option value={courseData.courseId} >{courseData.courseName}</option>
+                          )
+                        })}
+                      </Select>
+                    </Box>
+                </HStack>
+                <HStack>
+                    <Text>振替日数：</Text>
+                    <Box>
+                      <Select placeholder={String(rest.studentInfo.subDay)} onChange={(e)=>rest.updateSubday(Number(e.target.value))}>
+                        {subDate.map((Data) => {
+                          return (
+                            <option value={Data} >{Data}</option>
                           )
                         })}
                       </Select>
@@ -113,8 +127,9 @@ const EditModal: FC<EditModalProps> = (props) => {
                     <Text>メモ：</Text>
                     <Box><Textarea value={rest.studentInfo.memo} onChange={(e)=>rest.updateMemo(e.target.value)}></Textarea></Box>
                 </HStack>
-                </Loading>
+               </>
             }
+             </Loading>
                 <Button colorScheme='blue' mr={3} onClick={() => {
                   rest.onClickUpdateStudentInfo()
                   setTimeout(rest.GetStudentInfo, 1000)
