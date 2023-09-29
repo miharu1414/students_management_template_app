@@ -58,7 +58,7 @@ const EditModal: FC<EditModalProps> = (props) => {
                 textAlign={"center"}
                 textColor={"white"}>編集
         </Button>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
