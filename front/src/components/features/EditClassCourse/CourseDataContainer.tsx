@@ -21,7 +21,6 @@ const CourseDataContainer: FC<CourseDataContainerProps> = (props) => {
     const [error, setError] = useState<boolean>(false)
 
     const GetCoursesInfo = async () => {
-        setLoading(true)
         try {
             const URL = process.env.REACT_APP_UTIL_API + 'getCourses';
             const response = await fetch(URL, {
@@ -61,17 +60,25 @@ const CourseDataContainer: FC<CourseDataContainerProps> = (props) => {
           }
     }
 
+    const handleReload = ():void => {
+      setLoading(true);
+      GetCoursesInfo();
+    }
+
     useEffect(() => {
+      setLoading(true)
         setTimeout(GetCoursesInfo,1000)
-      
+    
     }, [])
+    
+
 
     return (
         <>
         <VStack>
           <CourseDatasList
             courseInfo={coursesInfo}
-            GetCoursesInfo={GetCoursesInfo}
+            GetCoursesInfo={handleReload}
             loading={loading}
             error={error}
           />

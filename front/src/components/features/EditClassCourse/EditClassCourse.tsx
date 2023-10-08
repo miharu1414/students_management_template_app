@@ -36,7 +36,7 @@ const EditClassCourse: FC<EditClassCourseProps> = (props) => {
                     <ClassDataContainer/>
                 </Box>
                 :
-                <HStack spacing={"100"}>
+                <HStack spacing={"100"} alignItems={"baseline"}>
                     <CourseDataContainer/>
                     <ClassDataContainer/>
                 </HStack>
