@@ -21,7 +21,6 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
     const [error, setError] = useState<boolean>(false)
 
     const GetClassesInfo = async () => {
-        setLoading(true)
         try {
             const URL = process.env.REACT_APP_UTIL_API + 'getClassesNoneUpdate';
             const response = await fetch(URL, {
@@ -61,8 +60,14 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
           }
     }
 
+    const handleReload = ():void =>{
+      setLoading(true)
+      GetClassesInfo()
+    }
+
     useEffect(() => {
-        GetClassesInfo()
+      setLoading(true)
+      GetClassesInfo()
     }, [])
 
     return (
@@ -70,7 +75,7 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
       <VStack>
         <ClassDatasList
            classInfo={classesInfo}
-           GetClassesInfo={GetClassesInfo}
+           GetClassesInfo={handleReload}
            loading={loading}
            error={error}
         />
