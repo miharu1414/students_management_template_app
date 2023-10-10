@@ -62,12 +62,12 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
 
     const handleReload = ():void =>{
       setLoading(true)
-      GetClassesInfo()
+      setTimeout(GetClassesInfo,1000)
     }
 
     useEffect(() => {
       setLoading(true)
-      GetClassesInfo()
+      setTimeout(GetClassesInfo,1000)
     }, [])
 
     return (

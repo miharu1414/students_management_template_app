@@ -163,6 +163,13 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
         }))
     } 
 
+    const updateSubday = (newSubday: number)=> {
+      setStudentInfo((prevValue)=>({
+          ...prevValue,
+          subDay:  newSubday,
+      }))
+  } 
+
     const handleInsertStudentInfo = async () => {
         try {
             console.log(studentInfo.course_name)
@@ -230,6 +237,7 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
            updateCourse={updateCourse}
            updateAddress={updateAddress}
            updateMemo={updateMemo}
+           updateSubday={updateSubday}
            onGetClasses={GetClasses}
            onGetCourses={GetCourses}
            GetStudentInfo={rest.GetStudentInfo}
