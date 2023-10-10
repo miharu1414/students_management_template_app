@@ -23,7 +23,7 @@ const StudentDataMobile: FC<StudentDataMobileProps> = (props) => {
 
     return (
       <>
-        <Tr>
+        <Tr alignItems={"center"}>
             <Td onClick={onOpen}>{rest.studentInfo.name}
             <DetailStudent student={rest.studentInfo} isOpen={isOpen} onClose={onClose}/>
             </Td>

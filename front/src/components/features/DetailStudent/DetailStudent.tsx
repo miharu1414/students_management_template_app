@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, Box , Heading, Divider} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, Box , Heading, Divider, Select} from "@chakra-ui/react";
 import { Present, attendData, studentInfoDetail } from "src/components/features/DetailStudent/DetailStudentContainer";
 import {
     Stat,
@@ -11,9 +11,11 @@ import {
   } from '@chakra-ui/react'
 type DetailStudentProps = {
     children? : React.ReactNode;
-    
+    selectedFiscalYear: string;
+    fiscalYears: string[];
     studentInfo?: studentInfoDetail
     attendData? : attendData[];
+    onChangeSelectedFiscalYear: (value:string)=>void;
 
 }
 
@@ -52,6 +54,20 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
 
     return (
         <Box width={"85%"} >
+            <Box width={"100px"} marginBottom={2}>
+                <Select placeholder={rest.selectedFiscalYear} onChange={(e)=>rest.onChangeSelectedFiscalYear(e.target.value)}>
+                {rest.fiscalYears.map((fiscalYear) => {
+                    // placeholderと同じ値の場合、何も表示しない
+                    if (fiscalYear === rest.selectedFiscalYear) {
+                        return null;
+                    }
+                    return (
+                    <option value={fiscalYear} >{fiscalYear}</option>
+                    )
+                })}
+                </Select>
+            </Box>
+
             <Box onClick={()=>{
               console.log("詳細画面モーダル")
             }}>
@@ -73,7 +89,12 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
               <StatLabel><StatArrow type='decrease' />残り振替</StatLabel>
                   <StatNumber>{rest.attendData ? countSubstituteNum(rest.attendData) : ""}</StatNumber>
               </Stat>
+              <Stat>
+              <StatLabel>振替調整日</StatLabel>
+                  <StatNumber>{rest.attendData ? countSubstituteNum(rest.attendData) : ""}</StatNumber>
+              </Stat>
               </StatGroup>
+              
             </Box>
 
             <Table variant="simple">

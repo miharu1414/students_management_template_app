@@ -87,7 +87,12 @@ const EditModal: FC<EditModalProps> = (props) => {
                     <Text>クラス：</Text>
                     <Box>
                       <Select placeholder={rest.studentInfo.class_name} onChange={(e)=>rest.updateClass(e.target.value)}>
+
                         {rest.classes.map((classData) => {
+                          // placeholderと同じ値の場合、何も表示しない
+                          if (classData.className === rest.studentInfo.class_name) {
+                            return null;
+                          }
                           return (
                             <option value={classData.classId} >{classData.className}</option>
                           )
@@ -100,6 +105,10 @@ const EditModal: FC<EditModalProps> = (props) => {
                     <Box>
                       <Select placeholder={rest.studentInfo.course_name} onChange={(e)=>rest.updateCourse(e.target.value)}>
                         {rest.courses.map((courseData) => {
+                          // placeholderと同じ値の場合、何も表示しない
+                          if (courseData.courseName === rest.studentInfo.course_name) {
+                            return null;
+                          }                          
                           return (
                             <option value={courseData.courseId} >{courseData.courseName}</option>
                           )
@@ -112,6 +121,9 @@ const EditModal: FC<EditModalProps> = (props) => {
                     <Box>
                       <Select placeholder={String(rest.studentInfo.subDay)} onChange={(e)=>rest.updateSubday(Number(e.target.value))}>
                         {subDate.map((Data) => {
+                          if (rest.studentInfo.subDay=== Data) {
+                            return null;
+                          }     
                           return (
                             <option value={Data} >{Data}</option>
                           )
