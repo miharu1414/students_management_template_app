@@ -79,20 +79,19 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
             
 
               <StatGroup >
-                  <Stat>
-                  <StatLabel><StatArrow type='increase' />出席数</StatLabel>
-                  <StatNumber>{rest.attendData ? countPresent(rest.attendData) : ""}</StatNumber>
+                <Stat>
+                    <StatLabel><StatArrow type='increase' />出席数</StatLabel>
+                    <StatNumber>{rest.attendData ? countPresent(rest.attendData) : ""}</StatNumber>
+                </Stat>
 
-              </Stat>
-
-              <Stat>
-              <StatLabel><StatArrow type='decrease' />残り振替</StatLabel>
-                  <StatNumber>{rest.attendData ? countSubstituteNum(rest.attendData) : ""}</StatNumber>
-              </Stat>
-              <Stat>
-              <StatLabel>振替調整日</StatLabel>
-                  <StatNumber>{rest.attendData ? countSubstituteNum(rest.attendData) : ""}</StatNumber>
-              </Stat>
+                <Stat>
+                    <StatLabel><StatArrow type='decrease' />残り振替</StatLabel>
+                    <StatNumber>{rest.attendData ? countSubstituteNum(rest.attendData) : ""}</StatNumber>
+                </Stat>
+                <Stat>
+                    <StatLabel>振替調整日</StatLabel>
+                    <StatNumber>{rest.attendData ? countSubstituteNum(rest.attendData) : ""}</StatNumber>
+                </Stat>
               </StatGroup>
               
             </Box>
