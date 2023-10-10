@@ -60,7 +60,7 @@ export const StudentSearchBox: FC<StudentSearchBoxProps> = (props) => {
                   onChange={(e) => {
                     setPrevText(e.target.value)
                     handleChange(e.target.value)}
-                }
+                  }
                   onCompositionStart={() => {
                     isImeOn.current = true // IME 入力中フラグを ON
                   }}
@@ -75,9 +75,9 @@ export const StudentSearchBox: FC<StudentSearchBoxProps> = (props) => {
 
 
               </HStack>
-              <HStack>
+              <HStack marginTop={2} width={"95%"}>
                     <Text>コース：</Text>
-                    <Box>
+                    <Box width={"60%"}>
                       <Select placeholder="指定なし" onChange={(e)=>rest.onChangeSelectedCourse(e.target.value)}>
                         {rest.courses.map((courseData) => {
                           return (

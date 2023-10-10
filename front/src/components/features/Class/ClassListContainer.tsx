@@ -15,8 +15,6 @@ const ClassListContainer: FC<ClassListContainerProps> = (props) => {
   const { children, ...rest } = props;
   const [loading,setLoading] = useState<boolean>(false);
 
-
-
   const [classList, setClassList] = useState<Array<Class>>([]);
 
     // ランダムな日付と時間を生成する関数

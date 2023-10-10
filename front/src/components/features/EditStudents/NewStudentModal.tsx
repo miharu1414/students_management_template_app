@@ -22,6 +22,7 @@ type NewStudentModalProps = {
     updateCourse: (newCourse:string) => void,
     updateAddress: (newAddress:string) => void,
     updateMemo: (newMemo:string) => void,
+    updateSubday: (newSubday:number) => void,
     onClickInsertStudentInfo: () => void,
     onGetClasses: () => void,
     onGetCourses: () => void,
@@ -33,6 +34,8 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [sendDisable, setSendDisable] = useState<boolean>(true)
+
+    const subDate = [0,1,2,3,4,5,6,7,8,9,10,11,12]
 
     useEffect(() => {
       if (rest.studentInfo.address==="" || rest.studentInfo.name==="" || rest.studentInfo.kana==="" || rest.studentInfo.memo==="" || rest.studentInfo.class_name==="" || rest.studentInfo.course_name===""){
@@ -52,19 +55,19 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
     return (
       <>
         <Button 
-                onClick={() => {
-                  onOpen()
-                  rest.onGetClasses()
-                  setTimeout(rest.onGetCourses, 1000)
-                }}
-                padding={3} 
-                border={2} 
-                borderColor={"whiteAlpha.200"}
-                width={"100px"}
-                borderRadius={10}
-                backgroundColor={"blue.300"}
-                textAlign={"center"}
-                textColor={"white"}>新規追加
+          onClick={() => {
+            onOpen()
+            rest.onGetClasses()
+            setTimeout(rest.onGetCourses, 1000)
+          }}
+          padding={3} 
+          border={2} 
+          borderColor={"whiteAlpha.200"}
+          width={"100px"}
+          borderRadius={10}
+          backgroundColor={"blue.300"}
+          textAlign={"center"}
+          textColor={"white"}>新規追加
         </Button>
         <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -97,8 +100,21 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                     <Box>
                       <Select placeholder='コースを選んでください' onChange={(e)=>rest.updateCourse(e.target.value)}>
                         {rest.courses.map((courseData) => {
+
                           return (
                             <option value={courseData.courseId}>{courseData.courseName}</option>
+                          )
+                        })}
+                      </Select>
+                    </Box>
+                </HStack>
+                <HStack>
+                    <Text>振替日数：</Text>
+                    <Box>
+                      <Select placeholder={String(rest.studentInfo.subDay)} onChange={(e)=>rest.updateSubday(Number(e.target.value))}>
+                        {subDate.map((Data) => {
+                          return (
+                            <option value={Data} >{Data}</option>
                           )
                         })}
                       </Select>

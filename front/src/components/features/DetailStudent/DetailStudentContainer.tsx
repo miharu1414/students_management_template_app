@@ -39,7 +39,10 @@ const DetailStudentContainer: FC<DetailStudentContainerProps> = (props) => {
     const {children, ...rest} = props;
     const [loading,setLoading] = useState<boolean>(true)
     const [studentInfo,setStudentInfo] = useState<studentInfoDetail>()
-    const [attendData,setAttendDate] = useState<attendData[]>([])
+    const [attendData,setAttendData] = useState<attendData[]>([])
+    const [displayAttendData,setDisplayAttendData] = useState<attendData[]>([])
+    const [selectedFiscalYear,setSelectedFiscalYear] = useState<string>("")
+    const [fiscalYears, setFiscalYears] = useState<string[]>([])
 
     const FetchStudentAttendDetail = async () => {
         setLoading(true)
@@ -68,7 +71,7 @@ const DetailStudentContainer: FC<DetailStudentContainerProps> = (props) => {
           const jsonData = await response.json();
           console.log('受け取ったJSONデータ:', jsonData);
           setStudentInfo(jsonData.studentsData);
-          setAttendDate(jsonData.attendData);
+          setAttendData(jsonData.attendData);
           setLoading(false)
     
           // 任意の追加処理をここで行う
@@ -78,14 +81,64 @@ const DetailStudentContainer: FC<DetailStudentContainerProps> = (props) => {
         }
       };
 
+      const handleSelectFiscalYear = ():void => {
+        const fiscalYears = new Set<string>()
+        attendData.map((attend)=>{
+          fiscalYears.add(attend.fiscalYear)
+        })
+        const listFiscalYears: string[] = [...fiscalYears]
+        setFiscalYears(listFiscalYears)
+        
+      }
+
+      const handleDisplayAttendData = (): void => {
+        // fiscalYearがselectedFiscalYearに合致するデータをフィルタリングして取得
+        const filteredAttendData = attendData.filter((data) => {
+          return data.fiscalYear === selectedFiscalYear;
+        });
+      
+        // filteredAttendDataをdisplayAttendDataに格納
+        setDisplayAttendData(filteredAttendData);
+      };
+      const calculateFiscalYear = ():string => {
+        const today = new Date();
+        const year: number = today.getFullYear();
+        const month = today.getMonth() + 1; // 月は0から始まるため+1する
+      
+        // 年度の開始月を設定します（通常は4月）
+        const fiscalYearStartMonth = 4;
+      
+        // 今日の月が年度の開始月よりも前の場合、前の年が年度となります
+        if (month < fiscalYearStartMonth) {
+          const fiscalYear: number = year - 1
+          return String(fiscalYear)
+        } else {
+          return String(year);
+        }
+      }
+      
+
       useEffect(()=>{
+        setSelectedFiscalYear(calculateFiscalYear())
         FetchStudentAttendDetail();
       },[])
 
+      useEffect(()=>{
+        handleSelectFiscalYear()
+      },[attendData])
+
+      useEffect(()=>{
+        handleDisplayAttendData()
+      },[selectedFiscalYear])
+
     return (
         <Loading loading={loading}>
-            <DetailStudent studentInfo={studentInfo}
-                attendData={attendData}
+            <DetailStudent 
+              selectedFiscalYear={selectedFiscalYear}
+              onChangeSelectedFiscalYear={setSelectedFiscalYear}
+              fiscalYears={fiscalYears}
+              studentInfo={studentInfo}
+              attendData={displayAttendData}
             />
 
         </Loading>
