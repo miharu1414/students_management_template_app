@@ -16,7 +16,7 @@ type StudentSearchBoxProps = {
     onChangeSearchStr: (value:string)=>void;
 }
 
-export const StudentSearchBox: FC<StudentSearchBoxProps> = (props) => {
+  export const StudentSearchBox: FC<StudentSearchBoxProps> = (props) => {
     const {children, ...rest} = props;
     const ctx = useContext(userContext);
 
@@ -39,7 +39,9 @@ export const StudentSearchBox: FC<StudentSearchBoxProps> = (props) => {
 
         // ここで最新の入力値にもとづいて検索処理などを行う
         console.log(text)
-    }
+  }
+
+
   return (
 
         <VStack spacing={0}  borderRadius={"5px"}>
