@@ -41,7 +41,10 @@ const StudentData: FC<StudentDataProps> = (props) => {
             <Td flexShrink={"0"}>{rest.studentInfo.name}</Td>
             <Td flexShrink={"0"}>{rest.studentInfo.class_name}</Td>
             <Td flexShrink={"0"}>{rest.studentInfo.subDay}</Td>
-            <Td flexShrink={"0"}>{rest.studentInfo.address}</Td>
+            <Td style={{ flexShrink: 0 }}>
+                <a href={`tel:${rest.studentInfo.address}`}>
+                    {rest.studentInfo.address}</a>
+            </Td>
             <Td>{rest.studentInfo.memo}</Td>
             <EditModalContainer 
               studentId={rest.studentInfo.id}
