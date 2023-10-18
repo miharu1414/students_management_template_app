@@ -3,84 +3,35 @@ import { Box, VStack } from "@chakra-ui/react";
 import CourseDatasList from "./CourseDataList";
 import NewCourseModalContainer from "./NewCourseModalContainer";
 
+import { courseInfo, studentInfo } from "./ClassCourseStudentsContainer";
+
 type CourseDataContainerProps = {
     children? : Node;
+    loading: boolean;
+    coursesInfo: courseInfo[],
+    studentsInfo: studentInfo[];
+    error: boolean;
+    GetCoursesInfo: () => void,
+    onClickReloadCourse: ()=> void;
 }
 
-export type courseInfo = {
-    courseId: string,
-    courseName: string,
-}
+
 
 const CourseDataContainer: FC<CourseDataContainerProps> = (props) => {
-    const {children} = props;
+  const { children, ...rest } = props;
 
-    const [coursesInfo, setCoursesInfo] = useState<Array<courseInfo>>([
-    ]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<boolean>(false)
 
-    const GetCoursesInfo = async () => {
-        try {
-            const URL = process.env.REACT_APP_UTIL_API + 'getCourses';
-            const response = await fetch(URL, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                // 必要な場合、他のヘッダーも追加できます
-              },
-              body: JSON.stringify({}),
-            });
-      
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-      
-            // リクエストが成功した場合の処理
-            console.log(response);
-      
-            // JSONデータを取得
-            const jsonData = await response.json();
-            console.log(jsonData)
-            // 任意の追加処理をここで行う
 
-            const newCourses: courseInfo[] = [];
-            jsonData.course_info.map((course:courseInfo) => {
-                const CourseData: courseInfo = {courseId: course.courseId, courseName: course.courseName}
-                newCourses.push(CourseData)
-            })
-            setCoursesInfo(newCourses)
-            setLoading(false)
-            setError(false)
-          } catch (error) {
-            // エラーハンドリング
-            setError(true)
-            console.error('POSTリクエストエラー:', error);
-          }
-    }
-
-    const handleReload = ():void => {
-      setLoading(true);
-      setTimeout(GetCoursesInfo,1000)
-    }
-
-    useEffect(() => {
-      setLoading(true)
-      setTimeout(GetCoursesInfo,100)
     
-    }, [])
-    
-
-
     return (
         <>
         <VStack>
           <CourseDatasList
-            courseInfo={coursesInfo}
-            GetCoursesInfo={handleReload}
-            loading={loading}
-            error={error}
+            courseInfo={rest.coursesInfo}
+            students={rest.studentsInfo}
+            GetCoursesInfo={rest.onClickReloadCourse}
+            loading={rest.loading}
+            error={rest.error}
           />
           <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
                   width={"120px"}
@@ -92,7 +43,7 @@ const CourseDataContainer: FC<CourseDataContainerProps> = (props) => {
                   marginBottom={8}
                   >
                   <NewCourseModalContainer
-                    GetCoursesInfo={GetCoursesInfo}
+                    GetCoursesInfo={rest.GetCoursesInfo}
                   />
           </Box>
         </VStack>

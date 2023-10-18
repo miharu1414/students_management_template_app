@@ -25,7 +25,7 @@ const StudentDataMobile: FC<StudentDataMobileProps> = (props) => {
       <>
         <Tr alignItems={"center"}>
             <Td onClick={onOpen}>{rest.studentInfo.name}
-            <DetailStudent student={rest.studentInfo} isOpen={isOpen} onClose={onClose}/>
+              <DetailStudent student={rest.studentInfo} isOpen={isOpen} onClose={onClose}/>
             </Td>
 
             <EditModalContainer 
