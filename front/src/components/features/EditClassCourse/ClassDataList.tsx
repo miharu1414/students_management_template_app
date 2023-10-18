@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, VStack,
 } from "@chakra-ui/react";
-import { classInfo } from "./ClassDataContainer";
+import { classInfo } from "./ClassCourseStudentsContainer";
 import ClassData from "./ClassData";
 import Loading from "src/components/common/Loading";
 
@@ -29,6 +29,7 @@ const ClassDatasList: FC<ClassDatasListProps> = (props) => {
                             <Thead>
                                 <Tr>
                                     <Th>クラス名</Th>
+                                    <Th></Th>
                                 </Tr>
                             </Thead>
                             <Tbody>

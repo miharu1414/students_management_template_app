@@ -2,82 +2,33 @@ import { FC, useEffect, useState } from "react";
 import { Box, VStack } from "@chakra-ui/react";
 import ClassDatasList from "./ClassDataList";
 import NewClassModalContainer from "./NewClassModalContainer";
+import { classInfo, studentInfo } from "./ClassCourseStudentsContainer";
 
 type ClassDataContainerProps = {
     children? : Node;
+    classesInfo: classInfo[],
+    studentsInfo: studentInfo[]
+    loading:boolean;
+    error:boolean;
+    GetClassesInfo: () => void,
+    onClickReloadClass: ()=>void,
+    
 }
 
-export type classInfo = {
-    classId: string,
-    className: string,
-}
 
 const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
-    const {children} = props;
+  const { children, ...rest } = props;
 
-    const [classesInfo, setClassesInfo] = useState<Array<classInfo>>([
-    ]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<boolean>(false)
-
-    const GetClassesInfo = async () => {
-        try {
-            const URL = process.env.REACT_APP_UTIL_API + 'getClassesNoneUpdate';
-            const response = await fetch(URL, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                // 必要な場合、他のヘッダーも追加できます
-              },
-              body: JSON.stringify({}),
-            });
-      
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-      
-            // リクエストが成功した場合の処理
-            console.log(response);
-      
-            // JSONデータを取得
-            const jsonData = await response.json();
-            console.log(jsonData)
-            // 任意の追加処理をここで行う
-
-            const newClasses: classInfo[] = [];
-            jsonData.class_info.map((classData:classInfo) => {
-                const ClassData: classInfo = {classId: classData.classId, className: classData.className}
-                newClasses.push(ClassData)
-            })
-            setClassesInfo(newClasses)
-            setLoading(false)
-            setError(false)
-          } catch (error) {
-            // エラーハンドリング
-            setError(true)
-            console.error('POSTリクエストエラー:', error);
-          }
-    }
-
-    const handleReload = ():void =>{
-      setLoading(true)
-      setTimeout(GetClassesInfo,1000)
-    }
-
-    useEffect(() => {
-      setLoading(true)
-      setTimeout(GetClassesInfo,1000)
-    }, [])
+   
 
     return (
       <>
       <VStack>
         <ClassDatasList
-           classInfo={classesInfo}
-           GetClassesInfo={handleReload}
-           loading={loading}
-           error={error}
+           classInfo={rest.classesInfo}
+           GetClassesInfo={rest.onClickReloadClass}
+           loading={rest.loading}
+           error={rest.error}
         />
         <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
                 width={"120px"}
@@ -89,7 +40,7 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
                 marginBottom={8}
                 >
                 <NewClassModalContainer
-                  GetClassesInfo={GetClassesInfo}
+                  GetClassesInfo={rest.GetClassesInfo}
                 />
         </Box>
         </VStack>

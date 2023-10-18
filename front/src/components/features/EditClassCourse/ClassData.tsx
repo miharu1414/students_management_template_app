@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useDisclosure, Tr, Td} from "@chakra-ui/react";
-import { classInfo } from "./ClassDataContainer";
+import { classInfo } from "./ClassCourseStudentsContainer";
 import EditClassModalContainer from "./EditClassModalContainer";
 
 type ClassDataProps = {
