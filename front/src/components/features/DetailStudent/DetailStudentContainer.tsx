@@ -125,6 +125,7 @@ const DetailStudentContainer: FC<DetailStudentContainerProps> = (props) => {
 
       useEffect(()=>{
         handleSelectFiscalYear()
+        handleDisplayAttendData()
       },[attendData])
 
       useEffect(()=>{

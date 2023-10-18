@@ -20,7 +20,13 @@ const Header: FC<HeaderProps> = (props) => {
     const navigate = useNavigate()
  
     return (
-        <Box width="100%" display="flex" justifyContent="flex-end" height={"50px"}> {/* justifyContentを追加 */}
+        <Box 
+            width="100%" 
+            display="flex" 
+            justifyContent="flex-end" 
+            height={"50px"}
+            
+        > {/* justifyContentを追加 */}
             
             <Tooltip
               placement={"top"}

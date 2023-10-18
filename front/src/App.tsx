@@ -50,37 +50,34 @@ export const App = () => (
           <BrowserRouter basename="/build">
             <LoginCheck/>
             <Header/>
-            <Routes>
+              <Routes>
 
-              <Route path={`/`}  element={<Home/>}/>
+                <Route path={`/`}  element={<Home/>}/>
 
-              <Route path={`/register/`}  />
+                <Route path={`/register/`}  />
 
-              <Route path={`/login/`} element={<Login/>} />
+                <Route path={`/login/`} element={<Login/>} />
 
-              <Route path={`/doLogin/`} >
-                <Route path={`:id/:name`} element={<LoginFunction/>}/>
-              </Route>
+                <Route path={`/doLogin/`} >
+                  <Route path={`:id/:name`} element={<LoginFunction/>}/>
+                </Route>
 
-              <Route path={`/logout/`} element={<Logout/>} />
+                <Route path={`/logout/`} element={<Logout/>} />
 
 
-              <Route path={`/edit/`}  element={<EditStudentsPage/>}/>
-              <Route path={`/editClassCourse/`}  element={<EditClassCoursePage />}/>              
-              <Route path={`/control/`} >
-                <Route path={`:id/:name`} element={<PresentControl/>}/>
-              </Route>
-              <Route path={`/detail/`} >
-                <Route path={`:id`} element={<Detail/>}/>
-              </Route>
+                <Route path={`/edit/`}  element={<EditStudentsPage/>}/>
+                <Route path={`/editClassCourse/`}  element={<EditClassCoursePage />}/>              
+                <Route path={`/control/`} >
+                  <Route path={`:id/:name`} element={<PresentControl/>}/>
+                </Route>
+                <Route path={`/detail/`} >
+                  <Route path={`:id`} element={<Detail/>}/>
+                </Route>
 
               <Route path={`/extraAttend/`}  element={<ExtraAttendPage/>}/>
             </Routes>
           </BrowserRouter>
-
         </VStack>
-
-
       </Box>
 
 

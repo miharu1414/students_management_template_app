@@ -1,21 +1,36 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, VStack,
 } from "@chakra-ui/react";
-import { courseInfo } from "./CourseDataContainer";
+import { courseInfo, studentInfo } from "./ClassCourseStudentsContainer";
 import CourseData from "./CourseData";
 import Loading from "src/components/common/Loading";
 
 type CourseDatasListProps = {
     children?: React.ReactNode;
     courseInfo: courseInfo[],
-    GetCoursesInfo: () => void,
+    students: studentInfo[]
     loading: boolean,
     error: boolean,
+    GetCoursesInfo: () => void,
 }
 
 const CourseDatasList: FC<CourseDatasListProps> = (props) => {
     const { children, ...rest } = props;
+    const [studentsByCourse, setStudentsByCourse] = useState<Array<studentInfo[]>>([]);
+  // courseIdごとにstudentsを整理
+  const organizeStudentsByCourse = () => {
+    const organizedData:Array<studentInfo[]> = [];
 
+    rest.courseInfo.forEach((course) => {
+      organizedData.push(rest.students.filter((student) => student.course_id === course.courseId))
+    });
+
+    setStudentsByCourse(organizedData);
+  };
+
+  useEffect(()=>{
+    organizeStudentsByCourse()
+  },[rest.students, rest.courseInfo])
     return (
 
         <Box  >
@@ -30,6 +45,7 @@ const CourseDatasList: FC<CourseDatasListProps> = (props) => {
                             <Thead>
                                 <Tr>
                                     <Th>コース名</Th>
+                                    <Th></Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -38,6 +54,7 @@ const CourseDatasList: FC<CourseDatasListProps> = (props) => {
                         <CourseData
                             index={index}
                             courseInfo={course}
+                            students={studentsByCourse[index] ? studentsByCourse[index] : []}
                             key={index}
                             GetCoursesInfo={rest.GetCoursesInfo}
                         />

@@ -1,4 +1,6 @@
 import { FC,useContext } from "react";
+import { PhoneIcon } from '@chakra-ui/icons'
+
 import {
     Modal,
     ModalOverlay,
@@ -12,6 +14,7 @@ import {
     HStack,
     Text,
     Box,
+    Link,
   } from '@chakra-ui/react'
 import { userContext } from "src/hooks/UserInfo";
 import { studentInfo } from "src/components/features/EditStudents/StudentDataContainer";
@@ -57,7 +60,12 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
                 </HStack>
                 <HStack fontSize={"lg"}>
                     <Text>緊急連絡先：</Text>
-                    <Box>{rest.student.address}</Box>
+                    <Box >
+                        <Link href={`tel:${rest.student.address}`} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                            {rest.student.address}　<PhoneIcon />
+                        </Link>
+                    </Box>
+
                 </HStack>
                 <HStack fontSize={"lg"}>
                     <Text>振替調整日：</Text>

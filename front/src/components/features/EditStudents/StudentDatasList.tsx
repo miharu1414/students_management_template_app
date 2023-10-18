@@ -46,6 +46,8 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                 <Thead>
                                     <Tr>
                                         <Th>名前</Th>
+                                        <Th>コース</Th>
+                                        <Th>編集</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
