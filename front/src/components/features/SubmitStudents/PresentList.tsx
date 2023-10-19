@@ -6,7 +6,7 @@ import {  useParams, Link } from 'react-router-dom';
 import PresentListItem from "./PresentListItem"
 import { presentInfo } from "./PresentListContainer";
 import SubmitModal from "src/components/features/SubmitStudents/SubmitModal";
-import DateSelector from "src/components/common/DataSelector";
+import DateSelector from "src/components/common/DateSelector";
 import Loading from "src/components/common/Loading";
 
 type PresentListProps = {

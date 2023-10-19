@@ -9,9 +9,11 @@ import { Box, Button, useDisclosure, Modal, HStack, Text, Textarea,
     VStack,
 } from "@chakra-ui/react";
 import { classInfo } from "./EditClassModalContainer";
+import Loading from "src/components/common/Loading";
 
 type EditClassModalProps = {
-    classInfo: classInfo,
+    classInfo: classInfo;
+    loading: boolean;
     onClickUpdateClassInfo: () => void,
     updateClass: (newClass:string) => void,
     getClassInfo: () => void,
@@ -46,18 +48,21 @@ const EditClassModal: FC<EditClassModalProps> = (props) => {
             <Text>クラスの編集</Text>
           </ModalHeader>
           <ModalBody>
+
             <VStack>
+              <Loading loading={rest.loading}>
                 <HStack>
-                    <Text>クラスの名前：</Text>
-                    <Box><Input value={rest.classInfo.className} onChange={(e)=> rest.updateClass(e.target.value) }></Input></Box>
-                </HStack>
-                <Button colorScheme='blue' mr={3} onClick={() => {
-                  rest.onClickUpdateClassInfo()
-                  setTimeout(rest.GetClassesInfo, 500)
-                  onClose()
-                }}>
-                    更新
-                </Button>
+                        <Text>クラスの名前：</Text>
+                        <Box><Input value={rest.classInfo.className} onChange={(e)=> rest.updateClass(e.target.value) }></Input></Box>
+                    </HStack>
+                    <Button colorScheme='blue' mr={3} onClick={() => {
+                      rest.onClickUpdateClassInfo()
+                      setTimeout(rest.GetClassesInfo, 500)
+                      onClose()
+                    }}>
+                        更新
+                  </Button>
+              </Loading>
             </VStack>
           </ModalBody>
 

@@ -1,5 +1,6 @@
-import { FC } from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, Box , Heading, Divider, Select} from "@chakra-ui/react";
+import { FC, useState } from "react";
+import { Table, Thead, Tbody, Tr, Th, Td, Box , Heading, Divider, Select, IconButton, Button} from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 import { Present, attendData, studentInfoDetail } from "src/components/features/DetailStudent/DetailStudentContainer";
 import {
     Stat,
@@ -8,19 +9,49 @@ import {
     StatHelpText,
     StatArrow,
     StatGroup,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
   } from '@chakra-ui/react'
+import DetailStudentModal from "./DetailStudentModal";
+import DateSelector from "src/components/common/DateSelector";
+import DeleteStudentModal from "./DeleteStudentModal";
+
+type presentInfo = {
+    id: string;
+    name: string;
+    attendId: string;
+    classId?: string | undefined;
+    courseId?: string | undefined;
+}
+
 type DetailStudentProps = {
     children? : React.ReactNode;
     selectedFiscalYear: string;
     fiscalYears: string[];
     studentInfo?: studentInfoDetail
     attendData? : attendData[];
+    presentInfo : presentInfo;
+    selectedDate: Date;
     onChangeSelectedFiscalYear: (value:string)=>void;
-
+    onChangeSelectedDate: (value:Date)=>void;
+    onChangePresentInfo: (id:string, value:string)=>void;
+    onChangeFetchStudent: () => void;
+    clickInsertStudentAttendance: ()=>void;
+    clickDeleteStudentAttendance: (index:string)=>void;
+    InsertStudent: () => void;
+    DeleteStudent: (index:string) => void;
 }
 
 const DetailStudent: FC<DetailStudentProps> = (props) => {
     const { children, ...rest } = props;
+
+    const modal1 = useDisclosure()
     
     const bgColorFunc = (value:string) => {
         if (value === "欠席") return "red.200";
@@ -48,9 +79,7 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
     const parseIntOrZero = (str:string):number => {
       const parsedInt = parseInt(str, 10);
       return isNaN(parsedInt) ? 0 : parsedInt;
-  }
-
-    
+    }    
 
     return (
         <Box width={"85%"} >
@@ -96,7 +125,7 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
               
             </Box>
 
-            <Table variant="simple">
+            <Table variant="simple" >
                         <Thead>
                             <Tr>
                                 <Th>回数</Th>
@@ -111,10 +140,38 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
                                     <Td>{formatDate(entry.date)}</Td>
                                     <Td 
                                     backgroundColor={bgColorFunc(entry.status)}>{entry.status}</Td>
+                                    <DeleteStudentModal index={entry.studentAttendId} DeleteStudent={rest.DeleteStudent} />
                                 </Tr>
                             ))}
                         </Tbody>
             </Table>
+            <Box mt="8px" display='flex' justifyContent='center'>
+                <Button onClick={modal1.onOpen}>出席情報追加</Button>
+            </Box>
+
+            <Modal isOpen={modal1.isOpen} onClose={modal1.onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                <ModalHeader>出席情報を追加します</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <Box display='flex' justifyContent='center' mb={"12px"}>
+                        <DateSelector selectedDate={rest.selectedDate} handleDateChange={rest.onChangeSelectedDate}/>
+                    </Box>
+                    <DetailStudentModal index={1} studentInfo={rest.presentInfo} onClickUpdateStudentInfo={rest.onChangePresentInfo}/>
+                </ModalBody>
+
+                <ModalFooter>
+                    <Button colorScheme='red' mr={3} onClick={modal1.onClose}>
+                    Close
+                    </Button>
+                    <Button colorScheme="blue" onClick={()=>{
+                        rest.InsertStudent()
+                        modal1.onClose()
+                    }}>登録</Button>
+                </ModalFooter>
+                </ModalContent>
+            </Modal>
         </Box>
 
     );

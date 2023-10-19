@@ -8,10 +8,12 @@ import { Box, Button, useDisclosure, Modal, HStack, Text, Textarea,
     Input,
     VStack,
 } from "@chakra-ui/react";
+import Loading from "src/components/common/Loading";
 import { courseInfo } from "./EditCourseModalContainer";
 
 type EditCourseModalProps = {
     courseInfo: courseInfo,
+    loading:boolean,
     onClickUpdateCourseInfo: () => void,
     updateCourse: (newCourse:string) => void,
     getCourseInfo: () => void,
@@ -47,17 +49,20 @@ const EditCourseModal: FC<EditCourseModalProps> = (props) => {
           </ModalHeader>
           <ModalBody>
             <VStack>
+              <Loading loading={rest.loading}>
                 <HStack>
-                    <Text>コースの名前：</Text>
-                    <Box><Input value={rest.courseInfo.courseName} onChange={(e)=> rest.updateCourse(e.target.value) }></Input></Box>
-                </HStack>
-                <Button colorScheme='blue' mr={3} onClick={() => {
-                  rest.onClickUpdateCourseInfo()
-                  setTimeout(rest.GetCoursesInfo, 1000)
-                  onClose()
-                }}>
+                      <Text>コースの名前：</Text>
+                      <Box><Input value={rest.courseInfo.courseName} onChange={(e)=> rest.updateCourse(e.target.value) }></Input></Box>
+                  </HStack>
+                  <Button colorScheme='blue' mr={3} onClick={() => {
+                    rest.onClickUpdateCourseInfo()
+                    setTimeout(rest.GetCoursesInfo, 1000)
+                    onClose()
+                  }}>
                     更新
                 </Button>
+              </Loading>
+               
             </VStack>
           </ModalBody>
 
