@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Box, VStack, theme, Stack, Divider, Button } from "@chakra-ui/react"
 import {  useParams, Link } from 'react-router-dom';
-import DateSelector from "src/components/common/DataSelector";
+import DateSelector from "src/components/common/DateSelector";
 import PresentListContainer from "src/components/features/SubmitStudents/PresentListContainer";
 import SubmitModal from "src/components/features/SubmitStudents/SubmitModal";
 type PresentControlProps = {
