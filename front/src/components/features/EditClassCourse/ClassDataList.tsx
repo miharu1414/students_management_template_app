@@ -1,13 +1,14 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, VStack,
 } from "@chakra-ui/react";
-import { classInfo } from "./ClassCourseStudentsContainer";
+import { classInfo, studentInfo } from "./ClassCourseStudentsContainer";
 import ClassData from "./ClassData";
 import Loading from "src/components/common/Loading";
 
 type ClassDatasListProps = {
-    children?: React.ReactNode;
+    children?: Node;
     classInfo: classInfo[],
+    students: studentInfo[],
     GetClassesInfo: () => void,
     loading: boolean,
     error: boolean,
@@ -16,6 +17,22 @@ type ClassDatasListProps = {
 const ClassDatasList: FC<ClassDatasListProps> = (props) => {
     const { children, ...rest } = props;
 
+    const [studentsByClass, setStudentsByClass] = useState<Array<studentInfo[]>>([]);
+    // class_idごとにstudentsを整理
+    const organizeStudentsByClass = () => {
+        const organizedData: Array<studentInfo[]> = [];
+      
+        rest.classInfo.forEach((classData) => {
+          const studentsForClass = rest.students.filter((student) => student.class_id === classData.classId);
+          organizedData.push(studentsForClass);
+        });
+      
+        setStudentsByClass(organizedData);
+      };
+      
+      useEffect(() => {
+        organizeStudentsByClass();
+      }, [rest.students, rest.classInfo]);
     return (
         <Box>
             <Heading size={"lg"} textAlign={"center"} marginBottom={2}>クラス管理</Heading>
@@ -39,6 +56,7 @@ const ClassDatasList: FC<ClassDatasListProps> = (props) => {
                             index={index}
                             classInfo={classData}
                             key={index}
+                            students={studentsByClass[index] ? studentsByClass[index] : []}
                             GetClassesInfo={rest.GetClassesInfo}
                         />
                     )

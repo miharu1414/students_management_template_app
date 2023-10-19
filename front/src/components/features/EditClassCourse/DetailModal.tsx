@@ -16,15 +16,15 @@ import {
     Link,
   } from '@chakra-ui/react'
 import { studentInfo } from "./ClassCourseStudentsContainer";
-type DetailCourseModalProps = {
+type DetailModalProps = {
     children? : Node;
     students: studentInfo[];
     isOpen: boolean;
-    courseName:string;
+    groupName:string;
     onClose: ()=> void;
 }
 
-const DetailCourseModal: FC<DetailCourseModalProps> = (props) => {
+const DetailModal: FC<DetailModalProps> = (props) => {
     const {children, ...rest} = props;
     const ctx = useContext(userContext);
 
@@ -36,7 +36,7 @@ const DetailCourseModal: FC<DetailCourseModalProps> = (props) => {
         <Modal isOpen={rest.isOpen} onClose={rest.onClose}>
             <ModalOverlay />
             <ModalContent>
-            <ModalHeader>{rest.courseName}詳細</ModalHeader>
+            <ModalHeader>{rest.groupName}詳細</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
             <VStack alignItems={"flex-start"} paddingLeft={4} spacing={2}>
@@ -66,4 +66,4 @@ const DetailCourseModal: FC<DetailCourseModalProps> = (props) => {
         </>
     );
 }
-export default DetailCourseModal;
+export default DetailModal;
