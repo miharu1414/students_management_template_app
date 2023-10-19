@@ -99,6 +99,10 @@ const PresentList: FC<PresentListProps> = (props) => {
                     onUpload={rest.onClickDelete}
                 />
             </Box>
+            <Box marginBottom={5}>
+                <Button colorScheme="orange"><Link to={"/extraAttend"}>振替を登録
+                </Link></Button>
+            </Box>
         
 
         
