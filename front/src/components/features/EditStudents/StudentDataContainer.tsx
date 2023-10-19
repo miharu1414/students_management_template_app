@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Box,  HStack } from "@chakra-ui/react";
+import { Box,  Button,  HStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import StudentDatasList from "./StudentDatasList";
 import NewStudentModalContainer from "./NewStudentModalContainer";
@@ -38,6 +38,7 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
     const [displayStudents,setDisplayStudents] = useState<Array<studentInfo>>([]);
     const [courses, setCourses] = useState<Array<courseInfo>>([])
     const [selectedCourse, setSelectedCourse] = useState<string>("");
+    const [checkSort, setCheckSort] = useState<boolean>(false)
 
     const GetStudentInfo = async () => {
         try {
@@ -143,9 +144,37 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
       await GetCourses();
     }
 
+
+
+    const sortName = () => {
+      const newData = [...displayStudents]; // 新しい配列を作成
+      newData.sort((a, b) => {
+        if (a.kana < b.kana) return -1;
+        else if (a.kana > b.kana) return 1;
+        return 0;
+      });
+      setDisplayStudents(newData); // 新しい配列をセット
+      setCheckSort(!checkSort)
+    }
+
+    const sortNameReverse = () => {
+      const newData = [...displayStudents]; // 新しい配列を作成
+      newData.sort((a, b) => {
+        if (a.kana < b.kana) return 1;
+        else if (a.kana > b.kana) return -1;
+        return 0;
+      });
+      setDisplayStudents(newData); // 新しい配列をセット
+      setCheckSort(!checkSort)
+    }
+
+    useEffect(() => {
+      console.log(displayStudents)
+
+   }, [displayStudents])
+
     useEffect(() => {
        handleOnOpenPage();
-
     }, [])
 
       const debouncedInputText = useDebounce(searchStr,500)
@@ -167,12 +196,12 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
           textAlign={"center"}
           textColor={"white"}
           marginBottom={3}
-
           >
           <Link to={"/"}>
           ホームヘ
           </Link>
         </Box> 
+      
         <Box >
             
           <Box padding={2} border={2} 
@@ -188,12 +217,8 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
                   <NewStudentModalContainer
                     GetStudentInfo={GetStudentInfo}
                   />
-              </Box>
-      </Box>
-
-
-
-
+          </Box>
+        </Box>
 
         <StudentDatasList
            studentInfo={displayStudents}
@@ -204,6 +229,9 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
            onChangeSelectedCourse={setSelectedCourse}
            GetStudentInfo={GetStudentInfo}
            onChangeSearchStr={setSearchStr}
+           checkSort={checkSort}
+           sortName={sortName}
+           sortNameReverse={sortNameReverse}
         />
 
       </>

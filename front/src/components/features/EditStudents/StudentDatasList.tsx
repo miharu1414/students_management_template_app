@@ -1,8 +1,11 @@
 import { FC, useEffect, useState, } from "react";
 
 import { Box, Button, Flex, Table, Thead, Tbody, Tr, Th, Td , Heading, Divider, VStack,
-    useDisclosure
+    useDisclosure,
+    IconButton,
 } from "@chakra-ui/react";
+import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
+
 import { studentInfo } from "./StudentDataContainer";
 import StudentData from "./StudentData";
 import StudentDataMobile from "./StudentDataMobile";
@@ -22,7 +25,9 @@ type StudentDatasListProps = {
     onChangeSearchStr: (value: string)=> void;
     onChangeSelectedCourse: (value:string) => void;
     GetStudentInfo: () => void,
-
+    checkSort: boolean;
+    sortName: () => void;
+    sortNameReverse: () => void;
 }
 
 const StudentDatasList: FC<StudentDatasListProps> = (props) => {
@@ -45,9 +50,7 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>
-                                        <Th>名前</Th>
-                                        <Th>コース</Th>
-                                        <Th>編集</Th>
+                                        <Th>名前 {rest.checkSort ? <IconButton aria-label='sort data' size={"sm"} onClick={rest.sortName} icon={<ChevronUpIcon/>}/> : <IconButton aria-label='sort data' size={"sm"} onClick={rest.sortNameReverse} icon={<ChevronDownIcon/>}/>}</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
@@ -78,7 +81,7 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>
-                                        <Th flexShrink={"0"}>名前</Th>
+                                        <Th flexShrink={"0"}>名前 {rest.checkSort ? <IconButton aria-label='sort data' size={"sm"} onClick={rest.sortName} icon={<ChevronUpIcon/>}/> : <IconButton aria-label='sort data' size={"sm"} onClick={rest.sortNameReverse} icon={<ChevronDownIcon/>}/>}</Th>
                                         <Th flexShrink={"0"}>クラス</Th>
                                         <Th flexShrink={"0"}>振替日数</Th>
                                         <Th flexShrink={"0"}>緊急連絡先</Th>

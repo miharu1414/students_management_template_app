@@ -7,7 +7,7 @@ import {   Link } from 'react-router-dom';
 import { presentInfo } from "./ExtraAttendContainer";
 import { classInfo } from "src/components/features/ExtraSubmit/ExtraAttendContainer";
 import SubmitModal from "src/components/features/SubmitStudents/SubmitModal";
-import DateSelector from "src/components/common/DataSelector";
+import DateSelector from "src/components/common/DateSelector";
 import Loading from "src/components/common/Loading";
 import { SearchStudentBox } from "src/components/features/ExtraSubmit/SearchStudentBox";
 import ExtraAttendItem from "./ExtraAttendItem";

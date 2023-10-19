@@ -14,10 +14,11 @@ import {
     HStack,
     Text,
     Box,
-    Link,
+    Spacer,
   } from '@chakra-ui/react'
 import { userContext } from "src/hooks/UserInfo";
 import { studentInfo } from "src/components/features/EditStudents/StudentDataContainer";
+import {  Link } from 'react-router-dom';
 
 type DetailStudentProps = {
     children? : Node;
@@ -30,6 +31,7 @@ type DetailStudentProps = {
 const DetailStudent: FC<DetailStudentProps> = (props) => {
     const {children, ...rest} = props;
     const ctx = useContext(userContext);
+    const attendData = "/detail/" + rest.student.id
         
     return (
         <>
@@ -60,10 +62,10 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
                 </HStack>
                 <HStack fontSize={"lg"}>
                     <Text>緊急連絡先：</Text>
-                    <Box >
-                        <Link href={`tel:${rest.student.address}`} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                    <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                        <a href={`tel:${rest.student.address}`}>
                             {rest.student.address}　<PhoneIcon />
-                        </Link>
+                        </a>
                     </Box>
 
                 </HStack>
@@ -80,6 +82,22 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
             </ModalBody>
     
             <ModalFooter>
+
+                    <Box padding={2} border={2} 
+                        borderColor={"whiteAlpha.200"}
+                        width={"120px"}
+                        borderRadius={10}
+                        backgroundColor={"blue.300"}
+                        textAlign={"center"}
+                        textColor={"white"}
+                        marginBottom={3}
+                        >
+                          <Link to={attendData} >
+                            出席簿へ
+                          </Link>  
+                    </Box>
+                
+                <Spacer></Spacer>
                 <Button colorScheme='blue' onClick={rest.onClose}>
                     閉じる
                 </Button>
