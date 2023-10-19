@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { Box, VStack, theme, Stack, Divider, Button } from "@chakra-ui/react"
-
+import { userContext } from "src/hooks/UserInfo";
 import {  useParams, Link } from 'react-router-dom';
 import PresentList from "./PresentList"
 
@@ -20,10 +20,11 @@ export type presentInfo = {
 
 const PresentListContainer: FC<PresentListContainerProps> = (props) => {
     const {children, ...rest} = props;
-
+    const ctx = useContext(userContext)
+    const selectedDate = ctx.selectedDate
+    const setSelectedDate = ctx.setUpdateDate
     const [studentsInfo, setStudentsInfo] = useState<Array<presentInfo>>([]);
     const [loading,setLoading] = useState<boolean>(false);
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [error, setError] = useState<boolean>(false);
     const [isDisable,setIsDisable] = useState<boolean>(false);
 

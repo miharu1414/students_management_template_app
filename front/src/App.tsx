@@ -1,5 +1,5 @@
 import * as React from "react"
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, BrowserRouter, Routes, Route} from "react-router-dom";
 import {
   ChakraProvider,
   Box,
@@ -47,7 +47,7 @@ export const App = () => (
         <VStack spacing={0}>
           
 
-          <BrowserRouter basename="/build">
+          <HashRouter basename="/build">
             <LoginCheck/>
             <Header/>
               <Routes>
@@ -76,7 +76,7 @@ export const App = () => (
 
               <Route path={`/extraAttend/`}  element={<ExtraAttendPage/>}/>
             </Routes>
-          </BrowserRouter>
+          </HashRouter>
         </VStack>
       </Box>
 

@@ -8,6 +8,7 @@ type NameProps = {
 const Name: FC<NameProps> = (props) => {
     const {children, ...rest} = props;
     const ctx = useContext(userContext);
+    const day = ctx.selectedDate
     return (
         <></>
     )
