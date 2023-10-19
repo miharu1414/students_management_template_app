@@ -27,6 +27,7 @@ const ClassDataContainer: FC<ClassDataContainerProps> = (props) => {
         <ClassDatasList
            classInfo={rest.classesInfo}
            GetClassesInfo={rest.onClickReloadClass}
+           students={rest.studentsInfo}
            loading={rest.loading}
            error={rest.error}
         />

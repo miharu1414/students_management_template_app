@@ -1,12 +1,14 @@
 import { FC, useEffect } from "react";
 import { useDisclosure, Tr, Td} from "@chakra-ui/react";
-import { classInfo } from "./ClassCourseStudentsContainer";
+import { classInfo, studentInfo } from "./ClassCourseStudentsContainer";
 import EditClassModalContainer from "./EditClassModalContainer";
+import DetailModal from "./DetailModal";
 
 type ClassDataProps = {
     children?: React.ReactNode;
     index: number;
     classInfo: classInfo,
+    students: studentInfo[];
     GetClassesInfo: () => void,
 }
 
@@ -22,7 +24,11 @@ const ClassData: FC<ClassDataProps> = (props) => {
     return (
       <>
         <Tr>
-            <Td>{rest.classInfo.className}</Td>
+        <Td onClick={onOpen} paddingRight={1}>
+              {rest.classInfo.className}
+              <DetailModal isOpen={isOpen} onClose={onClose} groupName={rest.classInfo.className} students={rest.students}/>
+            </Td>
+            <Td paddingX={2}>({rest.students.length}人)</Td>
             <EditClassModalContainer 
               classId={rest.classInfo.classId}
               GetClassesInfo={rest.GetClassesInfo}
