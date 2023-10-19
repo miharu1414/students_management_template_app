@@ -38,7 +38,7 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
     const subDate = [0,1,2,3,4,5,6,7,8,9,10,11,12]
 
     useEffect(() => {
-      if (rest.studentInfo.address==="" || rest.studentInfo.name==="" || rest.studentInfo.kana==="" || rest.studentInfo.memo==="" || rest.studentInfo.class_name==="" || rest.studentInfo.course_name===""){
+      if ( rest.studentInfo.name==="" || rest.studentInfo.kana===""  || rest.studentInfo.class_name==="" || rest.studentInfo.course_name===""){
         setSendDisable(true)
       }
       else {
@@ -111,13 +111,13 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                 <HStack>
                     <Text>振替日数：</Text>
                     <Box>
-                      <Select placeholder={String(rest.studentInfo.subDay)} onChange={(e)=>rest.updateSubday(Number(e.target.value))}>
-                        {subDate.map((Data) => {
-                          return (
-                            <option value={Data} >{Data}</option>
-                          )
-                        })}
-                      </Select>
+                      <Select value={rest.studentInfo.subDay} onChange={(e)=>rest.updateSubday(Number(e.target.value))}>
+                          {subDate.map((Data) => {
+                            return (
+                              <option value={Data} >{Data}</option>
+                            )
+                          })}
+                        </Select>
                     </Box>
                 </HStack>
                 <HStack>

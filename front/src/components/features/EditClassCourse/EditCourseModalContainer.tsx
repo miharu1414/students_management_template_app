@@ -13,6 +13,7 @@ export type courseInfo = {
 
 const EditCourseModalContainer: FC<EditCourseModalContainerProps> =  (props) => {
     const {...rest} = props;
+    const [loading, setLoading] = useState<boolean>(true)
 
     const [courseInfo, setCourseInfo] = useState<courseInfo>(
         {
@@ -24,6 +25,7 @@ const EditCourseModalContainer: FC<EditCourseModalContainerProps> =  (props) => 
     const GetCourseInfo = async () => {
       try {
           console.log(rest.courseId)
+          setLoading(true)
           const URL = process.env.REACT_APP_UTIL_API + 'getCourse';
           const response = await fetch(URL, {
             method: 'POST',
@@ -46,9 +48,11 @@ const EditCourseModalContainer: FC<EditCourseModalContainerProps> =  (props) => 
           const jsonData = await response.json();
           // 任意の追加処理をここで行う
           setCourseInfo({courseId: rest.courseId, courseName: jsonData.course_name})
+          setLoading(false)
         } catch (error) {
           // エラーハンドリング
           console.error('POSTリクエストエラー:', error);
+          setLoading(false)
         }
   }
     
@@ -105,6 +109,7 @@ const EditCourseModalContainer: FC<EditCourseModalContainerProps> =  (props) => 
     return (
         <EditCourseModal
            courseInfo={courseInfo}
+           loading={loading}
            onClickUpdateCourseInfo={handleUpdateCourseInfo}
            updateCourse={updateCourse}
            getCourseInfo={GetCourseInfo}

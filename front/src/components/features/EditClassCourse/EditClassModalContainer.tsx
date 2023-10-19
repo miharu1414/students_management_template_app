@@ -13,6 +13,7 @@ export type classInfo = {
 
 const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
     const {...rest} = props;
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [classInfo, setClassInfo] = useState<classInfo>(
         {
@@ -24,6 +25,7 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
     const GetClassInfo = async () => {
       try {
           console.log(rest.classId)
+          setLoading(true)
           const URL = process.env.REACT_APP_UTIL_API + 'getClass';
           const response = await fetch(URL, {
             method: 'POST',
@@ -46,9 +48,11 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
           const jsonData = await response.json();
           // 任意の追加処理をここで行う
           setClassInfo({classId: rest.classId, className: jsonData.class_name})
+          setLoading(false)
         } catch (error) {
           // エラーハンドリング
           console.error('POSTリクエストエラー:', error);
+          setLoading(false)
         }
   }
     
@@ -101,6 +105,7 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
     return (
         <EditClassModal
            classInfo={classInfo}
+           loading={loading}
            onClickUpdateClassInfo={handleUpdateClassInfo}
            updateClass={updateClass}
            getClassInfo={GetClassInfo}
