@@ -47,7 +47,7 @@ export const App = () => (
         <VStack spacing={0}>
           
 
-          <HashRouter basename="/build">
+          <HashRouter basename="">
             <LoginCheck/>
             <Header/>
               <Routes>
