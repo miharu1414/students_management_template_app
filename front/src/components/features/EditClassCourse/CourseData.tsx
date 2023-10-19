@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useDisclosure, Tr, Td} from "@chakra-ui/react";
 import { courseInfo, studentInfo } from "./ClassCourseStudentsContainer";
 import EditCourseModalContainer from "./EditCourseModalContainer";
-import DetailCourseModal from "./DetailCourseModal";
+import DetailModal from "./DetailModal";
 
 type CourseDataProps = {
     children?: React.ReactNode;
@@ -26,7 +26,7 @@ const CourseData: FC<CourseDataProps> = (props) => {
         <Tr>
             <Td onClick={onOpen} paddingRight={1}>
               {rest.courseInfo.courseName}
-              <DetailCourseModal isOpen={isOpen} onClose={onClose} courseName={rest.courseInfo.courseName} students={rest.students}/>
+              <DetailModal isOpen={isOpen} onClose={onClose} groupName={rest.courseInfo.courseName} students={rest.students}/>
             </Td>
             <Td paddingX={2}>({rest.students.length}人)</Td>
             <EditCourseModalContainer 
