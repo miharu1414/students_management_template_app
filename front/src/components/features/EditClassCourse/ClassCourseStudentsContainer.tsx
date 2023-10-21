@@ -219,19 +219,7 @@ const ClassCourseStudentsContainer: FC<ClassCourseStudentsContainerProps> = (pro
     
     return (
         <>
-        <VStack maxWidth={'800px'}>
-            <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
-                    width={"120px"}
-                    borderRadius={10}
-                    backgroundColor={"blue.300"}
-                    textAlign={"center"}
-                    textColor={"white"}
-                    marginBottom={8}
-                    >
-                    <Link to={"/"}>
-                    ホームヘ
-                    </Link>
-            </Box>
+        <VStack maxWidth={'800px'} mt="50px"> 
             
             {isSp ? 
                 <Box>

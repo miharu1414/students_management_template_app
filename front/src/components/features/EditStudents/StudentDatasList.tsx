@@ -9,6 +9,7 @@ import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { studentInfo } from "./StudentDataContainer";
 import StudentData from "./StudentData";
 import StudentDataMobile from "./StudentDataMobile";
+import NewStudentModalContainer from "./NewStudentModalContainer"
 import Loading from "src/components/common/Loading";
 import { mediaQuery, useMediaQuery } from "src/hooks/Response";
 import { Link } from "react-router-dom";
@@ -78,6 +79,22 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                     <Divider border={"2px"} color={"gray.400"} marginBottom={3}/>
                     <Loading loading={rest.loading}>
                     <StudentSearchBox width="400px" searchStr={rest.searchStr} courses={rest.courses} onChangeSelectedCourse={rest.onChangeSelectedCourse} onChangeSearchStr={rest.onChangeSearchStr} />
+                    <Box >
+                        <Box padding={2} border={2} 
+                                borderColor={"whiteAlpha.200"}
+                                width={"120px"}
+                                borderRadius={10}
+                                backgroundColor={""}
+                                textAlign={"center"}
+                                textColor={"white"}
+                                marginBottom={3}
+
+                                >
+                                <NewStudentModalContainer
+                                    GetStudentInfo={rest.GetStudentInfo}
+                                />
+                        </Box>
+                    </Box>
                     <Table variant="simple">
                                 <Thead>
                                     <Tr>

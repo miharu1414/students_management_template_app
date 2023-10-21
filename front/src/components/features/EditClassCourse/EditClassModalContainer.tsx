@@ -9,6 +9,8 @@ type EditClassModalContainerProps = {
 export type classInfo = {
     classId: string,
     className: string,
+    areaColor: string,
+    borderColor: string,
 }
 
 const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
@@ -19,6 +21,8 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
         {
             classId: "",
             className: "",
+            borderColor: "",
+            areaColor: "",
         },
     );
 
@@ -47,7 +51,7 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
           // JSONデータを取得
           const jsonData = await response.json();
           // 任意の追加処理をここで行う
-          setClassInfo({classId: rest.classId, className: jsonData.class_name})
+          setClassInfo({classId: rest.classId, className: jsonData.class_name, areaColor: jsonData.areaColor, borderColor: jsonData.borderColor})
           setLoading(false)
         } catch (error) {
           // エラーハンドリング
@@ -59,7 +63,7 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
     const updateClass = (newClass: string)=> {
         const newValue = classInfo
         newValue.className = newClass
-        setClassInfo({className: newValue.className, classId: newValue.classId})
+        setClassInfo({className: newValue.className, classId: newValue.classId,  areaColor: "", borderColor: ""})
     } 
 
     const handleUpdateClassInfo = async () => {

@@ -1,12 +1,15 @@
 import { FC } from "react";
 import { Box, theme, IconButton , 
-     Menu,
+    Menu,
     MenuButton,
     MenuList,
     MenuItem,
     Tooltip,
+    Spacer,
+    Text,
+    HStack
 } from "@chakra-ui/react"
-import { EditIcon, HamburgerIcon, AtSignIcon, AddIcon,ExternalLinkIcon, RepeatClockIcon,RepeatIcon } from "@chakra-ui/icons";
+import { EditIcon, HamburgerIcon, AtSignIcon, AddIcon,ExternalLinkIcon, RepeatClockIcon,RepeatIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { ColorModeSwitcher } from "src/ColorModeSwitcher"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -23,25 +26,42 @@ const Header: FC<HeaderProps> = (props) => {
         <Box 
             width="100%" 
             display="flex" 
-            justifyContent="flex-end" 
+            justifyContent="flex-start" 
             height={"50px"}
             
         > {/* justifyContentを追加 */}
+            
+            <Tooltip placement={"top"} label="ホームヘ">
+                <HStack onClick={() => navigate('/')} spacing="0">
+                    <IconButton
+                        size="md"
+                        fontSize="lg"
+                        variant="ghost"
+                        colorScheme="blue"
+                        marginLeft="2"
+                        icon={<InfoOutlineIcon />}
+                        aria-label={`editing`}>    
+                    </IconButton>
+                    <Text fontSize="12px" color="blue.700">ホームヘ</Text>
+                </HStack>
+            </Tooltip>
+
+            <Spacer></Spacer>
             
             <Tooltip
               placement={"top"}
               label='クラス・コースの編集'
             >
-                <IconButton
-                    onClick={() => navigate('/editClassCourse/')}
-                    size="md"
-                    fontSize="lg"
-                    variant="ghost"
-                    color="current"
-                    marginLeft="2"
-                    icon={<EditIcon />}
-                    aria-label={`editing`}
-                />
+                    <IconButton
+                        onClick={() => navigate('/editClassCourse/')}
+                        size="md"
+                        fontSize="lg"
+                        variant="ghost"
+                        color="current"
+                        marginLeft="2"
+                        icon={<EditIcon />}
+                        aria-label={`editing`}
+                    />
             </Tooltip>
             <Tooltip
               placement={"top"}

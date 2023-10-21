@@ -18,9 +18,9 @@ const ClassListItem: FC<ClassListItemProps> = (props) => {
   return (
     <Link to={link()}>
         <Card align='center' border={"1px"} minW={"300px"}
-        borderColor={"blue.500"}
-        backgroundColor={"blue.50"}
-    >
+          borderColor={rest.class.borderColor ?? "blue.500"}
+          backgroundColor={rest.class.areaColor ?? "blue.50"}
+        >
 
         <CardBody padding={2}>
             

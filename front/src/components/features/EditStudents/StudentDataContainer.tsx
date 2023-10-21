@@ -186,53 +186,22 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
     },[debouncedInputText,selectedCourse])
 
     return (
-      <>   
-
-        <Box padding={3} border={2} 
-          borderColor={"whiteAlpha.200"}
-          width={"120px"}
-          borderRadius={10}
-          backgroundColor={"blue.300"}
-          textAlign={"center"}
-          textColor={"white"}
-          marginBottom={3}
-          >
-          <Link to={"/"}>
-          ホームヘ
-          </Link>
-        </Box> 
-      
-        <Box >
-            
-          <Box padding={2} border={2} 
-                borderColor={"whiteAlpha.200"}
-                width={"120px"}
-                borderRadius={10}
-                backgroundColor={""}
-                textAlign={"center"}
-                textColor={"white"}
-                marginBottom={3}
-
-                >
-                  <NewStudentModalContainer
-                    GetStudentInfo={GetStudentInfo}
-                  />
-          </Box>
+      <> 
+        <Box mt="50px">
+          <StudentDatasList
+            studentInfo={displayStudents}
+            searchStr={debouncedInputText}
+            loading={loading}
+            error={error}
+            courses={courses}
+            onChangeSelectedCourse={setSelectedCourse}
+            GetStudentInfo={GetStudentInfo}
+            onChangeSearchStr={setSearchStr}
+            checkSort={checkSort}
+            sortName={sortName}
+            sortNameReverse={sortNameReverse}
+          />
         </Box>
-
-        <StudentDatasList
-           studentInfo={displayStudents}
-           searchStr={debouncedInputText}
-           loading={loading}
-           error={error}
-           courses={courses}
-           onChangeSelectedCourse={setSelectedCourse}
-           GetStudentInfo={GetStudentInfo}
-           onChangeSearchStr={setSearchStr}
-           checkSort={checkSort}
-           sortName={sortName}
-           sortNameReverse={sortNameReverse}
-        />
 
       </>
     )

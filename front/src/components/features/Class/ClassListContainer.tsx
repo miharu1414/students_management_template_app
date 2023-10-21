@@ -9,6 +9,8 @@ export type Class = {
   classId: string;
   className: string;
   lastUpdate: string;
+  areaColor: string;
+  borderColor: string;
 };
 
 const ClassListContainer: FC<ClassListContainerProps> = (props) => {
