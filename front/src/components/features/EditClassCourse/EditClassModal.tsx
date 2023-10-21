@@ -15,8 +15,10 @@ import Loading from "src/components/common/Loading";
 type EditClassModalProps = {
     classInfo: classInfo;
     loading: boolean;
+    onChangeAreaColor: (value: string)=>void;
     onClickUpdateClassInfo: () => void,
     updateClass: (newClass:string) => void,
+
     getClassInfo: () => void,
     GetClassesInfo: () => void,
 }
@@ -60,7 +62,7 @@ const EditClassModal: FC<EditClassModalProps> = (props) => {
                     </HStack>
                     <HStack>
                       <Text>背景色：</Text>
-                        <Box><ColorPicker/></Box>
+                        <Box bgColor={rest.classInfo.areaColor}><ColorPicker color={rest.classInfo.areaColor} onChangeColor={rest.onChangeAreaColor}/></Box>
                     </HStack>
                   </VStack>
 

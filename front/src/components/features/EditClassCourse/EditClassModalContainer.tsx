@@ -26,6 +26,13 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
         },
     );
 
+    const handleChangeAreaColor = (value: string) => {
+      setClassInfo((prev) => ({
+        ...prev,
+        areaColor: value // areaColorのみを更新
+      }));
+    }
+
     const GetClassInfo = async () => {
       try {
           console.log(rest.classId)
@@ -110,6 +117,7 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
         <EditClassModal
            classInfo={classInfo}
            loading={loading}
+           onChangeAreaColor={handleChangeAreaColor}
            onClickUpdateClassInfo={handleUpdateClassInfo}
            updateClass={updateClass}
            getClassInfo={GetClassInfo}
