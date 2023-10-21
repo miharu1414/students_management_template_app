@@ -108,10 +108,10 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
             
 
               <StatGroup >
-                <Stat>
+                {/* <Stat>
                     <StatLabel><StatArrow type='increase' />出席数</StatLabel>
                     <StatNumber>{rest.attendData ? countPresent(rest.attendData) : ""}</StatNumber>
-                </Stat>
+                </Stat> */}
 
                 <Stat>
                     <StatLabel><StatArrow type='decrease' />残り振替</StatLabel>
