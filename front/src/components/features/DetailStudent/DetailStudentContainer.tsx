@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import DetailStudent from "./DetailStudent";
 import { json } from "react-router-dom";
 import Loading from "src/components/common/Loading";
+import { Box } from "@chakra-ui/react";
 
 type DetailStudentContainerProps = {
     children? : Node;
@@ -252,7 +253,7 @@ const DetailStudentContainer: FC<DetailStudentContainerProps> = (props) => {
       }, [studentInfo])
 
     return (
-        <Loading loading={loading}>
+          <Loading loading={loading}>
             <DetailStudent 
               selectedFiscalYear={selectedFiscalYear}
               onChangeSelectedFiscalYear={setSelectedFiscalYear}
@@ -270,8 +271,7 @@ const DetailStudentContainer: FC<DetailStudentContainerProps> = (props) => {
               selectedDate={selectedDate}
             />
 
-        </Loading>
-
+          </Loading>
     )
 }
 

@@ -38,8 +38,8 @@ const StudentData: FC<StudentDataProps> = (props) => {
     return (
       <>
         <Tr>
-            <Td flexShrink={"0"}>{rest.studentInfo.name}</Td>
-            <Td flexShrink={"0"}>{rest.studentInfo.class_name}</Td>
+            <Td flexShrink={"0"} whiteSpace={"nowrap"} paddingRight={2}>{rest.studentInfo.name}</Td>
+            <Td flexShrink={"0"} whiteSpace={"nowrap"} paddingRight={0}>{rest.studentInfo.class_name}</Td>
             <Td flexShrink={"0"}>{rest.studentInfo.subDay}</Td>
             <Td style={{ flexShrink: 0 }}>
                 <a href={`tel:${rest.studentInfo.address}`}>

@@ -12,7 +12,7 @@ const Home: FC<HomeProps> = (props) => {
     return (
     <>
         <VStack>
-            <Heading >
+            <Heading mt="50px">
                 クラス一覧
             </Heading>
             <ClassListContainer/>    

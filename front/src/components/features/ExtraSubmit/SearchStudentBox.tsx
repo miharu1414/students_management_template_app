@@ -38,8 +38,8 @@ export const SearchStudentBox: FC<SearchStudentBoxProps> = (props) => {
           for (let j = 1; j <= b.length; j++) {
             const cost = a[i - 1] === b[j - 1] ? 0 : 1;
             dp[i][j] = Math.min(
-              dp[i - 1][j] + 1, // Deletion
-              dp[i][j - 1] + 1, // Insertion
+              dp[i - 1][j] + 0.5, // Deletion
+              dp[i][j - 1] + 0.5, // Insertion
               dp[i - 1][j - 1] + cost // Substitution
             );
           }
@@ -71,7 +71,7 @@ export const SearchStudentBox: FC<SearchStudentBoxProps> = (props) => {
     filterAndSortData(rest.searchStr, rest.data);
       
 
-      
+
       
     
   return (
