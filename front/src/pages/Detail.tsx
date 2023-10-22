@@ -14,18 +14,6 @@ const Name: FC<NameProps> = (props) => {
 
     return (
         <>
-            <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
-                    width={"120px"}
-                    borderRadius={10}
-                    backgroundColor={"blue.300"}
-                    textAlign={"center"}
-                    textColor={"white"}
-                    marginBottom={8}
-                    >
-                    <Link to={"/"}>
-                    ホームヘ
-                    </Link>
-            </Box>
             <DetailStudentContainer id={id as string}/>
         
         </>

@@ -9,6 +9,8 @@ type EditClassModalContainerProps = {
 export type classInfo = {
     classId: string,
     className: string,
+    areaColor: string,
+    borderColor: string,
 }
 
 const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
@@ -19,8 +21,24 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
         {
             classId: "",
             className: "",
+            borderColor: "",
+            areaColor: "",
         },
     );
+
+    const handleChangeAreaColor = (value: string) => {
+      setClassInfo((prev) => ({
+        ...prev,
+        areaColor: value // areaColorのみを更新
+      }));
+    }
+
+    const handleChangeBorderColor = (value: string) => {
+      setClassInfo((prev) => ({
+        ...prev,
+        borderColor: value // areaColorのみを更新
+      }));
+    }
 
     const GetClassInfo = async () => {
       try {
@@ -47,7 +65,7 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
           // JSONデータを取得
           const jsonData = await response.json();
           // 任意の追加処理をここで行う
-          setClassInfo({classId: rest.classId, className: jsonData.class_name})
+          setClassInfo({classId: rest.classId, className: jsonData.class_name, areaColor: jsonData.area_color, borderColor: jsonData.border_color})
           setLoading(false)
         } catch (error) {
           // エラーハンドリング
@@ -59,7 +77,7 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
     const updateClass = (newClass: string)=> {
         const newValue = classInfo
         newValue.className = newClass
-        setClassInfo({className: newValue.className, classId: newValue.classId})
+        setClassInfo({className: newValue.className, classId: newValue.classId,  areaColor: "", borderColor: ""})
     } 
 
     const handleUpdateClassInfo = async () => {
@@ -75,6 +93,8 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
               },
               body: JSON.stringify({
                 edited_class_name: classInfo.className,
+                area_color: classInfo.areaColor,
+                border_color: classInfo.borderColor,
                 class_id: classInfo.classId,
               }),
             });
@@ -106,6 +126,8 @@ const EditClassModalContainer: FC<EditClassModalContainerProps> =  (props) => {
         <EditClassModal
            classInfo={classInfo}
            loading={loading}
+           onChangeAreaColor={handleChangeAreaColor}
+           onChangeBorderColor={handleChangeBorderColor}
            onClickUpdateClassInfo={handleUpdateClassInfo}
            updateClass={updateClass}
            getClassInfo={GetClassInfo}

@@ -11,8 +11,11 @@ type ClassCourseStudentsContainerProps = {
     children? : Node;
 }
 export type classInfo = {
-    classId: string,
-    className: string,
+  classId: string,
+  className: string,
+  areaColor: string,
+  borderColor: string,
+
 }
 export type courseInfo = {
     courseId: string,
@@ -74,7 +77,7 @@ const ClassCourseStudentsContainer: FC<ClassCourseStudentsContainerProps> = (pro
 
             const newClasses: classInfo[] = [];
             jsonData.class_info.map((classData:classInfo) => {
-                const ClassData: classInfo = {classId: classData.classId, className: classData.className}
+                const ClassData: classInfo = {classId: classData.classId, className: classData.className, areaColor: classData.areaColor, borderColor: classData.borderColor}
                 newClasses.push(ClassData)
             })
             setClassesInfo(newClasses)
@@ -194,7 +197,7 @@ const ClassCourseStudentsContainer: FC<ClassCourseStudentsContainerProps> = (pro
         setLoadingClass(true)
         setLoadingCourse(true)
         await GetInformationCourse();
-        GetInformationClass(false);
+        await GetInformationClass(false);
 
     }
 
@@ -219,19 +222,7 @@ const ClassCourseStudentsContainer: FC<ClassCourseStudentsContainerProps> = (pro
     
     return (
         <>
-        <VStack maxWidth={'800px'}>
-            <Box padding={3} border={2} borderColor={"whiteAlpha.200"}
-                    width={"120px"}
-                    borderRadius={10}
-                    backgroundColor={"blue.300"}
-                    textAlign={"center"}
-                    textColor={"white"}
-                    marginBottom={8}
-                    >
-                    <Link to={"/"}>
-                    ホームヘ
-                    </Link>
-            </Box>
+        <VStack maxWidth={'800px'} mt="50px"> 
             
             {isSp ? 
                 <Box>

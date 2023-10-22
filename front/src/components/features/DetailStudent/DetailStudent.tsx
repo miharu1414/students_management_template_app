@@ -82,7 +82,7 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
     }    
 
     return (
-        <Box width={"85%"} >
+        <Box width={"85%"} mt="50px">
             <Box width={"100px"} marginBottom={2}>
                 <Select placeholder={rest.selectedFiscalYear} onChange={(e)=>rest.onChangeSelectedFiscalYear(e.target.value)}>
                 {rest.fiscalYears.map((fiscalYear) => {
@@ -108,10 +108,10 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
             
 
               <StatGroup >
-                <Stat>
+                {/* <Stat>
                     <StatLabel><StatArrow type='increase' />出席数</StatLabel>
                     <StatNumber>{rest.attendData ? countPresent(rest.attendData) : ""}</StatNumber>
-                </Stat>
+                </Stat> */}
 
                 <Stat>
                     <StatLabel><StatArrow type='decrease' />残り振替</StatLabel>
@@ -145,7 +145,7 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
                             ))}
                         </Tbody>
             </Table>
-            <Box mt="8px" display='flex' justifyContent='center'>
+            <Box mt="12px" display='flex' justifyContent='center'>
                 <Button onClick={modal1.onOpen}>出席情報追加</Button>
             </Box>
 

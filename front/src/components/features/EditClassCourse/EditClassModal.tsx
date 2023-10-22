@@ -8,14 +8,18 @@ import { Box, Button, useDisclosure, Modal, HStack, Text, Textarea,
     Input,
     VStack,
 } from "@chakra-ui/react";
+import ColorPicker from "src/components/common/ColorPicker";
 import { classInfo } from "./EditClassModalContainer";
 import Loading from "src/components/common/Loading";
 
 type EditClassModalProps = {
     classInfo: classInfo;
     loading: boolean;
+    onChangeAreaColor: (value: string)=>void;
+    onChangeBorderColor: (value: string)=>void;
     onClickUpdateClassInfo: () => void,
     updateClass: (newClass:string) => void,
+
     getClassInfo: () => void,
     GetClassesInfo: () => void,
 }
@@ -51,10 +55,22 @@ const EditClassModal: FC<EditClassModalProps> = (props) => {
 
             <VStack>
               <Loading loading={rest.loading}>
-                <HStack>
+                  <VStack>
+                    <HStack>
                         <Text>クラスの名前：</Text>
                         <Box><Input value={rest.classInfo.className} onChange={(e)=> rest.updateClass(e.target.value) }></Input></Box>
+                        
                     </HStack>
+                    <HStack>
+                      <Text>背景色：</Text>
+                        <Box bgColor={rest.classInfo.areaColor}><ColorPicker color={rest.classInfo.areaColor} onChangeColor={rest.onChangeAreaColor}/></Box>
+                    </HStack>
+                    <HStack>
+                      <Text>ボーダー色：</Text>
+                        <Box bgColor={rest.classInfo.borderColor}><ColorPicker color={rest.classInfo.borderColor} onChangeColor={rest.onChangeBorderColor}/></Box>
+                    </HStack>
+                  </VStack>
+
                     <Button colorScheme='blue' mr={3} onClick={() => {
                       rest.onClickUpdateClassInfo()
                       setTimeout(rest.GetClassesInfo, 500)

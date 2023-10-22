@@ -13,8 +13,9 @@ import {
     HStack,
     Text,
     Box,
-    Link,
   } from '@chakra-ui/react'
+
+import {  Link } from 'react-router-dom';
 import { studentInfo } from "./ClassCourseStudentsContainer";
 type DetailModalProps = {
     children? : Node;
@@ -44,7 +45,9 @@ const DetailModal: FC<DetailModalProps> = (props) => {
                     return (
                         <HStack fontSize={"lg"}>
                             <Text>{index+1}.</Text>
-                            <Box>{student.name}</Box>
+                            <Link to={"/detail/" + student.id}>
+                                <Text>{student.name}</Text>
+                            </Link>
                         </HStack>
                     )
                 })}
