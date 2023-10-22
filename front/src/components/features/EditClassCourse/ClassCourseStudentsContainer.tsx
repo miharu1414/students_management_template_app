@@ -11,8 +11,11 @@ type ClassCourseStudentsContainerProps = {
     children? : Node;
 }
 export type classInfo = {
-    classId: string,
-    className: string,
+  classId: string,
+  className: string,
+  areaColor: string,
+  borderColor: string,
+
 }
 export type courseInfo = {
     courseId: string,
@@ -74,7 +77,7 @@ const ClassCourseStudentsContainer: FC<ClassCourseStudentsContainerProps> = (pro
 
             const newClasses: classInfo[] = [];
             jsonData.class_info.map((classData:classInfo) => {
-                const ClassData: classInfo = {classId: classData.classId, className: classData.className}
+                const ClassData: classInfo = {classId: classData.classId, className: classData.className, areaColor: classData.areaColor, borderColor: classData.borderColor}
                 newClasses.push(ClassData)
             })
             setClassesInfo(newClasses)
@@ -194,7 +197,7 @@ const ClassCourseStudentsContainer: FC<ClassCourseStudentsContainerProps> = (pro
         setLoadingClass(true)
         setLoadingCourse(true)
         await GetInformationCourse();
-        GetInformationClass(false);
+        await GetInformationClass(false);
 
     }
 
