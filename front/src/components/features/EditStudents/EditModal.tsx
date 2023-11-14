@@ -30,6 +30,9 @@ type EditModalProps = {
     updateAddress: (newAddress:string) => void,
     updateMemo: (newMemo:string) => void,
     updateSubday: (newSubday:number) => void,
+    updateAddressOwner:(newAddressOwner:string) => void,
+    updateAddressSub:(newAddressSub:string) => void,
+    updateAddressSubOwner:(newAddressSubOwner:string) => void,
 
     GetStudentInfo: () => void,
     onClick:()=>void;
@@ -132,8 +135,32 @@ const EditModal: FC<EditModalProps> = (props) => {
                     </Box>
                 </HStack>
                 <HStack>
-                    <Text>緊急連絡先：</Text>
-                    <Box><Input value={rest.studentInfo.address} onChange={(e)=>rest.updateAddress(e.target.value)}></Input></Box>
+                    <Text width={40}>緊急連絡先1：</Text>
+                    <HStack><Input value={rest.studentInfo.address} onChange={(e)=>rest.updateAddress(e.target.value)}></Input>
+                        <Select width={44} value={rest.studentInfo.address_owner ?? ""} onChange={(e)=>rest.updateAddressOwner(e.target.value)}>
+                          <option value="父">父</option>
+                          <option value="母">母</option>
+                          <option value="祖父">祖父</option>
+                          <option value="祖母">祖母</option>
+                          <option value="兄弟">兄弟</option>
+                          <option value="その他">その他</option>
+                          </Select>
+                    </HStack>
+
+                </HStack>
+                <HStack>
+                    <Text width={40}>緊急連絡先2：</Text>
+                    <HStack><Input  value={rest.studentInfo.address_sub} onChange={(e)=>rest.updateAddressSub(e.target.value)}></Input>
+                        <Select width={44}  value={rest.studentInfo.address_sub_owner ?? ""} onChange={(e)=>rest.updateAddressSubOwner(e.target.value)}>
+                          <option value="父">父</option>
+                          <option value="母">母</option>
+                          <option value="祖父">祖父</option>
+                          <option value="祖母">祖母</option>
+                          <option value="兄弟">兄弟</option>
+                          <option value="その他">その他</option>
+                          </Select>
+                    </HStack>
+                    
                 </HStack>
                 <HStack>
                     <Text>メモ：</Text>
