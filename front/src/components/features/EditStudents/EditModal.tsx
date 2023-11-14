@@ -34,7 +34,7 @@ type EditModalProps = {
     updateAddressSub:(newAddressSub:string) => void,
     updateAddressSubOwner:(newAddressSubOwner:string) => void,
 
-    GetStudentInfo: () => void,
+    GetStudentsInfo: () => void,
     onClick:()=>void;
 }
 
@@ -71,7 +71,7 @@ const EditModal: FC<EditModalProps> = (props) => {
             <Button colorScheme='red' mr={3} onClick={() => {
               rest.onClickDeleteStudentInfo()
               onClose()
-              setTimeout(rest.GetStudentInfo, 1000)
+              setTimeout(rest.GetStudentsInfo, 1000)
             }}>
               削除
             </Button>
@@ -134,10 +134,10 @@ const EditModal: FC<EditModalProps> = (props) => {
                       </Select>
                     </Box>
                 </HStack>
-                <HStack>
-                    <Text width={40}>緊急連絡先1：</Text>
-                    <HStack><Input value={rest.studentInfo.address} onChange={(e)=>rest.updateAddress(e.target.value)}></Input>
-                        <Select width={44} value={rest.studentInfo.address_owner ?? ""} onChange={(e)=>rest.updateAddressOwner(e.target.value)}>
+                <HStack spacing={0}>
+                    <Text  flexShrink={0}>緊急連絡先1：</Text>
+                    <HStack ><Input minWidth={32} padding={1}  value={rest.studentInfo.address} onChange={(e)=>rest.updateAddress(e.target.value)}></Input>
+                        <Select  value={rest.studentInfo.address_owner ?? ""} onChange={(e)=>rest.updateAddressOwner(e.target.value)}>
                           <option value="父">父</option>
                           <option value="母">母</option>
                           <option value="祖父">祖父</option>
@@ -148,10 +148,10 @@ const EditModal: FC<EditModalProps> = (props) => {
                     </HStack>
 
                 </HStack>
-                <HStack>
-                    <Text width={40}>緊急連絡先2：</Text>
-                    <HStack><Input  value={rest.studentInfo.address_sub} onChange={(e)=>rest.updateAddressSub(e.target.value)}></Input>
-                        <Select width={44}  value={rest.studentInfo.address_sub_owner ?? ""} onChange={(e)=>rest.updateAddressSubOwner(e.target.value)}>
+                <HStack spacing={0}>
+                    <Text  flexShrink={0} >緊急連絡先2：</Text>
+                    <HStack><Input minWidth={32} padding={1} value={rest.studentInfo.address_sub} onChange={(e)=>rest.updateAddressSub(e.target.value)}></Input>
+                        <Select  value={rest.studentInfo.address_sub_owner ?? ""} onChange={(e)=>rest.updateAddressSubOwner(e.target.value)}>
                           <option value="父">父</option>
                           <option value="母">母</option>
                           <option value="祖父">祖父</option>
@@ -171,7 +171,7 @@ const EditModal: FC<EditModalProps> = (props) => {
              </Loading>
                 <Button colorScheme='blue' mr={3} onClick={() => {
                   rest.onClickUpdateStudentInfo()
-                  setTimeout(rest.GetStudentInfo, 1000)
+                  setTimeout(rest.GetStudentsInfo, 1000)
                   onClose()
                 }}>
                     更新
