@@ -12,6 +12,9 @@ export type studentInfo = {
     subDay: number,
     memo: string,
     update: string,
+    address_owner: string,
+    address_sub: string,
+    address_sub_owner: string,
 }
 
 type NewStudentModalContainerProps = {
@@ -43,6 +46,9 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
             subDay: 0,
             memo: '',
             update: '',
+            address_owner: "",
+            address_sub:"",
+            address_sub_owner:""
         },
     );
 
@@ -169,6 +175,25 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
           subDay:  newSubday,
       }))
   } 
+  const updateAddressOwner = (newAddressOwner: string)=> {
+    setStudentInfo((prevValue)=>({
+        ...prevValue,
+        address_owner: newAddressOwner,
+    }))
+} 
+  const updateAddressSub = (newAddressSub: string)=> {
+    setStudentInfo((prevValue)=>({
+        ...prevValue,
+        address_sub: newAddressSub,
+    }))
+  }
+    const updateAddressSubOwner = (newAddressSubOwner: string)=> {
+      setStudentInfo((prevValue)=>({
+          ...prevValue,
+          address_sub_owner: newAddressSubOwner,
+      }))
+
+    }
 
     const handleInsertStudentInfo = async () => {
         try {
@@ -189,6 +214,9 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
                 address: studentInfo.address,
                 substitute_day: studentInfo.subDay,
                 memo: studentInfo.memo,
+                address_owner: studentInfo.address_owner,
+                address_sub: studentInfo.address_sub,
+                address_sub_owner: studentInfo.address_sub_owner
               }),
             });
       
@@ -212,6 +240,9 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
               subDay: 0,
               memo: '',
               update: '',
+              address_owner: "",
+              address_sub:"",
+              address_sub_owner:""
           },)
 
           } catch (error) {
@@ -238,6 +269,9 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
            updateAddress={updateAddress}
            updateMemo={updateMemo}
            updateSubday={updateSubday}
+           updateAddressOwner={updateAddressOwner}
+           updateAddressSub={updateAddressSub}
+           updateAddressSubOwner={updateAddressSubOwner}
            onGetClasses={GetClasses}
            onGetCourses={GetCourses}
            GetStudentInfo={rest.GetStudentInfo}
