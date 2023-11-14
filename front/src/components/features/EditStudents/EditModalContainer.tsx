@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import EditModal from "./EditModal";
+import { json } from "react-router-dom";
 
 type EditModalContainerProps = {
     studentId: string,
@@ -18,6 +19,9 @@ export type studentInfo = {
     subDay: number,
     memo: string,
     update: string,
+    address_owner: string,
+    address_sub: string,
+    address_sub_owner: string,
 }
 
 export type classInfo = {
@@ -46,6 +50,9 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             subDay: 0,
             memo: '',
             update: '',
+            address_owner: "",
+            address_sub:"",
+            address_sub_owner:""
         },
     );
 
@@ -82,7 +89,7 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             // JSONデータを取得
             const jsonData = await response.json();
             // 任意の追加処理をここで行う
-            setStudentInfo({studentId: rest.studentId, name: jsonData.name, kana: jsonData.kana, class_name: jsonData.class_name, class_id: jsonData.class_id, course_name: jsonData.course_name, course_id: jsonData.course_id, address: jsonData.address, subDay: jsonData.substitute_day, memo: jsonData.memo, update: jsonData.last_update})
+            setStudentInfo({studentId: rest.studentId, name: jsonData.name, kana: jsonData.kana, class_name: jsonData.class_name, class_id: jsonData.class_id, course_name: jsonData.course_name, course_id: jsonData.course_id, address: jsonData.address, subDay: jsonData.substitute_day, memo: jsonData.memo, update: jsonData.last_update, address_owner:jsonData.address_owner,address_sub:jsonData.address_sub,address_sub_owner:jsonData.address_sub_owner})
             
             setError1(false)
           } catch (error) {
@@ -204,6 +211,25 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
             memo: newMemo,
         }))
     } 
+    const updateAddressOwner = (newAddressOwner: string)=> {
+      setStudentInfo((prevValue)=>({
+          ...prevValue,
+          address_owner: newAddressOwner,
+      }))
+  } 
+    const updateAddressSub = (newAddressSub: string)=> {
+      setStudentInfo((prevValue)=>({
+          ...prevValue,
+          address_sub: newAddressSub,
+      }))
+    }
+      const updateAddressSubOwner = (newAddressSubOwner: string)=> {
+        setStudentInfo((prevValue)=>({
+            ...prevValue,
+            address_sub_owner: newAddressSubOwner,
+        }))
+ 
+      }
 
     const handleUpdateStudentInfo = async () => {
         try {
@@ -225,6 +251,9 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
                 address: studentInfo.address,
                 substitute_day: studentInfo.subDay,
                 memo: studentInfo.memo,
+                address_owner: studentInfo.address_owner,
+                address_sub: studentInfo.address_sub,
+                address_sub_owner: studentInfo.address_sub_owner
               }),
             });
       
@@ -306,6 +335,9 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
            updateAddress={updateAddress}
            updateMemo={updateMemo}
            updateSubday={updateSubday}
+           updateAddressOwner={updateAddressOwner}
+           updateAddressSub={updateAddressSub}
+           updateAddressSubOwner={updateAddressSubOwner}
            onClick={handleOnClick}
 
            GetStudentInfo={rest.GetStudentInfo}
