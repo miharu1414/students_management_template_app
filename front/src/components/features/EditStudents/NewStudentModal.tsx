@@ -29,7 +29,7 @@ type NewStudentModalProps = {
     onClickInsertStudentInfo: () => void,
     onGetClasses: () => void,
     onGetCourses: () => void,
-    GetStudentInfo: () => void,
+    GetStudentsInfo: () => void,
 }
 
 const NewStudentModal: FC<NewStudentModalProps> = (props) => {
@@ -157,7 +157,7 @@ const NewStudentModal: FC<NewStudentModalProps> = (props) => {
                 </HStack>
                 <Button colorScheme='blue' mr={3} isDisabled={sendDisable} onClick={() => {
                   rest.onClickInsertStudentInfo()
-                  setTimeout(rest.GetStudentInfo, 1000)
+                  setTimeout(rest.GetStudentsInfo, 1000)
                   onClose()
                 }}>
                     追加

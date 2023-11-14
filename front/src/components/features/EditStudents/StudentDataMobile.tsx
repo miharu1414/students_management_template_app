@@ -9,7 +9,7 @@ type StudentDataMobileProps = {
     children?: React.ReactNode;
     index: number;
     studentInfo: studentInfo,
-    GetStudentInfo: () => void,
+    GetStudentsInfo: () => void,
 }
 
 const StudentDataMobile: FC<StudentDataMobileProps> = (props) => {
@@ -30,7 +30,7 @@ const StudentDataMobile: FC<StudentDataMobileProps> = (props) => {
 
             <EditModalContainer 
               studentId={rest.studentInfo.id}
-              GetStudentInfo={rest.GetStudentInfo}
+              GetStudentsInfo={rest.GetStudentsInfo}
             />
         </Tr>
 
