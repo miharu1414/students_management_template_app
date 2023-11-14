@@ -26,6 +26,9 @@ export type studentInfo = {
     subDay: number,
     memo: string,
     update: string,
+    address_owner: string,
+    address_sub: string,
+    address_sub_owner: string,
 }
 
 const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
@@ -40,7 +43,7 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
     const [selectedCourse, setSelectedCourse] = useState<string>("");
     const [checkSort, setCheckSort] = useState<boolean>(false)
 
-    const GetStudentInfo = async () => {
+    const GetStudentsInfo = async () => {
         try {
             setLoading(true)
             const URL = process.env.REACT_APP_UTIL_API + 'getStudents';
@@ -68,11 +71,22 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
 
             const newStudents: studentInfo[] = [];
             jsonData.studentsData.map((student:studentInfo) => {
-                const studentData: studentInfo = {id: student.id, name: student.name, kana: student.kana, class_name: student.class_name, 
+                const studentData: studentInfo = {
+                  id: student.id, 
+                  name: student.name, 
+                  kana: student.kana, 
+                  class_name: student.class_name, 
                   class_id: student.class_id,
                   course_name: student.course_name,
                   course_id: student.course_id,
-                  address: student.address, subDay: student.subDay, memo: student.memo, update: student.update}
+                  address: student.address, 
+                  subDay: student.subDay, 
+                  memo: student.memo, 
+                  update: student.update,
+                  address_owner: student.address_owner,
+                  address_sub: student.address_sub,
+                  address_sub_owner: student.address_sub_owner
+                }
                 newStudents.push(studentData)
             })
             setStudentsInfo(newStudents)
@@ -140,7 +154,7 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
     }
 
     const handleOnOpenPage = async ()=> {
-      await GetStudentInfo();
+      await GetStudentsInfo();
       await GetCourses();
     }
 
@@ -195,7 +209,7 @@ const StudentDataContainer: FC<StudentDataContainerProps> = (props) => {
             error={error}
             courses={courses}
             onChangeSelectedCourse={setSelectedCourse}
-            GetStudentInfo={GetStudentInfo}
+            GetStudentsInfo={GetStudentsInfo}
             onChangeSearchStr={setSearchStr}
             checkSort={checkSort}
             sortName={sortName}

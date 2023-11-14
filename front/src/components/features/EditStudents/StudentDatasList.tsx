@@ -25,7 +25,7 @@ type StudentDatasListProps = {
     error: boolean;
     onChangeSearchStr: (value: string)=> void;
     onChangeSelectedCourse: (value:string) => void;
-    GetStudentInfo: () => void,
+    GetStudentsInfo: () => void,
     checkSort: boolean;
     sortName: () => void;
     sortNameReverse: () => void;
@@ -55,14 +55,14 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                {rest.error && <Button onClick={()=>rest.GetStudentInfo()}>リロード</Button>}
+                                {rest.error && <Button onClick={()=>rest.GetStudentsInfo()}>リロード</Button>}
                                         {rest.studentInfo.map((student, index)=> {
                                             return (
                                                 <StudentDataMobile
                                                     index={index}
                                                     studentInfo={student}
                                                     key={index}
-                                                    GetStudentInfo={rest.GetStudentInfo}
+                                                    GetStudentsInfo={rest.GetStudentsInfo}
                                                 />
                                             )
                                         })}
@@ -91,7 +91,7 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
 
                                 >
                                 <NewStudentModalContainer
-                                    GetStudentInfo={rest.GetStudentInfo}
+                                    GetStudentsInfo={rest.GetStudentsInfo}
                                 />
                         </Box>
                     </Box>
@@ -101,19 +101,20 @@ const StudentDatasList: FC<StudentDatasListProps> = (props) => {
                                         <Th flexShrink={"0"}>名前 {rest.checkSort ? <IconButton aria-label='sort data' size={"sm"} onClick={rest.sortName} icon={<ChevronUpIcon/>}/> : <IconButton aria-label='sort data' size={"sm"} onClick={rest.sortNameReverse} icon={<ChevronDownIcon/>}/>}</Th>
                                         <Th flexShrink={"0"}>クラス</Th>
                                         <Th flexShrink={"0"}>振替日数</Th>
-                                        <Th flexShrink={"0"}>緊急連絡先</Th>
+                                        <Th flexShrink={"0"}>緊急連絡先1</Th>
+                                        <Th flexShrink={"0"}>緊急連絡先2</Th>
                                         <Th >メモ</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                {rest.error && <Button onClick={()=>rest.GetStudentInfo()}>リロード</Button>}
+                                {rest.error && <Button onClick={()=>rest.GetStudentsInfo()}>リロード</Button>}
                                     {rest.studentInfo.map((student, index)=> {
                                         return (
                                             <StudentData
                                                 index={index}
                                                 studentInfo={student}
                                                 key={index}
-                                                GetStudentInfo={rest.GetStudentInfo}
+                                                GetStudentsInfo={rest.GetStudentsInfo}
                                             />
                                         )
                                     })}

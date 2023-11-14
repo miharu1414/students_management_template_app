@@ -61,20 +61,35 @@ const DetailStudent: FC<DetailStudentProps> = (props) => {
                     <Box>{rest.student.course_name}</Box>
                 </HStack>
                 <HStack fontSize={"lg"}>
-                    <Text>緊急連絡先：</Text>
+                    <VStack spacing={0}>
+                    <Text>緊急連絡先１：</Text>
+                    <Text>({rest.student.address_owner})</Text>
+                    </VStack>
+
                     <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
                         <a href={`tel:${rest.student.address}`}>
                             {rest.student.address}　<PhoneIcon />
                         </a>
                     </Box>
+                </HStack>
+                <HStack fontSize={"lg"}>
+                    <VStack spacing={0}>
+                    <Text>緊急連絡先２：</Text>
+                    <Text>({rest.student.address_sub_owner})</Text>
+                    </VStack>
 
+                    <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                        <a href={`tel:${rest.student.address_sub}`}>
+                            {rest.student.address_sub}　<PhoneIcon />
+                        </a>
+                    </Box>
                 </HStack>
                 <HStack fontSize={"lg"}>
                     <Text>振替調整日：</Text>
                     <Box>{rest.student.subDay}</Box>
                 </HStack>
                 <HStack fontSize={"lg"}>
-                    <Text>メモ：</Text>
+                    <Text flexShrink={0}>メモ：</Text>
                     <Box>{rest.student.memo}</Box>
                 </HStack>
      

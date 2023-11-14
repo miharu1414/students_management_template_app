@@ -4,7 +4,7 @@ import { json } from "react-router-dom";
 
 type EditModalContainerProps = {
     studentId: string,
-    GetStudentInfo: () => void,
+    GetStudentsInfo: () => void,
 }
 
 export type studentInfo = {
@@ -340,7 +340,7 @@ const EditModalContainer: FC<EditModalContainerProps> =  (props) => {
            updateAddressSubOwner={updateAddressSubOwner}
            onClick={handleOnClick}
 
-           GetStudentInfo={rest.GetStudentInfo}
+           GetStudentsInfo={rest.GetStudentsInfo}
         />
     )
 }

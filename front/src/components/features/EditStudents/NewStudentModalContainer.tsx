@@ -18,7 +18,7 @@ export type studentInfo = {
 }
 
 type NewStudentModalContainerProps = {
-  GetStudentInfo: () => void,
+  GetStudentsInfo: () => void,
 }
 
 export type classInfo = {
@@ -274,7 +274,7 @@ const NewStudentModalContainer: FC<NewStudentModalContainerProps> = (props) => {
            updateAddressSubOwner={updateAddressSubOwner}
            onGetClasses={GetClasses}
            onGetCourses={GetCourses}
-           GetStudentInfo={rest.GetStudentInfo}
+           GetStudentsInfo={rest.GetStudentsInfo}
         />
     )
 }
