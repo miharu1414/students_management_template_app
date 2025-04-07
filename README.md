@@ -1,4 +1,4 @@
-# students_management_template_app
+# students_management_template_app　フロント部分
 1. docker-compose build #最初だけ
 2. docker-compose up -d
 3. docker-compose ps　＃起動確認
