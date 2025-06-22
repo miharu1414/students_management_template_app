@@ -1,5 +1,5 @@
 #!/usr/local/bin/python
 
 from wsgiref.handlers import CGIHandler
-from helloFlask import app
+from main import app
 CGIHandler().run(app)
