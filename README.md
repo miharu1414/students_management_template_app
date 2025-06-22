@@ -21,6 +21,13 @@
 
 - 生徒 ― 出欠・振替情報を1画面に集約
 
+# 画面の抜粋
+
+<p align="center">
+  <img src="サンプル1.png" alt="サンプル1画像" style="width:30%; display:inline-block;">
+  <img src="サンプル2.png" alt="サンプル2画像" style="width:30%; display:inline-block;">
+  <img src="サンプル2.png" alt="サンプル2画像" style="width:30%; display:inline-block;">
+</p>
  
 # Requirement
 
@@ -28,6 +35,8 @@
 | ------------- | ---------------------------- | -------------------------------------------------------- |
 | **Frontend**  | Node 20 / npm 10             | React 18, TypeScript, chakra ui, React Router |
 | **Backend**   | Python 3.11                  | mysql-connector-python, requests, Flask, python-dotenv, flask-cors         |
+
+
 
 
 # students_management_template_app　フロント部分
